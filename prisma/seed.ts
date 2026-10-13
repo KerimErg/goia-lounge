@@ -99,6 +99,10 @@ const MENU: Cat[] = [
       ingredients: l("Gin, fraises fraîches, menthe, citron et Sprite/Schweppes.", "Gin, frische Erdbeeren, Minze, Zitrone und Sprite/Schweppes.", "Gin, fresh strawberries, mint, lemon and Sprite/Schweppes.") },
     { name: l("Pornstar Martini", "Pornstar Martini", "Pornstar Martini"), price: 1000, image: M("pornstar-martini") },
   ] },
+  // Desserts : seul le cheesecake spéculoos est connu (photo du GOIA) ; prix et autres desserts à compléter
+  { slug: "desserts", section: "FOOD", name: l("Desserts", "Desserts", "Desserts"), items: [
+    { name: l("Cheesecake spéculoos", "Spekulatius-Cheesecake", "Speculoos cheesecake"), price: null, image: "/images/goia/cheesecake-speculoos.jpg" },
+  ] },
 ];
 
 
