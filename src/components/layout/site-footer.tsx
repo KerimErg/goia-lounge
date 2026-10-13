@@ -14,7 +14,7 @@ export async function SiteFooter() {
   const days = (d: number[]) => (d.length === 1 ? dayName(d[0], locale, "short") : `${dayName(d[0], locale, "short")} – ${dayName(d[d.length - 1], locale, "short")}`);
 
   return (
-    <footer className="bg-ink text-ivory">
+    <footer className="border-t border-ivory/10 bg-ink text-ivory">
       <div className="container-page pt-20 pb-10 sm:pt-28">
         <Logo className="w-full max-w-[1100px] text-ivory/95" />
         <p className="eyebrow mt-6 text-[0.7rem] tracking-[0.6em] text-taupe-light">Huqqa — Lounge · {s.city}</p>

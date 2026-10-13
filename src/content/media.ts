@@ -9,9 +9,11 @@
  */
 export type HeroVideo = { landscape: { mp4: string; webm?: string }; portrait?: { mp4: string; webm?: string } };
 
-export const HERO_MEDIA: { poster: string; posterAlt: string; video: HeroVideo | null } = {
-  poster: "/images/goia/chicha-fumee-ambiance.jpg",
-  posterAlt: "Chicha et volutes de fumée devant les arches lumineuses du GOIA",
+export const HERO_MEDIA: { poster: string; posterPortrait: string; video: HeroVideo | null } = {
+  // Fonds d'ambiance volontairement flous (générés depuis les photos du lieu, basse définition) :
+  // à remplacer par une vidéo ou des photos HD dès qu'elles sont disponibles.
+  poster: "/images/goia/bg-fumee.jpg",
+  posterPortrait: "/images/goia/bg-fumee-portrait.jpg",
   video: null,
 };
 
@@ -21,4 +23,6 @@ export const PHOTOS = {
   table: "/images/goia/table-desserts-cocktails.jpg",
   amber: "/images/goia/chicha-cocktail-dessert.jpg",
   cheesecake: "/images/goia/cheesecake-speculoos.jpg",
+  /** Fond flou pour la section réservation */
+  tableBlur: "/images/goia/bg-table.jpg",
 } as const;

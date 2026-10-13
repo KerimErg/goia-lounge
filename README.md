@@ -32,25 +32,24 @@ Admin : http://localhost:3000/admin (identifiants affichés par le seed).
 3. Le script `vercel-build` exécute `prisma generate && prisma migrate deploy && next build` : les migrations sont appliquées à chaque déploiement.
 4. Seed (une seule fois, depuis votre machine) : `DATABASE_URL="<directe>" DIRECT_URL="<directe>" SEED_ALLOW_RESET=yes SEED_ADMIN_PASSWORD="…" npm run db:seed`.
 
-## Direction artistique « Taupe & marbre »
+## Direction artistique « lounge de nuit »
 
-Tirée du logo officiel (taupe `#7A6A5A`, lettres ivoire) et des photos du lieu ; le sombre est réservé aux moments immersifs.
+Inspirée des grands lounges de Dubaï (hero plein écran, ambiance immersive, arches), avec les couleurs du logo officiel.
 
 | Rôle | Couleur | D'où elle vient |
 |---|---|---|
-| Taupe | `#7A6A5A` | fond du logo : sections Ambiance et Réservation, menu mobile |
-| Ivoire / lin | `#F7F2EA` / `#ECE4D7` | lettres du logo : sections claires |
-| Marbre vert | `#0F3B3C` | tables en marbre : section « À table » (veines générées en SVG) |
-| Ambre | `#C98A45` | lumière derrière le verre cannelé : petits accents seulement |
-| Encre | `#1B1511` | hero et pied de page |
+| Encre | `#1B1511` | hero, galerie, réservation, pied de page |
+| Taupe | `#7A6A5A` | fond du logo : bandeau défilant, menu mobile, tuile Instagram |
+| Ivoire | `#F7F2EA` | lettres du logo : section des arches |
+| Marbre vert | `#0F3B3C` | tables en marbre : section « À table » (veines en SVG) |
+| Ambre | `#C98A45` | lumière derrière le verre cannelé : petits accents |
 
-- **Motif** : l'arche, reprise des niches lumineuses du lounge (cadre du hero, galerie, photo flottante).
-- **Typographies** auto-hébergées (DSGVO) : Italiana (titres, proche du logo), Jost (texte), Cormorant Garamond italique (accents).
-- **Parcours de l'accueil** : Hero (encre) → Le lieu (ivoire) → L'ambiance (taupe) → À table (marbre) → Galerie (lin) → Événements / Avis (seulement s'ils existent) → Réservation + infos pratiques (taupe) → pied de page (encre).
-- **Animations** (Framer Motion, déjà présent) : rideau et masque sur le hero, titres ligne par ligne, révélations d'images par masque, parallaxe légère, galerie horizontale pilotée par le défilement (ordinateur), photo qui suit le pointeur dans « À table ». Tout est désactivé avec « réduire les animations ».
-- **Fumée** : shader WebGL (bruit fractal, pas de particules), concentré autour de l'arche, rendu à demi-résolution, démarré quand le navigateur est au repos, en pause hors écran, désactivé sans GPU.
-- **Vidéo du hero** : prête à l'emploi. Déposez les fichiers dans `public/videos/` et renseignez-les dans `src/content/media.ts` (paysage + portrait pour mobile, sans son, en boucle, bouton pause).
-- **Aucune donnée inventée à l'accueil** : pas de prix ni de saveurs (la carte détaillée vient de l'admin), événements et avis affichés seulement s'ils sont publiés, téléphone / WhatsApp / email masqués tant qu'ils sont provisoires.
+- **Parcours** : hero plein écran (ambiance floutée + fumée + logo + bandeau d'infos) → bandeau de mots défilant → trois arches (ambre, marbre, fumée) → À table (photo qui suit le pointeur) → mosaïque photo → [événements / avis s'ils existent] → réservation plein écran + infos pratiques → pied de page.
+- **Photos basse définition** (miniatures Instagram ≈ 450 px) : affichées à une taille où elles restent nettes ; les grands fonds sont des versions volontairement floutées (`bg-*.jpg`). Avec des originaux HD ou une vidéo, remplacez-les dans `src/content/media.ts`.
+- **Typographies** auto-hébergées (DSGVO) : Italiana (titres), Jost (texte), Cormorant Garamond italique (accents).
+- **Animations** : entrée du hero en CSS (aucune attente du JavaScript), titres ligne par ligne, révélations par masque, parallaxe, bandeau défilant, fumée WebGL (démarrée au repos, coupée sans GPU). Tout est désactivé avec « réduire les animations ».
+- **Vidéo du hero** : déposez les fichiers dans `public/videos/` et renseignez-les dans `src/content/media.ts` (paysage + portrait, sans son, en boucle, bouton pause).
+- **Aucune donnée inventée à l'accueil** : pas de prix ni de saveurs, événements et avis affichés seulement s'ils sont publiés, coordonnées provisoires masquées.
 
 > ⚠️ La carte (chichas, boissons, prix) et les 3 événements créés par le seed sont des **exemples** : les événements sont créés non publiés, la carte doit être remplacée par la vraie avant la mise en ligne.
 

@@ -1,9 +1,11 @@
+import Image from "next/image";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Car, Mail, Phone, TramFront } from "lucide-react";
 import { InstagramIcon, WhatsAppIcon } from "@/components/brand/icons";
 import { Link } from "@/i18n/navigation";
 import { LineTitle } from "@/components/motion";
 import { Reveal } from "@/components/reveal";
+import { PHOTOS } from "@/content/media";
 import { prisma } from "@/lib/prisma";
 import { tr } from "@/lib/localized";
 import { nowInKehl } from "@/lib/time";
@@ -13,7 +15,7 @@ import { QuickBooking } from "./quick-booking";
 import { VenueMap } from "./venue-map";
 
 /**
- * F — Réservation, sur le taupe du logo : formulaire rapide (vers le tunnel de réservation),
+ * Réservation : photo du lieu floutée en plein écran : formulaire rapide (vers le tunnel de réservation),
  * contact réellement configuré, puis infos pratiques (adresse, horaires, accès, carte).
  */
 export async function Booking() {
@@ -28,37 +30,42 @@ export async function Booking() {
   const days = (d: number[]) => (d.length === 1 ? dayName(d[0], locale) : `${dayName(d[0], locale)} – ${dayName(d[d.length - 1], locale)}`);
 
   return (
-    <section id="reserver" className="bg-grain relative scroll-mt-0 bg-taupe pt-24 pb-20 text-ivory sm:pt-32 lg:pt-40" aria-labelledby="booking-title">
-      <div className="container-page">
-        <Reveal><p className="eyebrow text-ivory">{t("eyebrow")}</p></Reveal>
-        <LineTitle id="booking-title" lines={splitLines(t("title"), 2)} className="mt-6 text-[clamp(3.4rem,11vw,10rem)] leading-[0.88]" />
-        <Reveal delay={0.1}><p className="mt-8 max-w-lg font-accent text-2xl leading-snug text-ivory/90">{t("lead")}</p></Reveal>
-
-        <Reveal delay={0.15} className="mt-12">
-          <QuickBooking
-            hours={hours}
-            specials={specials.map((d) => ({ date: d.date.toISOString().slice(0, 10), closed: d.closed, opensAt: d.opensAt, closesAt: d.closesAt }))}
-            rules={{ slotIntervalMin: s.slotIntervalMin, lastSeatingBeforeCloseMin: s.lastSeatingBeforeCloseMin, minLeadMin: s.minLeadMin, maxDaysAhead: s.maxDaysAhead }}
-            zones={zones.map((z) => ({ slug: z.slug, name: tr(z.name, locale) }))}
-            maxParty={s.maxOnlinePartySize}
-          />
-          <p className="mt-5 text-sm text-ivory">
+    <section id="reserver" className="relative scroll-mt-0 bg-ink text-ivory" aria-labelledby="booking-title">
+      {/* Plein écran : la table du GOIA, floutée, en fond */}
+      <div className="relative isolate overflow-hidden pt-28 pb-24 sm:pt-36 sm:pb-32">
+        <Image src={PHOTOS.tableBlur} alt="" fill sizes="100vw" quality={70} className="-z-20 scale-110 object-cover" />
+        <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_50%_40%,rgb(27_21_17/0.45),rgb(27_21_17/0.9)_80%)]" />
+        <div className="container-page flex flex-col items-center text-center">
+          <Reveal><p className="eyebrow text-ivory/85">{t("eyebrow")}</p></Reveal>
+          <LineTitle id="booking-title" lines={splitLines(t("title"), 2)} className="mt-6 text-[clamp(3.2rem,10vw,9rem)] leading-[0.9]" />
+          <Reveal delay={0.1}><p className="mt-8 max-w-lg font-accent text-2xl leading-snug text-ivory/90">{t("lead")}</p></Reveal>
+          <Reveal delay={0.15} className="mt-12 w-full max-w-5xl text-left">
+            <QuickBooking
+              hours={hours}
+              specials={specials.map((d) => ({ date: d.date.toISOString().slice(0, 10), closed: d.closed, opensAt: d.opensAt, closesAt: d.closesAt }))}
+              rules={{ slotIntervalMin: s.slotIntervalMin, lastSeatingBeforeCloseMin: s.lastSeatingBeforeCloseMin, minLeadMin: s.minLeadMin, maxDaysAhead: s.maxDaysAhead }}
+              zones={zones.map((z) => ({ slug: z.slug, name: tr(z.name, locale) }))}
+              maxParty={s.maxOnlinePartySize}
+            />
+          </Reveal>
+          <p className="mt-6 text-sm text-ivory/85">
             {q.rich("more", { n: s.maxOnlinePartySize, link: (c) => <Link href="/privatisation" className="underline decoration-ivory/40 underline-offset-4 hover:decoration-ivory">{c}</Link> })}
           </p>
-        </Reveal>
+          {(links.whatsapp || links.phone || links.email || links.instagram) && (
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm">
+              <span className="eyebrow text-[0.62rem] text-ivory/80">{t("or")}</span>
+              {links.whatsapp && <a href={links.whatsapp} target="_blank" rel="noopener" className="link-underline inline-flex items-center gap-2"><WhatsAppIcon className="size-4" />WhatsApp</a>}
+              {links.phone && <a href={`tel:${links.phone.replace(/[^\d+]/g, "")}`} className="link-underline inline-flex items-center gap-2"><Phone className="size-4" />{links.phone}</a>}
+              {links.email && <a href={`mailto:${links.email}`} className="link-underline inline-flex items-center gap-2"><Mail className="size-4" />{links.email}</a>}
+              {links.instagram && <a href={links.instagram} target="_blank" rel="noopener" className="link-underline inline-flex items-center gap-2"><InstagramIcon className="size-4" />@goia.kehl</a>}
+            </div>
+          )}
+        </div>
+      </div>
 
-        {(links.whatsapp || links.phone || links.email || links.instagram) && (
-          <Reveal className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm">
-            <span className="eyebrow text-[0.62rem] text-ivory">{t("or")}</span>
-            {links.whatsapp && <a href={links.whatsapp} target="_blank" rel="noopener" className="link-underline inline-flex items-center gap-2"><WhatsAppIcon className="size-4" />WhatsApp</a>}
-            {links.phone && <a href={`tel:${links.phone.replace(/[^\d+]/g, "")}`} className="link-underline inline-flex items-center gap-2"><Phone className="size-4" />{links.phone}</a>}
-            {links.email && <a href={`mailto:${links.email}`} className="link-underline inline-flex items-center gap-2"><Mail className="size-4" />{links.email}</a>}
-            {links.instagram && <a href={links.instagram} target="_blank" rel="noopener" className="link-underline inline-flex items-center gap-2"><InstagramIcon className="size-4" />@goia.kehl</a>}
-          </Reveal>
-        )}
-
+      <div className="container-page pb-20">
         {/* Infos pratiques */}
-        <div id="infos" className="mt-24 grid gap-12 border-t border-ivory/25 pt-14 lg:mt-32 lg:grid-cols-12 lg:gap-10">
+        <div id="infos" className="grid gap-12 pt-16 lg:grid-cols-12 lg:gap-10">
           <div className="grid gap-10 sm:grid-cols-2 lg:col-span-7">
             <div>
               <h3 className="eyebrow text-[0.65rem] text-ivory">{info("address")}</h3>

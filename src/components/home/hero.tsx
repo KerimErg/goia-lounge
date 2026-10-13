@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
-import { HERO_MEDIA, PHOTOS } from "@/content/media";
-import { formatCoord, getVenue, hoursFor } from "@/lib/venue";
+import { HERO_MEDIA } from "@/content/media";
+import { contactLinks, getVenue, hoursFor } from "@/lib/venue";
 import { nowInKehl } from "@/lib/time";
 import { HeroStage } from "./hero-stage";
 
@@ -11,8 +11,8 @@ export async function Hero() {
   return (
     <HeroStage
       media={HERO_MEDIA}
-      inset={PHOTOS.table}
-      coords={`${formatCoord(settings.latitude, "N", "S")} · ${formatCoord(settings.longitude, "E", "W")}`}
+      address={`${settings.street} · ${settings.city}`}
+      instagram={contactLinks(settings).instagram}
       text={{
         eyebrow: t("eyebrow"),
         lead: t("lead"),

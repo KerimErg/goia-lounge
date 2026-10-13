@@ -41,7 +41,7 @@
   },
   "gallery": {
     "eyebrow": "Instants",
-    "title": "Vu au GOIA",
+    "title": "L'ambiance GOIA",
     "follow": "Suivez-nous sur Instagram",
     "hint": "Faites défiler"
   },
@@ -96,15 +96,9 @@
   "common": {
     "comingSoon": "Le nouveau site arrive très bientôt."
   },
-  "place": {
-    "eyebrow": "Le lieu",
-    "title": "Ambre, marbre vert et fumée lente",
-    "body": "GOIA est un huqqa lounge à Kehl, à quelques arrêts de tram de Strasbourg. La lumière passe derrière le verre cannelé, les tables sont en marbre vert, et la soirée se règle sur le rythme de la chicha.",
-    "aside": "Huqqa — Lounge"
-  },
   "ambiance": {
     "eyebrow": "L'ambiance",
-    "title": "Trois matières, une soirée",
+    "title": "Le GOIA, en trois matières",
     "amber_t": "Ambre",
     "amber": "Derrière le verre cannelé, une lumière chaude qui colore toute la salle.",
     "marble_t": "Marbre",
@@ -129,5 +123,8 @@
     "title": "Réserver une table",
     "lead": "Choisissez le jour, l'heure d'arrivée et le nombre de personnes.",
     "or": "Ou écrivez-nous"
+  },
+  "marquee": {
+    "words": "Chicha|Douceurs|Verres colorés|Huqqa lounge|Kehl"
   }
 }

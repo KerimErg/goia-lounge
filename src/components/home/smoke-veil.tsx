@@ -32,7 +32,7 @@ void main(){
  * préfère réduire les animations ; rien du tout si WebGL est indisponible.
  */
 export function SmokeVeil({ className, density = 0.55 }: { className?: string; density?: number }) {
-  // La fumée se concentre autour de l'arche : à droite sur ordinateur, en haut sur mobile.
+  // La fumée monte du bas de l'écran et se concentre au centre, derrière le logo.
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -67,7 +67,7 @@ export function SmokeVeil({ className, density = 0.55 }: { className?: string; d
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.uniform2f(uR, canvas.width, canvas.height);
       const wide = canvas.clientWidth >= 1024;
-      gl.uniform3f(uF, wide ? 0.74 : 0.5, wide ? 0.42 : 0.62, wide ? 0.85 : 0.7);
+      gl.uniform3f(uF, 0.5, wide ? 0.3 : 0.35, wide ? 1.1 : 0.8);
     };
     const t0 = performance.now() - 20000;
     const frame = (now: number) => { gl.uniform1f(uT, (now - t0) / 1000); gl.drawArrays(gl.TRIANGLES, 0, 3); };

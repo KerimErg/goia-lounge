@@ -1,6 +1,6 @@
 import { setRequestLocale } from "next-intl/server";
 import { Hero } from "@/components/home/hero";
-import { Place } from "@/components/home/place";
+import { Marquee } from "@/components/home/marquee";
 import { Ambiance } from "@/components/home/ambiance";
 import { AtTable } from "@/components/home/table";
 import { Gallery } from "@/components/home/gallery";
@@ -13,8 +13,9 @@ export const revalidate = 300;
 
 /**
  * Accueil : un parcours plutôt qu'une pile de blocs.
- * Hero (encre) → Le lieu (ivoire) → L'ambiance (taupe) → À table (marbre)
- * → Galerie (lin) → [Événements / Avis s'ils existent] → Réservation (taupe) → pied de page (encre).
+ * Hero plein écran (ambiance + fumée) → bandeau défilant (taupe) → trois arches (ivoire)
+ * → À table (marbre) → galerie (encre) → [Événements / Avis s'ils existent]
+ * → Réservation plein écran + infos pratiques → pied de page.
  */
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -24,7 +25,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   return (
     <>
       <Hero />
-      <Place />
+      <Marquee />
       <Ambiance />
       <AtTable instagramUrl={instagram} />
       <Gallery instagramUrl={instagram} />

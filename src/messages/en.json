@@ -41,7 +41,7 @@
   },
   "gallery": {
     "eyebrow": "Moments",
-    "title": "Seen at GOIA",
+    "title": "The GOIA mood",
     "follow": "Follow us on Instagram",
     "hint": "Keep scrolling"
   },
@@ -96,15 +96,9 @@
   "common": {
     "comingSoon": "The new website is coming very soon."
   },
-  "place": {
-    "eyebrow": "The place",
-    "title": "Amber, green marble and slow smoke",
-    "body": "GOIA is a huqqa lounge in Kehl, a few tram stops from Strasbourg. Light glows through fluted glass, the tables are green marble, and the evening moves at the pace of the shisha.",
-    "aside": "Huqqa — Lounge"
-  },
   "ambiance": {
     "eyebrow": "The mood",
-    "title": "Three textures, one evening",
+    "title": "GOIA in three textures",
     "amber_t": "Amber",
     "amber": "Behind fluted glass, a warm light that tints the whole room.",
     "marble_t": "Marble",
@@ -129,5 +123,8 @@
     "title": "Book a table",
     "lead": "Pick the day, your arrival time and the number of guests.",
     "or": "Or message us"
+  },
+  "marquee": {
+    "words": "Shisha|Sweets|Colourful glasses|Huqqa lounge|Kehl"
   }
 }
