@@ -1,0 +1,385 @@
+// GOIA Lounge — PostgreSQL (Neon en production)
+// DATABASE_URL : connexion poolée (application) · DIRECT_URL : connexion directe (migrations).
+// Toutes les dates/heures sont stockées en UTC ; l'heure de Kehl (Europe/Berlin)
+// est convertie dans src/lib/time.ts.
+// Les textes traduits sont des objets JSON { "fr": "...", "de": "...", "en": "..." }.
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  directUrl  = env("DIRECT_URL")
+  extensions = [btree_gist]
+}
+
+enum Role {
+  ADMIN
+  STAFF
+}
+
+enum ReservationStatus {
+  PENDING // en attente (ex. acompte à payer)
+  CONFIRMED // confirmée
+  SEATED // arrivée / installée
+  COMPLETED // terminée
+  CANCELLED // annulée
+  NO_SHOW // ne s'est pas présentée
+}
+
+enum ReservationSource {
+  WEBSITE
+  PHONE
+  WALK_IN
+  ADMIN
+}
+
+enum Occasion {
+  NONE
+  BIRTHDAY
+  FRIENDS
+  DATE
+  PRIVATE_EVENT
+  BUSINESS
+  OTHER
+}
+
+enum DepositStatus {
+  NOT_REQUIRED
+  PENDING
+  PAID
+  REFUNDED
+  FAILED
+}
+
+enum TableShape {
+  ROUND
+  SQUARE
+  RECT
+  BOOTH
+}
+
+enum MenuSection {
+  SHISHA
+  DRINK
+  FOOD
+}
+
+enum EventType {
+  DJ
+  SPORT
+  THEME
+  LIVE
+  OTHER
+}
+
+enum RequestType {
+  BIRTHDAY
+  BACHELOR // EVJF / EVG
+  CORPORATE
+  PRIVATE
+  OTHER
+}
+
+enum RequestStatus {
+  NEW
+  CONTACTED
+  QUOTED
+  CONFIRMED
+  DECLINED
+}
+
+// ---------------------------------------------------------------------------
+// Équipe (connexion à /admin)
+// ---------------------------------------------------------------------------
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  role         Role     @default(STAFF)
+  createdAt    DateTime @default(now()) @db.Timestamptz(3)
+}
+
+// ---------------------------------------------------------------------------
+// Réglages de l'établissement (une seule ligne, id = 1)
+// ---------------------------------------------------------------------------
+model Settings {
+  id                        Int      @id @default(1)
+  venueName                 String   @default("GOIA Lounge")
+  street                    String
+  postalCode                String
+  city                      String
+  latitude                  Float
+  longitude                 Float
+  phone                     String
+  whatsapp                  String
+  email                     String
+  instagramUrl              String
+  googleReviewsUrl          String?
+  // Réservation
+  slotIntervalMin           Int      @default(30)
+  defaultDurationMin        Int      @default(150)
+  lastSeatingBeforeCloseMin Int      @default(60)
+  minLeadMin                Int      @default(60)
+  maxDaysAhead              Int      @default(60)
+  maxOnlinePartySize        Int      @default(10)
+  cancelHoursBefore         Int      @default(3)
+  // Acompte Stripe (désactivé par défaut)
+  depositEnabled            Boolean  @default(false)
+  depositMinPartySize       Int      @default(8)
+  depositPerPersonCents     Int      @default(1000)
+  updatedAt                 DateTime @updatedAt @db.Timestamptz(3)
+}
+
+/// Horaires habituels. weekday : 0 = dimanche … 6 = samedi.
+/// closesAt <= opensAt signifie « le lendemain » (ex. 17:00 → 01:00).
+model OpeningHours {
+  weekday  Int     @id
+  opensAt  String
+  closesAt String
+  closed   Boolean @default(false)
+}
+
+/// Jour particulier : fermeture exceptionnelle ou soirée spéciale (horaires modifiés).
+model SpecialDay {
+  id       String   @id @default(cuid())
+  date     DateTime @unique @db.Date
+  closed   Boolean  @default(false)
+  opensAt  String?
+  closesAt String?
+  title    Json?
+  note     String?
+}
+
+// ---------------------------------------------------------------------------
+// Salle : zones et tables (anciennement agences et véhicules)
+// ---------------------------------------------------------------------------
+model Zone {
+  id          String  @id @default(cuid())
+  slug        String  @unique
+  name        Json
+  description Json?
+  order       Int     @default(0)
+  outdoor     Boolean @default(false)
+  active      Boolean @default(true)
+  planWidth   Int     @default(1000)
+  planHeight  Int     @default(700)
+  tables      Table[]
+}
+
+model Table {
+  id             String             @id @default(cuid())
+  zoneId         String
+  zone           Zone               @relation(fields: [zoneId], references: [id], onDelete: Restrict)
+  label          String
+  minCovers      Int                @default(1)
+  maxCovers      Int
+  shape          TableShape         @default(ROUND)
+  x              Float
+  y              Float
+  width          Float
+  height         Float
+  rotation       Int                @default(0)
+  onlineBookable Boolean            @default(true)
+  active         Boolean            @default(true)
+  order          Int                @default(0)
+  reservations   ReservationTable[]
+  blocks         TableBlock[]
+
+  @@unique([zoneId, label])
+}
+
+/// Table indisponible sur une période (réparation, réservée hors système…).
+model TableBlock {
+  id       String   @id @default(cuid())
+  tableId  String
+  table    Table    @relation(fields: [tableId], references: [id], onDelete: Cascade)
+  startsAt DateTime @db.Timestamptz(3)
+  endsAt   DateTime @db.Timestamptz(3)
+  reason   String?
+
+  @@index([tableId, startsAt])
+}
+
+// ---------------------------------------------------------------------------
+// Clients et réservations
+// ---------------------------------------------------------------------------
+model Customer {
+  id             String        @id @default(cuid())
+  firstName      String
+  lastName       String
+  email          String?       @unique
+  phone          String
+  locale         String        @default("fr")
+  vip            Boolean       @default(false)
+  notes          String?
+  marketingOptIn Boolean       @default(false)
+  createdAt      DateTime      @default(now()) @db.Timestamptz(3)
+  reservations   Reservation[]
+
+  @@index([phone])
+}
+
+model Reservation {
+  id                String             @id @default(cuid())
+  reference         String             @unique
+  status            ReservationStatus  @default(CONFIRMED)
+  source            ReservationSource  @default(WEBSITE)
+  customerId        String
+  customer          Customer           @relation(fields: [customerId], references: [id], onDelete: Restrict)
+  /// Arrivée et fin prévue, en UTC (calculées depuis l'heure de Kehl)
+  startAt           DateTime           @db.Timestamptz(3)
+  endAt             DateTime           @db.Timestamptz(3)
+  partySize         Int
+  preferredZoneId   String?
+  occasion          Occasion           @default(NONE)
+  specialRequest    String?
+  /// Chichas pré-commandées : [{ menuItemId, quantity }]
+  preorder          Json?
+  locale            String             @default("fr")
+  /// Empreinte SHA-256 du lien « Gérer ma réservation »
+  manageTokenHash   String?
+  adultConfirmed    Boolean            @default(false)
+  privacyAcceptedAt DateTime?          @db.Timestamptz(3)
+  depositStatus     DepositStatus      @default(NOT_REQUIRED)
+  depositCents      Int?
+  stripeSessionId   String?            @unique
+  internalNote      String?
+  cancelledBy       String? // "client" | "staff"
+  createdAt         DateTime           @default(now()) @db.Timestamptz(3)
+  updatedAt         DateTime           @updatedAt @db.Timestamptz(3)
+  tables            ReservationTable[]
+
+  @@index([startAt])
+  @@index([status])
+  @@index([customerId])
+}
+
+/// Lien réservation ↔ table(s). La contrainte d'exclusion (voir migration SQL)
+/// interdit deux lignes actives qui se chevauchent sur la même table.
+model ReservationTable {
+  reservationId String
+  tableId       String
+  startAt       DateTime    @db.Timestamptz(3)
+  endAt         DateTime    @db.Timestamptz(3)
+  active        Boolean     @default(true)
+  reservation   Reservation @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+  table         Table       @relation(fields: [tableId], references: [id], onDelete: Restrict)
+
+  @@id([reservationId, tableId])
+  @@index([tableId, startAt])
+}
+
+// ---------------------------------------------------------------------------
+// Contenus gérés depuis l'admin
+// ---------------------------------------------------------------------------
+model MenuCategory {
+  id          String      @id @default(cuid())
+  slug        String      @unique
+  section     MenuSection
+  name        Json
+  description Json?
+  order       Int         @default(0)
+  active      Boolean     @default(true)
+  items       MenuItem[]
+}
+
+model MenuItem {
+  id           String       @id @default(cuid())
+  categoryId   String
+  category     MenuCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  name         Json
+  description  Json?
+  priceCents   Int
+  /// ex. ["signature", "new", "premium", "vegan"]
+  tags         String[]     @default([])
+  available    Boolean      @default(true)
+  preorderable Boolean      @default(false)
+  order        Int          @default(0)
+
+  @@index([categoryId, order])
+}
+
+/// Suppléments (tête fruit, tête premium, glaçons…)
+model MenuExtra {
+  id         String      @id @default(cuid())
+  section    MenuSection
+  name       Json
+  priceCents Int
+  order      Int         @default(0)
+  active     Boolean     @default(true)
+}
+
+model Event {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  type        EventType @default(OTHER)
+  title       Json
+  description Json
+  startsAt    DateTime  @db.Timestamptz(3)
+  imageUrl    String?
+  published   Boolean   @default(false)
+}
+
+model GalleryImage {
+  id        String  @id @default(cuid())
+  url       String
+  alt       Json
+  width     Int
+  height    Int
+  order     Int     @default(0)
+  published Boolean @default(true)
+}
+
+/// Avis réels saisis par l'équipe (jamais d'avis inventés).
+model Review {
+  id        String   @id @default(cuid())
+  author    String
+  rating    Int?
+  text      String
+  source    String // google | instagram | autre
+  sourceUrl String?
+  date      DateTime @db.Date
+  published Boolean  @default(false)
+}
+
+model PrivatizationRequest {
+  id           String        @id @default(cuid())
+  type         RequestType   @default(OTHER)
+  date         DateTime      @db.Date
+  guests       Int
+  budgetCents  Int?
+  name         String
+  email        String
+  phone        String
+  message      String
+  locale       String        @default("fr")
+  status       RequestStatus @default(NEW)
+  internalNote String?
+  createdAt    DateTime      @default(now()) @db.Timestamptz(3)
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  message   String
+  locale    String   @default("fr")
+  handled   Boolean  @default(false)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+}
+
+/// Journal anti-spam (empreintes uniquement, jamais d'IP en clair).
+model RateEvent {
+  id        BigInt   @id @default(autoincrement())
+  bucket    String
+  keyHash   String
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+
+  @@index([bucket, keyHash, createdAt])
+}

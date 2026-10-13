@@ -1,0 +1,89 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/*
+ * GOIA — palette provisoire (à ajuster avec le logo et les photos Instagram) :
+ * noir profond, laiton, bordeaux. Site uniquement en mode sombre.
+ */
+:root {
+  --radius: 0.875rem;
+  --background: #0b0a0c;
+  --foreground: #eee7da;
+  --card: #141216;
+  --card-foreground: #eee7da;
+  --popover: #18161b;
+  --popover-foreground: #eee7da;
+  --primary: #c6a15b;          /* laiton */
+  --primary-foreground: #14100a;
+  --secondary: #1d1a20;
+  --secondary-foreground: #eee7da;
+  --muted: #1a181d;
+  --muted-foreground: #9d968b;
+  --accent: #5e1a24;           /* bordeaux */
+  --accent-foreground: #f3d9dd;
+  --destructive: #d9604f;
+  --border: #2a262c;
+  --input: #2f2a31;
+  --ring: #c6a15b;
+  --surface: #110f12;
+  --brass: #c6a15b;
+  --brass-light: #e3c88f;
+  --burgundy: #5e1a24;
+}
+
+@theme inline {
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), Georgia, serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-surface: var(--surface);
+  --color-brass: var(--brass);
+  --color-brass-light: var(--brass-light);
+  --color-burgundy: var(--burgundy);
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 4px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 6px);
+  --shadow-soft: 0 10px 30px -18px rgb(0 0 0 / 0.9);
+  --shadow-lift: 0 24px 60px -24px rgb(0 0 0 / 0.95);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+  }
+  h1, h2, h3 {
+    @apply font-display font-medium tracking-tight;
+  }
+  ::selection {
+    background: var(--brass);
+    color: #14100a;
+  }
+}
+
+@utility container-page {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}

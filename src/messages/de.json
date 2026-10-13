@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "title": "GOIA Lounge — Shisha Lounge in Kehl, nahe Straßburg",
+    "description": "GOIA Lounge, elegante Shisha Lounge in Kehl, direkt an der Grenze zu Straßburg. Signature-Shishas, Mocktails, DJ-Abende. Tisch online reservieren."
+  },
+  "nav": {
+    "home": "Start",
+    "menu": "Karte",
+    "booking": "Reservieren",
+    "privatization": "Private Events",
+    "contact": "Kontakt"
+  },
+  "common": {
+    "comingSoon": "Die neue Website ist bald online.",
+    "book": "Tisch reservieren",
+    "seeMenu": "Zur Karte",
+    "adultsOnly": "Nur für Volljährige (18+)"
+  }
+}

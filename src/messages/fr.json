@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "title": "GOIA Lounge — Chicha lounge à Kehl, près de Strasbourg",
+    "description": "GOIA Lounge, chicha lounge élégant à Kehl, à deux pas de Strasbourg. Chichas signature, mocktails, soirées DJ. Réservez votre table en ligne."
+  },
+  "nav": {
+    "home": "Accueil",
+    "menu": "La carte",
+    "booking": "Réserver",
+    "privatization": "Privatisation",
+    "contact": "Contact"
+  },
+  "common": {
+    "comingSoon": "Le nouveau site arrive très bientôt.",
+    "book": "Réserver une table",
+    "seeMenu": "Voir la carte",
+    "adultsOnly": "Réservé aux personnes majeures (18+)"
+  }
+}
