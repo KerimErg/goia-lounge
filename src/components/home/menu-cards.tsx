@@ -5,12 +5,11 @@ import { MaskReveal } from "@/components/motion";
 import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
 import { Ornament } from "@/components/ornament";
-import { PHOTOS } from "@/content/media";
 
+// Photos de la carte officielle
 const CARDS = [
-  { key: "shisha", src: PHOTOS.smoke },
-  { key: "drinks", src: PHOTOS.table },
-  { key: "sweets", src: PHOTOS.cheesecake },
+  { key: "shisha", src: "/images/menu/chicha-classique.jpg" },
+  { key: "drinks", src: "/images/menu/mojito-framboise.jpg" },
 ] as const;
 
 /** Notre carte : trois catégories claires (photo + nom + une ligne) et un bouton vers la carte. */
@@ -24,7 +23,7 @@ export async function MenuCards() {
           <h2 id="menu-title" className="mt-5 text-[clamp(2.6rem,5.5vw,4.4rem)] leading-none">{t("title")}</h2>
           <Ornament className="mx-auto mt-6 text-champagne" />
         </Reveal>
-        <ul className="mx-auto mt-12 grid max-w-5xl gap-4 sm:mt-14 sm:grid-cols-3 sm:gap-6 lg:gap-10">
+        <ul className="mx-auto mt-12 grid max-w-3xl gap-4 sm:mt-14 sm:grid-cols-2 sm:gap-8">
           {CARDS.map((c, i) => (
             <li key={c.key}>
               {/* Mobile : ligne compacte (photo + texte) ; ordinateur : carte verticale */}

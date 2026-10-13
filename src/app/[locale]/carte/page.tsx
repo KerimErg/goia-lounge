@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 const euro = (cents: number, locale: string) =>
   new Intl.NumberFormat(locale, { style: "currency", currency: "EUR", minimumFractionDigits: cents % 100 ? 2 : 0 }).format(cents / 100);
-const TAGS = ["signature", "new", "popular", "premium"];
+const TAGS = ["bestseller", "premium", "classique", "signature", "new"];
 
 /**
  * La carte, façon menu QR : catégories en photo, puis chaque produit avec sa photo,
@@ -60,9 +60,9 @@ export default async function MenuPage({ params }: { params: Promise<{ locale: s
 
       {/* Catégories en photo */}
       <div className="container-page max-w-6xl">
-        <ul className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
+        <ul className="flex flex-wrap justify-center gap-3 sm:gap-4">
           {cats.map((c) => (
-            <li key={c.id}>
+            <li key={c.id} className="w-[calc(50%-0.375rem)] sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)]">
               <a href={`#${c.slug}`} className="group relative block aspect-[4/5] overflow-hidden bg-ink-soft">
                 {c.imageUrl ? (
                   <Image src={c.imageUrl} alt="" fill sizes="(min-width: 768px) 280px, 50vw" className="object-cover opacity-80 transition-[transform,opacity] duration-700 group-hover:scale-105 group-hover:opacity-100" />
@@ -101,34 +101,44 @@ export default async function MenuPage({ params }: { params: Promise<{ locale: s
                 {c.description && <p className="mx-auto mt-3 max-w-md font-accent text-lg text-ivory/70 italic">{tr(c.description, lang)}</p>}
                 <Ornament className="mx-auto mt-5 text-champagne" />
               </div>
-              <ul className="mt-10 grid gap-3 md:grid-cols-2 md:gap-4">
-                {c.items.map((it) => (
-                  <li key={it.id} className="flex gap-4 border border-ivory/10 bg-ink-soft/60 p-3 transition-colors hover:border-champagne/40 sm:p-4">
-                    <div className="relative size-20 shrink-0 overflow-hidden bg-taupe sm:size-24">
-                      {it.imageUrl ? (
-                        <Image src={it.imageUrl} alt={tr(it.name, lang)} fill sizes="96px" className="object-cover" />
-                      ) : c.imageUrl ? (
-                        <Image src={c.imageUrl} alt="" fill sizes="96px" className="object-cover opacity-60" />
-                      ) : (
-                        <div className="grid size-full place-items-center"><Logo className="w-3/4 text-ivory/50" /></div>
+              <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {c.items.map((it) => {
+                  const tags = it.tags.filter((g) => TAGS.includes(g));
+                  return (
+                    <li key={it.id} className="flex flex-col overflow-hidden border border-ivory/10 bg-ink-soft/60 transition-colors hover:border-champagne/40">
+                      {it.imageUrl && (
+                        <div className="relative aspect-[4/3] overflow-hidden bg-ink">
+                          <Image src={it.imageUrl} alt={tr(it.name, lang)} fill sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" className="object-cover transition-transform duration-700 hover:scale-105" />
+                          {it.priceCents != null && (
+                            <span className="absolute top-3 right-3 bg-champagne px-3 py-1.5 text-sm font-medium tabular-nums text-ink">{euro(it.priceCents, lang)}</span>
+                          )}
+                          {tags.length > 0 && (
+                            <span className="absolute bottom-3 left-3 flex gap-1.5">
+                              {tags.map((g) => <span key={g} className="border border-champagne/60 bg-ink/70 px-2 py-1 text-[0.58rem] tracking-[0.22em] text-champagne uppercase backdrop-blur-sm">{t(`tag_${g}`)}</span>)}
+                            </span>
+                          )}
+                        </div>
                       )}
-                    </div>
-                    <div className="flex min-w-0 flex-1 flex-col">
-                      <div className="flex items-start justify-between gap-3">
-                        <h3 className="font-display text-[1.35rem] leading-tight">{tr(it.name, lang)}</h3>
-                        <span className="shrink-0 pt-1 text-[0.95rem] tabular-nums text-champagne">{euro(it.priceCents, lang)}</span>
+                      <div className="flex flex-1 flex-col p-5">
+                        <div className="flex items-start justify-between gap-3">
+                          <h3 className="font-display text-[1.7rem] leading-tight">{tr(it.name, lang)}</h3>
+                          {!it.imageUrl && it.priceCents != null && <span className="shrink-0 pt-1.5 tabular-nums text-champagne">{euro(it.priceCents, lang)}</span>}
+                        </div>
+                        {!it.imageUrl && tags.length > 0 && (
+                          <p className="mt-2 flex gap-1.5">{tags.map((g) => <span key={g} className="border border-champagne/50 px-2 py-0.5 text-[0.58rem] tracking-[0.22em] text-champagne uppercase">{t(`tag_${g}`)}</span>)}</p>
+                        )}
+                        {it.subtitle && <p className="mt-2 text-[0.66rem] tracking-[0.25em] text-ivory/85 uppercase">{tr(it.subtitle, lang)}</p>}
+                        {it.description && <p className="mt-3 text-sm leading-relaxed text-ivory/65">{tr(it.description, lang)}</p>}
+                        {it.ingredients && (
+                          <div className="mt-4 border border-ivory/12 p-3.5">
+                            <p className="text-[0.58rem] tracking-[0.3em] text-champagne uppercase">{t("ingredients")}</p>
+                            <p className="mt-1.5 text-sm leading-relaxed text-ivory/80">{tr(it.ingredients, lang)}</p>
+                          </div>
+                        )}
                       </div>
-                      {it.description && <p className="mt-1 text-sm leading-snug text-ivory/60">{tr(it.description, lang)}</p>}
-                      {it.tags.some((g) => TAGS.includes(g)) && (
-                        <p className="mt-auto flex flex-wrap gap-1.5 pt-2">
-                          {it.tags.filter((g) => TAGS.includes(g)).map((g) => (
-                            <span key={g} className="border border-champagne/40 px-1.5 py-0.5 text-[0.55rem] tracking-[0.2em] text-champagne uppercase">{t(`tag_${g}`)}</span>
-                          ))}
-                        </p>
-                      )}
-                    </div>
-                  </li>
-                ))}
+                    </li>
+                  );
+                })}
               </ul>
               {showExtras && (
                 <div className="mx-auto mt-10 max-w-xl border border-ivory/10 px-6 py-6 text-center">

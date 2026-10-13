@@ -301,7 +301,12 @@ model MenuItem {
   category     MenuCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   name         Json
   description  Json?
-  priceCents   Int
+  /// Prix en centimes (vide = prix non communiqué, rien n'est affiché)
+  priceCents   Int?
+  /// Ligne courte sous le nom, ex. « Disponible avec tous nos goûts. »
+  subtitle     Json?
+  /// Liste des ingrédients (texte)
+  ingredients  Json?
   imageUrl     String?
   /// ex. ["signature", "new", "premium", "vegan"]
   tags         String[]     @default([])

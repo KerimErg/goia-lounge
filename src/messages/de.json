@@ -109,11 +109,9 @@
     "eyebrow": "Die Karte",
     "title": "Unsere Karte",
     "shisha_t": "Shishas",
-    "shisha": "Unsere Shisha-Auswahl.",
-    "drinks_t": "Getränke",
-    "drinks": "Kalte und warme Getränke.",
-    "sweets_t": "Desserts",
-    "sweets": "Süßes zum Teilen.",
+    "shisha": "Classique · Quasar",
+    "drinks_t": "Cocktails",
+    "drinks": "Mojitos · Tiki Mangue · Pornstar Martini",
     "cta": "Ganze Karte ansehen"
   },
   "flow": {
@@ -175,7 +173,10 @@
     "note": "Preise in Euro inkl. MwSt. Shishas nur für Volljährige.",
     "book": "Tisch reservieren",
     "empty": "Die vollständige Karte ist bald hier verfügbar. Bis dahin findest du sie auf Instagram.",
-    "items": "Artikel"
+    "items": "Artikel",
+    "ingredients": "Zutaten",
+    "tag_bestseller": "Bestseller",
+    "tag_classique": "Klassisch"
   },
   "cancelPage": {
     "title": "Reservierung stornieren",

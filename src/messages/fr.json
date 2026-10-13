@@ -109,11 +109,9 @@
     "eyebrow": "La carte",
     "title": "Notre carte",
     "shisha_t": "Chichas",
-    "shisha": "Notre sélection de chichas.",
-    "drinks_t": "Boissons",
-    "drinks": "Boissons fraîches et chaudes.",
-    "sweets_t": "Desserts",
-    "sweets": "Douceurs à partager.",
+    "shisha": "Classique · Quasar",
+    "drinks_t": "Cocktails",
+    "drinks": "Mojitos · Tiki Mangue · Pornstar Martini",
     "cta": "Voir toute la carte"
   },
   "flow": {
@@ -175,7 +173,10 @@
     "note": "Prix en euros, TVA incluse. Chichas réservées aux personnes majeures.",
     "book": "Réserver une table",
     "empty": "La carte complète arrive très bientôt sur le site. En attendant, retrouvez-la sur Instagram.",
-    "items": "articles"
+    "items": "articles",
+    "ingredients": "Ingrédients",
+    "tag_bestseller": "Best seller",
+    "tag_classique": "Classique"
   },
   "cancelPage": {
     "title": "Annuler ma réservation",

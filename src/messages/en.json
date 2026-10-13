@@ -109,11 +109,9 @@
     "eyebrow": "The menu",
     "title": "Our menu",
     "shisha_t": "Shishas",
-    "shisha": "Our shisha selection.",
-    "drinks_t": "Drinks",
-    "drinks": "Cold and hot drinks.",
-    "sweets_t": "Desserts",
-    "sweets": "Sweets to share.",
+    "shisha": "Classique · Quasar",
+    "drinks_t": "Cocktails",
+    "drinks": "Mojitos · Tiki Mangue · Pornstar Martini",
     "cta": "See the full menu"
   },
   "flow": {
@@ -175,7 +173,10 @@
     "note": "Prices in euros, VAT included. Shishas for adults only.",
     "book": "Book a table",
     "empty": "The full menu is coming to the site very soon. Meanwhile, find it on Instagram.",
-    "items": "items"
+    "items": "items",
+    "ingredients": "Ingredients",
+    "tag_bestseller": "Best seller",
+    "tag_classique": "Classic"
   },
   "cancelPage": {
     "title": "Cancel my booking",
