@@ -45,7 +45,7 @@ export async function VenueInfo() {
           </div>
         </div>
         <div className="lg:col-span-5">
-          <VenueMap lat={s.latitude} lng={s.longitude} label={`${s.street}, ${s.postalCode} ${s.city}`} consentText={info("mapConsent")} loadText={info("mapLoad")} />
+          <VenueMap lat={s.latitude} lng={s.longitude} label={`${s.street}, ${s.postalCode} ${s.city}`} directionsText={info("directions")} />
         </div>
       </div>
   );

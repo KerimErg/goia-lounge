@@ -75,9 +75,7 @@
     "tram": "Tram D, “Kehl Bahnhof” stop, a short walk away.",
     "parking": "Public car parks around Kehl station.",
     "contact": "Contact",
-    "directions": "Directions",
-    "mapConsent": "The map is provided by OpenStreetMap. Displaying it sends your IP address to this service.",
-    "mapLoad": "Show map"
+    "directions": "Directions"
   },
   "footer": {
     "tagline": "Huqqa lounge in Kehl, just across from Strasbourg.",
@@ -111,7 +109,7 @@
     "eyebrow": "The menu",
     "title": "Our menu",
     "shisha_t": "Shishas",
-    "shisha": "Classics and house creations.",
+    "shisha": "Our shisha selection.",
     "drinks_t": "Drinks",
     "drinks": "Cold and hot drinks.",
     "sweets_t": "Desserts",
@@ -176,7 +174,7 @@
     "tag_premium": "Premium",
     "note": "Prices in euros, VAT included. Shishas for adults only.",
     "book": "Book a table",
-    "empty": "The menu is coming soon.",
+    "empty": "The full menu is coming to the site very soon. Meanwhile, find it on Instagram.",
     "items": "items"
   },
   "cancelPage": {
@@ -192,12 +190,5 @@
   },
   "contactPage": {
     "lead": "A question, or a group of more than 8? Message us on Instagram, we reply quickly."
-  },
-  "consent": {
-    "title": "Privacy",
-    "text": "This site uses no advertising or analytics cookies. Only the access map (OpenStreetMap) is an external service: if you accept it, your IP address is sent to that service. <link>Learn more</link>",
-    "accept": "Accept the map",
-    "decline": "Decline",
-    "settings": "Privacy settings"
   }
 }

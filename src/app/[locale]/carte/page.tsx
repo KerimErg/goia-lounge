@@ -3,6 +3,8 @@ import Image from "next/image";
 import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "@/components/brand/logo";
+import { InstagramIcon } from "@/components/brand/icons";
+import { contactLinks, getVenue } from "@/lib/venue";
 import { Ornament } from "@/components/ornament";
 import { Button } from "@/components/ui/button";
 import { prisma } from "@/lib/prisma";
@@ -38,6 +40,7 @@ export default async function MenuPage({ params }: { params: Promise<{ locale: s
     prisma.menuExtra.findMany({ where: { active: true }, orderBy: { order: "asc" } }),
   ]);
   const cats = categories.filter((c) => c.items.length);
+  const { instagram } = contactLinks((await getVenue()).settings);
 
   return (
     <div className="bg-grain bg-ink text-ivory">
@@ -46,7 +49,14 @@ export default async function MenuPage({ params }: { params: Promise<{ locale: s
         <h1 className="mt-6 text-[clamp(3.2rem,9vw,6.4rem)] leading-none">{t("title")}</h1>
       </header>
 
-      {cats.length === 0 && <p className="py-24 text-center text-ivory/70">{t("empty")}</p>}
+      {cats.length === 0 && (
+        <div className="px-5 pb-24 text-center">
+          <p className="mx-auto max-w-md text-ivory/75">{t("empty")}</p>
+          {instagram && (
+            <Button asChild size="lux" variant="light" className="mt-8"><a href={instagram} target="_blank" rel="noopener"><InstagramIcon className="size-4" />@goia.kehl</a></Button>
+          )}
+        </div>
+      )}
 
       {/* Catégories en photo */}
       <div className="container-page max-w-6xl">
@@ -134,10 +144,10 @@ export default async function MenuPage({ params }: { params: Promise<{ locale: s
           );
         })}
 
-        <div className="mt-24 text-center">
+        {cats.length > 0 && <div className="mt-24 text-center">
           <p className="text-xs text-ivory/50">{t("note")}</p>
           <Button asChild size="lux" variant="light" className="mt-8"><Link href="/reservation">{t("book")}</Link></Button>
-        </div>
+        </div>}
       </div>
     </div>
   );

@@ -75,9 +75,7 @@
     "tram": "Tram D, arrêt « Kehl Bahnhof », à quelques pas.",
     "parking": "Parkings publics autour de la gare de Kehl.",
     "contact": "Contact",
-    "directions": "Itinéraire",
-    "mapConsent": "La carte est fournie par OpenStreetMap. En l'affichant, votre adresse IP est transmise à ce service.",
-    "mapLoad": "Afficher la carte"
+    "directions": "Itinéraire"
   },
   "footer": {
     "tagline": "Huqqa lounge à Kehl, à deux pas de Strasbourg.",
@@ -111,7 +109,7 @@
     "eyebrow": "La carte",
     "title": "Notre carte",
     "shisha_t": "Chichas",
-    "shisha": "Classiques et créations maison.",
+    "shisha": "Notre sélection de chichas.",
     "drinks_t": "Boissons",
     "drinks": "Boissons fraîches et chaudes.",
     "sweets_t": "Desserts",
@@ -176,7 +174,7 @@
     "tag_premium": "Premium",
     "note": "Prix en euros, TVA incluse. Chichas réservées aux personnes majeures.",
     "book": "Réserver une table",
-    "empty": "La carte arrive bientôt.",
+    "empty": "La carte complète arrive très bientôt sur le site. En attendant, retrouvez-la sur Instagram.",
     "items": "articles"
   },
   "cancelPage": {
@@ -192,12 +190,5 @@
   },
   "contactPage": {
     "lead": "Une question, un groupe de plus de 8 personnes ? Écrivez-nous sur Instagram, nous répondons rapidement."
-  },
-  "consent": {
-    "title": "Confidentialité",
-    "text": "Ce site n'utilise aucun cookie publicitaire ni de mesure d'audience. Seule la carte du plan d'accès (OpenStreetMap) est un service externe : si vous l'acceptez, votre adresse IP est transmise à ce service. <link>En savoir plus</link>",
-    "accept": "Accepter la carte",
-    "decline": "Refuser",
-    "settings": "Paramètres de confidentialité"
   }
 }

@@ -64,94 +64,14 @@ const TABLES: T[] = [
 ];
 
 /* ---------- Carte : 25 chichas, 20 boissons (FR / DE / EN) ---------- */
-type Item = { name: L; desc?: L; price: number; tags?: string[]; preorderable?: boolean };
+type Item = { name: L; desc?: L; price: number; tags?: string[]; preorderable?: boolean; image?: string };
 type Cat = { slug: string; section: MenuSection; name: L; description?: L; items: Item[] };
 
-const MENU: Cat[] = [
-  { slug: "classiques", section: "SHISHA", name: l("Classiques", "Klassiker", "Classics"), items: [
-    { name: l("Double Pomme", "Doppelapfel", "Double Apple"), desc: l("L'incontournable, anisé et doux", "Der Klassiker, mild mit Anisnote", "The classic, smooth with a hint of anise"), price: 1700, tags: ["popular"], preorderable: true },
-    { name: l("Raisin", "Traube", "Grape"), price: 1700, preorderable: true },
-    { name: l("Pastèque", "Wassermelone", "Watermelon"), price: 1700, preorderable: true },
-    { name: l("Pêche", "Pfirsich", "Peach"), price: 1700, preorderable: true },
-    { name: l("Citron", "Zitrone", "Lemon"), price: 1700, preorderable: true },
-  ] },
-  { slug: "fruitees", section: "SHISHA", name: l("Fruitées", "Fruchtig", "Fruity"), items: [
-    { name: l("Mangue Passion", "Mango Maracuja", "Mango Passion"), desc: l("Mangue mûre, fruit de la passion", "Reife Mango, Maracuja", "Ripe mango, passion fruit"), price: 1800, preorderable: true },
-    { name: l("Fruits rouges", "Rote Beeren", "Red berries"), price: 1800, preorderable: true },
-    { name: l("Ananas Coco", "Ananas Kokos", "Pineapple Coconut"), price: 1800, preorderable: true },
-    { name: l("Kiwi Fraise", "Kiwi Erdbeere", "Kiwi Strawberry"), price: 1800, preorderable: true },
-    { name: l("Melon blanc", "Honigmelone", "Honeydew melon"), price: 1800, preorderable: true },
-    { name: l("Litchi Rose", "Litschi Rose", "Lychee Rose"), desc: l("Floral et délicat", "Blumig und fein", "Floral and delicate"), price: 1800, tags: ["new"], preorderable: true },
-  ] },
-  { slug: "menthe", section: "SHISHA", name: l("Menthe & fraîcheur", "Minze & Frische", "Mint & fresh"), items: [
-    { name: l("Menthe glaciale", "Eisminze", "Ice mint"), desc: l("Fraîcheur intense", "Intensive Frische", "Intense freshness"), price: 1700, preorderable: true },
-    { name: l("Raisin Menthe", "Traube Minze", "Grape Mint"), price: 1700, tags: ["popular"], preorderable: true },
-    { name: l("Citron Menthe", "Zitrone Minze", "Lemon Mint"), price: 1700, preorderable: true },
-    { name: l("Pastèque Menthe", "Wassermelone Minze", "Watermelon Mint"), price: 1700, preorderable: true },
-  ] },
-  { slug: "signatures", section: "SHISHA", name: l("Signatures GOIA", "GOIA Signatures", "GOIA signatures"),
-    description: l("Nos créations maison, servies sur tête premium.", "Unsere Hauskreationen auf Premium-Kopf.", "Our house creations, served on a premium bowl."), items: [
-    { name: l("GOIA Gold", "GOIA Gold", "GOIA Gold"), desc: l("Mangue, vanille, menthe glaciale", "Mango, Vanille, Eisminze", "Mango, vanilla, ice mint"), price: 2300, tags: ["signature"], preorderable: true },
-    { name: l("Nuit de Kehl", "Kehler Nacht", "Kehl Night"), desc: l("Fruits rouges, citron vert, menthe", "Rote Beeren, Limette, Minze", "Red berries, lime, mint"), price: 2300, tags: ["signature"], preorderable: true },
-    { name: l("Rhin doré", "Goldener Rhein", "Golden Rhine"), desc: l("Pêche blanche, thé glacé, fleur d'oranger", "Weißer Pfirsich, Eistee, Orangenblüte", "White peach, iced tea, orange blossom"), price: 2300, tags: ["signature"], preorderable: true },
-    { name: l("Velours bordeaux", "Bordeaux-Samt", "Burgundy velvet"), desc: l("Cerise noire, cassis, pointe de cannelle", "Schwarzkirsche, Cassis, Hauch Zimt", "Black cherry, blackcurrant, a touch of cinnamon"), price: 2300, tags: ["signature", "new"], preorderable: true },
-    { name: l("Émeraude", "Smaragd", "Emerald"), desc: l("Pomme verte, kiwi, menthe poivrée", "Grüner Apfel, Kiwi, Pfefferminze", "Green apple, kiwi, peppermint"), price: 2300, tags: ["signature"], preorderable: true },
-  ] },
-  { slug: "premium", section: "SHISHA", name: l("Premium", "Premium", "Premium"),
-    description: l("Tabacs haut de gamme, préparation soignée.", "Hochwertige Tabake, sorgfältig zubereitet.", "High-end tobaccos, carefully prepared."), items: [
-    { name: l("Tête fruit ananas", "Ananaskopf", "Pineapple bowl"), desc: l("Servie dans un ananas frais, parfum au choix", "Im frischen Ananaskopf, Sorte nach Wahl", "Served in a fresh pineapple, flavour of your choice"), price: 3200, tags: ["premium"], preorderable: true },
-    { name: l("Tête fruit melon", "Melonenkopf", "Melon bowl"), desc: l("Servie dans un melon (selon saison)", "Im Melonenkopf (saisonal)", "Served in a melon (seasonal)"), price: 3200, tags: ["premium"], preorderable: true },
-    { name: l("Blend du chef", "Blend des Hauses", "Head shisha master's blend"), desc: l("Mélange préparé à la table selon vos goûts", "Am Tisch nach deinem Geschmack gemischt", "Mixed at your table to your taste"), price: 2600, tags: ["premium"], preorderable: true },
-    { name: l("Dark leaf", "Dark Leaf", "Dark leaf"), desc: l("Tabac foncé, pour amateurs", "Dunkler Tabak, für Kenner", "Dark-leaf tobacco, for connoisseurs"), price: 2600, tags: ["premium"], preorderable: true },
-    { name: l("Ice Blueberry", "Ice Blueberry", "Ice Blueberry"), price: 2600, tags: ["premium"], preorderable: true },
-  ] },
+// Carte officielle du GOIA : à remplir uniquement avec les produits, prix et photos réels
+// (aucun produit inventé). Format : { slug, section, name: l(fr, de, en), items: [{ name, desc?, price (centimes), image? }] }
+const MENU: Cat[] = [];
 
-  // Boissons
-  { slug: "softs", section: "DRINK", name: l("Softs", "Softdrinks", "Soft drinks"), items: [
-    { name: l("Cola (33 cl)", "Cola (0,33 l)", "Cola (33 cl)"), price: 400 },
-    { name: l("Cola zéro (33 cl)", "Cola Zero (0,33 l)", "Zero cola (33 cl)"), price: 400 },
-    { name: l("Ginger beer", "Ginger Beer", "Ginger beer"), price: 450 },
-    { name: l("Eau plate (50 cl)", "Stilles Wasser (0,5 l)", "Still water (50 cl)"), price: 350 },
-    { name: l("Eau pétillante (50 cl)", "Sprudelwasser (0,5 l)", "Sparkling water (50 cl)"), price: 350 },
-  ] },
-  { slug: "mocktails", section: "DRINK", name: l("Mocktails", "Mocktails", "Mocktails"),
-    description: l("Cocktails sans alcool préparés au bar.", "Alkoholfreie Cocktails von der Bar.", "Alcohol-free cocktails made at the bar."), items: [
-    { name: l("Virgin Mojito", "Virgin Mojito", "Virgin Mojito"), desc: l("Citron vert, menthe fraîche, sucre de canne", "Limette, frische Minze, Rohrzucker", "Lime, fresh mint, cane sugar"), price: 850, tags: ["popular"] },
-    { name: l("Passion Sunset", "Passion Sunset", "Passion Sunset"), desc: l("Fruit de la passion, orange, grenadine", "Maracuja, Orange, Grenadine", "Passion fruit, orange, grenadine"), price: 850 },
-    { name: l("GOIA Breeze", "GOIA Breeze", "GOIA Breeze"), desc: l("Mangue, ananas, coco, citron vert", "Mango, Ananas, Kokos, Limette", "Mango, pineapple, coconut, lime"), price: 900, tags: ["signature"] },
-    { name: l("Berry Fizz", "Berry Fizz", "Berry Fizz"), desc: l("Fruits rouges, basilic, tonic", "Rote Beeren, Basilikum, Tonic", "Red berries, basil, tonic"), price: 850 },
-    { name: l("Pink Lemonade", "Pink Lemonade", "Pink Lemonade"), desc: l("Citron, framboise, eau pétillante", "Zitrone, Himbeere, Sprudel", "Lemon, raspberry, sparkling water"), price: 750 },
-  ] },
-  { slug: "thes", section: "DRINK", name: l("Thés", "Tee", "Tea"), items: [
-    { name: l("Thé à la menthe (verre)", "Minztee (Glas)", "Mint tea (glass)"), desc: l("Menthe fraîche, à la marocaine", "Frische Minze, marokkanisch", "Fresh mint, Moroccan style"), price: 400 },
-    { name: l("Théière menthe (2–3 pers.)", "Kanne Minztee (2–3 Pers.)", "Mint tea pot (2–3 people)"), price: 1000, tags: ["popular"] },
-    { name: l("Thé noir", "Schwarzer Tee", "Black tea"), price: 350 },
-    { name: l("Thé vert jasmin", "Grüner Jasmintee", "Jasmine green tea"), price: 350 },
-  ] },
-  { slug: "cafes", section: "DRINK", name: l("Cafés", "Kaffee", "Coffee"), items: [
-    { name: l("Espresso", "Espresso", "Espresso"), price: 280 },
-    { name: l("Cappuccino", "Cappuccino", "Cappuccino"), price: 400 },
-    { name: l("Café turc", "Türkischer Mokka", "Turkish coffee"), price: 380 },
-  ] },
-  { slug: "jus", section: "DRINK", name: l("Jus frais", "Frische Säfte", "Fresh juices"), items: [
-    { name: l("Orange pressée", "Frisch gepresster O-Saft", "Fresh orange juice"), price: 650 },
-    { name: l("Citronnade gingembre", "Ingwer-Zitronade", "Ginger lemonade"), price: 600 },
-    { name: l("Pomme Kiwi", "Apfel Kiwi", "Apple Kiwi"), price: 650 },
-  ] },
-  // Douceurs
-  { slug: "desserts", section: "FOOD", name: l("Douceurs", "Süßes", "Sweets"), items: [
-    { name: l("Cheesecake spéculoos", "Spekulatius-Cheesecake", "Speculoos cheesecake"), desc: l("Fait maison, base biscuitée croustillante", "Hausgemacht, knuspriger Keksboden", "Homemade, crunchy biscuit base"), price: 750, tags: ["signature"] },
-    { name: l("Cheesecake fruits rouges", "Beeren-Cheesecake", "Red berry cheesecake"), price: 750 },
-    { name: l("Assiette de fruits frais", "Frischer Obstteller", "Fresh fruit platter"), desc: l("À partager, selon la saison", "Zum Teilen, je nach Saison", "To share, seasonal"), price: 1400 },
-  ] },
-];
-
-const EXTRAS: { section: MenuSection; name: L; price: number }[] = [
-  { section: "SHISHA", name: l("Tête fruit (ananas ou melon)", "Fruchtkopf (Ananas oder Melone)", "Fruit bowl (pineapple or melon)"), price: 1000 },
-  { section: "SHISHA", name: l("Tête premium", "Premium-Kopf", "Premium bowl"), price: 400 },
-  { section: "SHISHA", name: l("Changement de parfum", "Sortenwechsel", "Flavour change"), price: 600 },
-  { section: "SHISHA", name: l("Embout personnel", "Eigenes Mundstück", "Personal mouthpiece"), price: 100 },
-];
+const EXTRAS: { section: MenuSection; name: L; price: number }[] = [];
 
 /* ---------- Clients de démonstration (adresses en .example) ---------- */
 const FIRST = ["Léa", "Thomas", "Sarah", "Yanis", "Jonas", "Inès", "Mehdi", "Laura", "Lukas", "Amina", "Hugo", "Sofia", "Nils", "Camille", "Emre", "Julia", "Rayan", "Clara", "Noah", "Lina", "Adam", "Mia"];
@@ -210,7 +130,7 @@ async function main() {
         slug: c.slug, section: c.section, name: c.name, description: c.description, order: ci,
         imageUrl: { SHISHA: "/images/goia/chicha-fumee-ambiance.jpg", DRINK: "/images/goia/table-desserts-cocktails.jpg", FOOD: "/images/goia/cheesecake-speculoos.jpg" }[c.section],
         items: { create: c.items.map((it, ii) => ({ name: it.name, description: it.desc, priceCents: it.price, tags: it.tags ?? [], preorderable: !!it.preorderable, order: ii,
-          imageUrl: it.name.fr.startsWith("Cheesecake spéculoos") ? "/images/goia/cheesecake-speculoos.jpg" : null })) },
+          imageUrl: it.image ?? null })) },
       },
     });
     itemCount += c.items.length;
@@ -222,7 +142,7 @@ async function main() {
   await prisma.galleryImage.createMany({
     data: [
       g("chicha-fumee-ambiance.jpg", l("Chicha et volutes de fumée dans la lumière tamisée du GOIA", "Shisha und Rauchschwaden im gedämpften Licht des GOIA", "Shisha and swirling smoke in GOIA's soft light"), 0),
-      g("table-desserts-cocktails.jpg", l("Table dressée avec desserts et cocktails sans alcool", "Gedeckter Tisch mit Desserts und alkoholfreien Cocktails", "Table set with desserts and alcohol-free cocktails"), 1),
+      g("table-desserts-cocktails.jpg", l("Table dressée avec desserts et boissons", "Gedeckter Tisch mit Desserts und Getränken", "Table set with desserts and drinks"), 1),
       g("cheesecake-speculoos.jpg", l("Cheesecake spéculoos maison", "Hausgemachter Spekulatius-Cheesecake", "Homemade speculoos cheesecake"), 2, 387, 516),
       g("chicha-cocktail-dessert.jpg", l("Chicha, cocktail et cheesecake sur table en marbre", "Shisha, Cocktail und Cheesecake auf Marmortisch", "Shisha, cocktail and cheesecake on a marble table"), 3),
     ],
@@ -300,7 +220,7 @@ async function main() {
         status, source: pick(["WEBSITE", "WEBSITE", "WEBSITE", "PHONE"] as const),
         customerId: customer.id, startAt, endAt, partySize: party, preferredZoneId: table.zoneId,
         occasion, specialRequest: occasion === "BIRTHDAY" ? "Bougie sur le dessert si possible 🎂" : null,
-        preorder: rand() < 0.3 ? [{ menuItemId: pick(preorderable).id, quantity: 1 }] : undefined,
+        preorder: preorderable.length && rand() < 0.3 ? [{ menuItemId: pick(preorderable).id, quantity: 1 }] : undefined,
         locale: customer.locale, adultConfirmed: true, privacyAcceptedAt: new Date(),
         cancelledBy: status === "CANCELLED" ? "client" : null,
         tables: { create: [{ tableId: table.id, startAt, endAt }] },

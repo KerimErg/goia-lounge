@@ -75,9 +75,7 @@
     "tram": "Tram D, Haltestelle „Kehl Bahnhof“, nur wenige Schritte entfernt.",
     "parking": "Öffentliche Parkplätze rund um den Bahnhof Kehl.",
     "contact": "Kontakt",
-    "directions": "Route planen",
-    "mapConsent": "Die Karte wird von OpenStreetMap bereitgestellt. Beim Anzeigen wird deine IP-Adresse an diesen Dienst übermittelt.",
-    "mapLoad": "Karte anzeigen"
+    "directions": "Route planen"
   },
   "footer": {
     "tagline": "Huqqa Lounge in Kehl, direkt an der Grenze zu Straßburg.",
@@ -111,7 +109,7 @@
     "eyebrow": "Die Karte",
     "title": "Unsere Karte",
     "shisha_t": "Shishas",
-    "shisha": "Klassiker und Hauskreationen.",
+    "shisha": "Unsere Shisha-Auswahl.",
     "drinks_t": "Getränke",
     "drinks": "Kalte und warme Getränke.",
     "sweets_t": "Desserts",
@@ -176,7 +174,7 @@
     "tag_premium": "Premium",
     "note": "Preise in Euro inkl. MwSt. Shishas nur für Volljährige.",
     "book": "Tisch reservieren",
-    "empty": "Die Karte folgt in Kürze.",
+    "empty": "Die vollständige Karte ist bald hier verfügbar. Bis dahin findest du sie auf Instagram.",
     "items": "Artikel"
   },
   "cancelPage": {
@@ -192,12 +190,5 @@
   },
   "contactPage": {
     "lead": "Eine Frage oder eine Gruppe mit mehr als 8 Personen? Schreib uns auf Instagram, wir antworten schnell."
-  },
-  "consent": {
-    "title": "Datenschutz",
-    "text": "Diese Website verwendet keine Werbe- oder Analyse-Cookies. Nur die Anfahrtskarte (OpenStreetMap) ist ein externer Dienst: Wenn du zustimmst, wird deine IP-Adresse an diesen Dienst übermittelt. <link>Mehr erfahren</link>",
-    "accept": "Karte akzeptieren",
-    "decline": "Ablehnen",
-    "settings": "Datenschutz-Einstellungen"
   }
 }

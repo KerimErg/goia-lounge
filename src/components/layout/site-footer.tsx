@@ -2,14 +2,12 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { InstagramIcon, WhatsAppIcon } from "@/components/brand/icons";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "@/components/brand/logo";
-import { ConsentSettingsLink } from "@/components/cookie-banner";
 import { contactLinks, dayName, getVenue, groupHours } from "@/lib/venue";
 
 export async function SiteFooter() {
   const t = await getTranslations("footer");
   const nav = await getTranslations("nav");
   const info = await getTranslations("info");
-  const consent = await getTranslations("consent");
   const locale = await getLocale();
   const { settings: s, hours } = await getVenue();
   const links = contactLinks(s);
@@ -61,7 +59,6 @@ export async function SiteFooter() {
           <p className="flex flex-wrap gap-x-5 gap-y-2">
             <Link href="/impressum" className="link-underline">{t("impressum")}</Link>
             <Link href="/datenschutz" className="link-underline">{t("privacy")}</Link>
-            <ConsentSettingsLink label={consent("settings")} />
             <span>© {new Date().getFullYear()} GOIA Lounge</span>
           </p>
         </div>
