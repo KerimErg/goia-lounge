@@ -34,7 +34,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   setRequestLocale(locale);
   // Seuls les textes utilisés par les composants client partent dans le navigateur.
   const all = await getMessages();
-  const messages = { nav: all.nav, quick: all.quick };
+  const messages = { nav: all.nav, quick: all.quick, flow: all.flow };
   return (
     <html lang={locale} className={fontVariables}>
       <body className="min-h-dvh bg-ivory">

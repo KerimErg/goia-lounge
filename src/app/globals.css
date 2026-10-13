@@ -20,6 +20,7 @@
   --marble-deep: #0a2829;
   --amber: #c98a45;
   --ember: #b4532a;
+  --champagne: #c8a97e;
 
   --background: var(--ivory);
   --foreground: var(--ink);
@@ -74,6 +75,7 @@
   --color-marble-deep: var(--marble-deep);
   --color-amber: var(--amber);
   --color-ember: var(--ember);
+  --color-champagne: var(--champagne);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -195,4 +197,17 @@
 }
 @utility enter-mask {
   animation: mask-up 1.5s var(--ease-lux) both;
+}
+
+/* Champs de formulaire élégants : libellé en petites capitales, ligne fine */
+@utility field-label {
+  @apply mb-2 block font-sans text-[0.62rem] font-medium tracking-[0.3em] uppercase;
+  color: var(--taupe-deep);
+}
+@utility field-input {
+  @apply h-12 w-full rounded-none border-0 border-b bg-transparent px-0 text-base outline-none transition-colors;
+  border-color: rgb(27 21 17 / 0.25);
+  color: var(--ink);
+  &:focus { border-color: var(--ink); }
+  &:disabled { opacity: 0.45; }
 }

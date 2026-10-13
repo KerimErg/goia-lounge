@@ -4,6 +4,7 @@ import { InstagramIcon } from "@/components/brand/icons";
 import { Logo } from "@/components/brand/logo";
 import { MaskReveal } from "@/components/motion";
 import { Reveal } from "@/components/reveal";
+import { Ornament } from "@/components/ornament";
 import { prisma } from "@/lib/prisma";
 import { tr } from "@/lib/localized";
 
@@ -17,8 +18,9 @@ export async function Gallery({ instagramUrl }: { instagramUrl: string | null })
     <section className="bg-ink py-24 text-ivory sm:py-32" aria-labelledby="gallery-title">
       <div className="container-page">
         <Reveal className="flex flex-col items-center text-center">
-          <p className="eyebrow text-taupe-light">{t("eyebrow")}</p>
+          <p className="eyebrow text-champagne">{t("eyebrow")}</p>
           <h2 id="gallery-title" className="mt-5 text-[clamp(2.6rem,5.5vw,4.4rem)] leading-none">{t("title")}</h2>
+          <Ornament className="mx-auto mt-6 text-champagne" />
         </Reveal>
         {/* Grille régulière, cases carrées : les photos restent nettes */}
         <div className="mx-auto mt-12 grid max-w-6xl grid-cols-2 gap-3 sm:mt-14 md:grid-cols-5 md:gap-4">

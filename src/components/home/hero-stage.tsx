@@ -8,10 +8,11 @@ import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { InstagramIcon } from "@/components/brand/icons";
 import { Logo } from "@/components/brand/logo";
+import { Ornament } from "@/components/ornament";
 import type { HeroVideo } from "@/content/media";
 import { SmokeVeil } from "./smoke-veil";
 
-type Text = { eyebrow: string; lead: string; book: string; explore: string; scroll: string; tonight: string; play: string; pause: string };
+type Text = { eyebrow: string; book: string; explore: string; scroll: string; tonight: string; play: string; pause: string };
 
 /** Vidéo plein écran (version portrait sur téléphone), lecture sans son, bouton pause. */
 function BackgroundVideo({ video, poster, labels }: { video: HeroVideo; poster: string; labels: { play: string; pause: string } }) {
@@ -80,6 +81,8 @@ export function HeroStage({ media, address, instagram, text }: {
       <SmokeVeil className="pointer-events-none absolute inset-0 z-0 size-full mix-blend-screen" density={media.video ? 0.3 : 0.6} />
 
       <h1 id="hero-title" className="sr-only">GOIA — Huqqa Lounge, Kehl</h1>
+      {/* Cadre fin, comme un faire-part : touche luxe discrète */}
+      <div aria-hidden className="pointer-events-none absolute inset-3 z-10 border border-champagne/25 sm:inset-5" />
 
       <motion.div style={{ y: contentY, opacity: contentOpacity }} className="container-page relative z-10 flex flex-1 flex-col items-center justify-center pt-20 text-center">
         {/* Logo : chaque lettre monte derrière un masque */}
@@ -90,9 +93,7 @@ export function HeroStage({ media, address, instagram, text }: {
         </div>
         <p style={{ animationDelay: "0.9s" }} className="enter-rise eyebrow mt-6 text-[clamp(0.62rem,1.4vw,0.85rem)] tracking-[0.7em] text-ivory/90">Huqqa — Lounge</p>
 
-        <p style={{ animationDelay: "1.1s" }} className="enter-rise mt-8 max-w-xl font-accent text-[1.45rem] leading-snug text-ivory/90 sm:text-[1.75rem]">
-          {text.lead}
-        </p>
+        <div style={{ animationDelay: "1.1s" }} className="enter-rise mt-8 text-champagne"><Ornament /></div>
         <div style={{ animationDelay: "1.3s" }} className="enter-rise mt-10 grid w-full max-w-sm gap-3 sm:flex sm:max-w-none sm:justify-center">
           <Button asChild size="lux" variant="light"><a href="#reserver">{text.book}</a></Button>
           <Button asChild size="lux" variant="outline" className="text-ivory backdrop-blur-sm"><Link href="/carte">{text.explore}</Link></Button>

@@ -4,6 +4,7 @@ import { Car, Mail, Phone, TramFront } from "lucide-react";
 import { InstagramIcon, WhatsAppIcon } from "@/components/brand/icons";
 import { Link } from "@/i18n/navigation";
 import { Reveal } from "@/components/reveal";
+import { Ornament } from "@/components/ornament";
 import { PHOTOS } from "@/content/media";
 import { prisma } from "@/lib/prisma";
 import { tr } from "@/lib/localized";
@@ -35,8 +36,9 @@ export async function Booking() {
         <Image src={PHOTOS.tableBlur} alt="" fill sizes="100vw" quality={70} className="-z-20 scale-110 object-cover" />
         <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_50%_40%,rgb(27_21_17/0.45),rgb(27_21_17/0.9)_80%)]" />
         <div className="container-page flex flex-col items-center text-center">
-          <Reveal><p className="eyebrow text-ivory/85">{t("eyebrow")}</p></Reveal>
+          <Reveal><p className="eyebrow text-champagne">{t("eyebrow")}</p></Reveal>
           <h2 id="booking-title" className="mt-5 text-[clamp(2.8rem,7vw,5.6rem)] leading-none">{t("title")}</h2>
+          <Ornament className="mx-auto mt-6 text-champagne" />
           <p className="mt-6 max-w-lg text-lg text-ivory/85">{t("lead")}</p>
           <Reveal delay={0.15} className="mt-12 w-full max-w-5xl text-left">
             <QuickBooking
@@ -65,6 +67,7 @@ export async function Booking() {
       <div className="container-page pb-20">
         {/* Infos pratiques */}
         <h2 className="pt-20 text-center text-[clamp(2.4rem,5vw,4rem)] leading-none">{info("title")}</h2>
+        <Ornament className="mx-auto mt-6 text-champagne" />
         <div id="infos" className="grid gap-12 pt-14 lg:grid-cols-12 lg:gap-10">
           <div className="grid gap-10 sm:grid-cols-2 lg:col-span-7">
             <div>

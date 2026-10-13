@@ -15,7 +15,6 @@ export async function Hero() {
       instagram={contactLinks(settings).instagram}
       text={{
         eyebrow: t("eyebrow"),
-        lead: t("lead"),
         book: t("book"),
         explore: t("explore"),
         scroll: t("scroll"),

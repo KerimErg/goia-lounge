@@ -17,15 +17,15 @@ export async function SiteFooter() {
     <footer className="border-t border-ivory/10 bg-ink text-ivory">
       <div className="container-page pt-16 pb-10">
         <Logo className="w-48 text-ivory sm:w-56" />
-        <p className="eyebrow mt-4 text-[0.62rem] tracking-[0.5em] text-taupe-light">Huqqa — Lounge</p>
+        <p className="eyebrow mt-4 text-[0.62rem] tracking-[0.5em] text-champagne">Huqqa — Lounge</p>
 
         <div className="mt-12 grid gap-10 border-t border-ivory/15 pt-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <h2 className="eyebrow text-[0.62rem] text-taupe-light">{info("address")}</h2>
+            <h2 className="eyebrow text-[0.62rem] text-champagne">{info("address")}</h2>
             <address className="mt-4 text-sm leading-relaxed not-italic">{s.venueName}<br />{s.street}<br />{s.postalCode} {s.city}</address>
           </div>
           <div>
-            <h2 className="eyebrow text-[0.62rem] text-taupe-light">{info("hours")}</h2>
+            <h2 className="eyebrow text-[0.62rem] text-champagne">{info("hours")}</h2>
             <dl className="mt-4 space-y-1.5 text-sm">
               {groupHours(hours).map((g) => (
                 <div key={g.days.join()} className="flex gap-4">
@@ -36,7 +36,7 @@ export async function SiteFooter() {
             </dl>
           </div>
           <div>
-            <h2 className="eyebrow text-[0.62rem] text-taupe-light">{info("contact")}</h2>
+            <h2 className="eyebrow text-[0.62rem] text-champagne">{info("contact")}</h2>
             <ul className="mt-4 space-y-2 text-sm">
               {links.instagram && <li><a href={links.instagram} target="_blank" rel="noopener" className="link-underline inline-flex items-center gap-2"><InstagramIcon className="size-4" />@goia.kehl</a></li>}
               {links.whatsapp && <li><a href={links.whatsapp} target="_blank" rel="noopener" className="link-underline inline-flex items-center gap-2"><WhatsAppIcon className="size-4" />WhatsApp</a></li>}
