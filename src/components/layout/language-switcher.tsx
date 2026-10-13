@@ -17,7 +17,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
     <div role="group" aria-label={t("language")} className={cn("flex items-center gap-1 text-[0.7rem] tracking-[0.2em]", className)}>
       {locales.map((l, i) => (
         <span key={l} className="flex items-center">
-          {i > 0 && <span aria-hidden className="mx-1 text-ivory/30">·</span>}
+          {i > 0 && <span aria-hidden className="mx-1 opacity-30">·</span>}
           <button
             type="button"
             lang={l}
@@ -25,7 +25,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
             onClick={() => router.replace(
               // @ts-expect-error -- les paramètres dynamiques de la page courante sont conservés
               { pathname, params }, { locale: l as Locale, scroll: false })}
-            className={cn("uppercase transition-colors hover:text-brass", l === locale ? "text-brass" : "text-ivory/70")}
+            className={cn("uppercase underline-offset-[6px] transition-opacity hover:opacity-100", l === locale ? "underline decoration-1" : "opacity-55")}
           >
             {l}
           </button>

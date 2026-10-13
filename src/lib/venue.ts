@@ -48,3 +48,31 @@ export function groupHours(hours: OpeningHoursRow[]) {
 /** Nom du jour dans la langue voulue (0 = dimanche). */
 export const dayName = (weekday: number, locale: string, style: "long" | "short" = "long") =>
   new Intl.DateTimeFormat(locale, { weekday: style, timeZone: "UTC" }).format(new Date(Date.UTC(2026, 0, 4 + weekday)));
+
+/**
+ * Coordonnées réellement renseignées ? Les valeurs provisoires du seed
+ * (« 0000 », @example.com) ne sont jamais affichées en lien cliquable.
+ */
+export function contactLinks(s: { phone: string; whatsapp: string; email: string; instagramUrl: string }) {
+  const real = (v: string) => !!v && !/0000|example\./i.test(v);
+  return {
+    phone: real(s.phone) ? s.phone : null,
+    whatsapp: real(s.whatsapp) ? `https://wa.me/${s.whatsapp.replace(/\D/g, "")}` : null,
+    email: real(s.email) ? s.email : null,
+    instagram: real(s.instagramUrl) ? s.instagramUrl : null,
+  };
+}
+
+/** Horaires d'un jour donné (0 = dimanche), ou null si fermé. */
+export function hoursFor(hours: OpeningHoursRow[], weekday: number) {
+  const h = hours.find((r) => r.weekday === weekday);
+  return !h || h.closed ? null : `${h.opensAt} – ${h.closesAt}`;
+}
+
+/** 48.5717 → « 48°34′N » (détail typographique du lieu). */
+export function formatCoord(value: number, pos: string, neg: string) {
+  const a = Math.abs(value);
+  const d = Math.floor(a);
+  const m = Math.round((a - d) * 60);
+  return `${d}°${String(m).padStart(2, "0")}′${value >= 0 ? pos : neg}`;
+}

@@ -1,11 +1,13 @@
-import { LOGO_PATH, LOGO_VIEWBOX } from "./logo-path";
 import { cn } from "@/lib/utils";
 
-/** Logo GOIA en vectoriel : prend la couleur du texte (currentColor), net à toutes les tailles. */
+// Le tracé (≈ 15 Ko) vit dans <LogoSymbol /> (posé une fois dans le layout) : ici, une simple référence.
+export const LOGO_VIEWBOX = "0 0 2078 686";
+const [, , vw, vh] = LOGO_VIEWBOX.split(" ").map(Number);
+
 export function Logo({ className, title = "GOIA" }: { className?: string; title?: string }) {
   return (
-    <svg viewBox={LOGO_VIEWBOX} className={cn("h-auto", className)} role="img" aria-label={title}>
-      <path d={LOGO_PATH} fill="currentColor" fillRule="evenodd" />
+    <svg viewBox={LOGO_VIEWBOX} className={cn("h-auto", className)} role="img" aria-label={title} style={{ aspectRatio: `${vw} / ${vh}` }}>
+      <use href="#goia-logo" />
     </svg>
   );
 }

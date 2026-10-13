@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Curseur discret (souris uniquement) : un anneau laiton qui suit le pointeur
+ * Curseur discret (souris uniquement) : un anneau clair en mode « différence » (lisible sur tous les fonds) qui suit le pointeur
  * et s'agrandit au survol des liens et boutons. Le curseur système reste visible.
  */
 export function Cursor() {
@@ -33,7 +33,7 @@ export function Cursor() {
     <div
       ref={ring}
       aria-hidden="true"
-      className="pointer-events-none fixed top-0 left-0 z-[100] hidden size-8 rounded-full border border-brass/70 opacity-0 transition-[width,height,opacity,background-color] duration-300 data-[hover=true]:size-14 data-[hover=true]:bg-brass/10 md:block"
+      className="pointer-events-none fixed top-0 left-0 z-[100] hidden size-8 rounded-full border border-white opacity-0 mix-blend-difference transition-[width,height,opacity,background-color] duration-300 data-[hover=true]:size-14 data-[hover=true]:bg-white md:block"
     />
   );
 }

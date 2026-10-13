@@ -43,11 +43,11 @@ export function QuickBooking({ hours, specials, rules, zones, maxParty }: {
     ? new Intl.DateTimeFormat(locale, { weekday: "short", day: "numeric", month: "long" }).format(dateOf(date))
     : t("pickDate");
 
-  const field = "flex h-14 w-full items-center gap-3 border-0 border-b border-ivory/15 bg-transparent px-1 text-left text-sm outline-none transition-colors hover:border-brass/60 focus-visible:border-brass md:border-b-0 md:border-r md:px-5";
+  const field = "flex h-16 w-full items-center gap-3 border-0 border-b border-ink/10 bg-transparent px-5 text-left text-sm outline-none transition-colors hover:bg-linen/60 focus-visible:bg-linen md:border-b-0 md:border-r";
 
   return (
     <form
-      className="grid overflow-hidden border border-ivory/12 bg-espresso/90 shadow-lift backdrop-blur-xl md:grid-cols-[1.3fr_1fr_0.9fr_1fr_auto]"
+      className="grid overflow-hidden bg-ivory text-ink shadow-lift md:grid-cols-[1.3fr_1fr_0.9fr_1fr_auto]"
       onSubmit={(e) => {
         e.preventDefault();
         const q = new URLSearchParams({ persons });
@@ -61,14 +61,14 @@ export function QuickBooking({ hours, specials, rules, zones, maxParty }: {
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <button type="button" className={field}>
-            <CalendarDays className="size-4 shrink-0 text-brass" aria-hidden />
+            <CalendarDays className="size-4 shrink-0 text-taupe-deep" aria-hidden />
             <span className="grid">
               <span className="eyebrow text-[0.6rem] text-muted-foreground">{t("date")}</span>
-              <span className={cn("first-letter:uppercase", !date && "text-ivory/60")}>{dateLabel}</span>
+              <span className={cn("first-letter:uppercase", !date && "text-ink/50")}>{dateLabel}</span>
             </span>
           </button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto border-ivory/12 bg-popover p-3" align="start">
+        <PopoverContent className="w-auto border-ink/10 bg-popover p-3" align="start">
           <Calendar
             mode="single"
             locale={DP_LOCALES[locale]}
@@ -92,7 +92,7 @@ export function QuickBooking({ hours, specials, rules, zones, maxParty }: {
 
       <Select value={time} onValueChange={setTime} disabled={!date || slots.length === 0}>
         <SelectTrigger className={cn(field, "rounded-none shadow-none [&>svg:last-child]:hidden")} aria-label={t("time")}>
-          <Clock className="size-4 shrink-0 text-brass" aria-hidden />
+          <Clock className="size-4 shrink-0 text-taupe-deep" aria-hidden />
           <span className="grid flex-1 text-left">
             <span className="eyebrow text-[0.6rem] text-muted-foreground">{t("time")}</span>
             <SelectValue placeholder={date && !slots.length ? t("closed") : "—"} />
@@ -105,7 +105,7 @@ export function QuickBooking({ hours, specials, rules, zones, maxParty }: {
 
       <Select value={persons} onValueChange={setPersons}>
         <SelectTrigger className={cn(field, "rounded-none shadow-none [&>svg:last-child]:hidden")} aria-label={t("persons")}>
-          <Users className="size-4 shrink-0 text-brass" aria-hidden />
+          <Users className="size-4 shrink-0 text-taupe-deep" aria-hidden />
           <span className="grid flex-1 text-left">
             <span className="eyebrow text-[0.6rem] text-muted-foreground">{t("persons")}</span>
             <SelectValue />
@@ -120,7 +120,7 @@ export function QuickBooking({ hours, specials, rules, zones, maxParty }: {
 
       <Select value={zone} onValueChange={setZone}>
         <SelectTrigger className={cn(field, "rounded-none shadow-none [&>svg:last-child]:hidden")} aria-label={t("zone")}>
-          <MapPin className="size-4 shrink-0 text-brass" aria-hidden />
+          <MapPin className="size-4 shrink-0 text-taupe-deep" aria-hidden />
           <span className="grid flex-1 text-left">
             <span className="eyebrow text-[0.6rem] text-muted-foreground">{t("zone")}</span>
             <SelectValue />
@@ -132,7 +132,7 @@ export function QuickBooking({ hours, specials, rules, zones, maxParty }: {
         </SelectContent>
       </Select>
 
-      <Button type="submit" size="lux" className="m-3 h-14 rounded-none md:m-0 md:h-auto md:px-8">
+      <Button type="submit" size="lux" className="m-3 h-14 md:m-0 md:h-auto md:px-8">
         {t("check")}
       </Button>
     </form>

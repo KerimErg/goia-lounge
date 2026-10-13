@@ -16,11 +16,15 @@
     "skip": "Aller au contenu"
   },
   "hero": {
-    "eyebrow": "Huqqa · Lounge · Kehl",
-    "tagline": "Chichas d'exception, mocktails et nuits feutrées, à deux pas de Strasbourg.",
+    "eyebrow": "Huqqa lounge · Kehl",
+    "lead": "Chicha, douceurs et verres colorés, le soir venu, de l'autre côté du Rhin.",
     "book": "Réserver une table",
-    "seeMenu": "Voir la carte",
-    "scroll": "Découvrir"
+    "explore": "Découvrir le lieu",
+    "today": "Ce soir",
+    "closedToday": "Fermé aujourd'hui",
+    "scroll": "Entrer",
+    "playVideo": "Lire la vidéo",
+    "pauseVideo": "Mettre la vidéo en pause"
   },
   "quick": {
     "title": "Réservez votre table",
@@ -35,31 +39,11 @@
     "personsN": "{n} pers.",
     "more": "Plus de {n} personnes ? Pensez à la <link>privatisation</link>."
   },
-  "experience": {
-    "eyebrow": "L'expérience GOIA",
-    "title": "Un lounge pensé pour prendre son temps",
-    "intro": "Lumière ambrée, marbre, velours et volutes : au GOIA, chaque détail invite à ralentir.",
-    "ambiance_t": "L'ambiance",
-    "ambiance": "Un décor intimiste, des lumières tamisées et des espaces pour se retrouver, à deux ou entre amis.",
-    "shisha_t": "Les chichas",
-    "shisha": "Têtes premium, tabacs sélectionnés et créations maison, préparées avec soin par nos chichamen.",
-    "service_t": "Le service",
-    "service": "Une équipe attentive, des changements de charbon réguliers et des desserts faits pour être partagés.",
-    "music_t": "La musique",
-    "music": "Deep house et sonorités orientales, et des soirées DJ le week-end."
-  },
-  "menuPreview": {
-    "eyebrow": "La carte",
-    "title": "Nos signatures",
-    "text": "Des créations maison aux classiques revisités, et des mocktails préparés minute.",
-    "shishas": "Chichas signature",
-    "drinks": "Mocktails",
-    "cta": "Découvrir toute la carte"
-  },
   "gallery": {
     "eyebrow": "Instants",
-    "title": "L'ambiance GOIA",
-    "follow": "Suivez-nous sur Instagram"
+    "title": "Vu au GOIA",
+    "follow": "Suivez-nous sur Instagram",
+    "hint": "Faites défiler"
   },
   "events": {
     "eyebrow": "Agenda",
@@ -111,5 +95,39 @@
   },
   "common": {
     "comingSoon": "Le nouveau site arrive très bientôt."
+  },
+  "place": {
+    "eyebrow": "Le lieu",
+    "title": "Ambre, marbre vert et fumée lente",
+    "body": "GOIA est un huqqa lounge à Kehl, à quelques arrêts de tram de Strasbourg. La lumière passe derrière le verre cannelé, les tables sont en marbre vert, et la soirée se règle sur le rythme de la chicha.",
+    "aside": "Huqqa — Lounge"
+  },
+  "ambiance": {
+    "eyebrow": "L'ambiance",
+    "title": "Trois matières, une soirée",
+    "amber_t": "Ambre",
+    "amber": "Derrière le verre cannelé, une lumière chaude qui colore toute la salle.",
+    "marble_t": "Marbre",
+    "marble": "Des tables en marbre vert, où se posent chichas, assiettes et verres.",
+    "smoke_t": "Fumée",
+    "smoke": "Les volutes montent lentement devant les arches lumineuses."
+  },
+  "table": {
+    "eyebrow": "À table",
+    "title": "Ce qui arrive sur le marbre",
+    "shisha_t": "Chicha",
+    "shisha": "Préparée à la commande. Les saveurs du moment sont sur la carte.",
+    "sweets_t": "Douceurs",
+    "sweets": "Comme ce cheesecake au spéculoos, servi sur assiette blanche.",
+    "glass_t": "Au verre",
+    "glass": "Fruit de la passion, agrumes séchés, couleurs vives.",
+    "menu": "Voir la carte",
+    "news": "Les nouveautés sur Instagram"
+  },
+  "booking": {
+    "eyebrow": "Réservation",
+    "title": "Réserver une table",
+    "lead": "Choisissez le jour, l'heure d'arrivée et le nombre de personnes.",
+    "or": "Ou écrivez-nous"
   }
 }

@@ -16,11 +16,15 @@
     "skip": "Zum Inhalt"
   },
   "hero": {
-    "eyebrow": "Huqqa · Lounge · Kehl",
-    "tagline": "Ausgewählte Shishas, Mocktails und stimmungsvolle Nächte – direkt an der Grenze zu Straßburg.",
+    "eyebrow": "Huqqa Lounge · Kehl",
+    "lead": "Shisha, Süßes und bunte Gläser, wenn es Abend wird – direkt am Rhein.",
     "book": "Tisch reservieren",
-    "seeMenu": "Zur Karte",
-    "scroll": "Entdecken"
+    "explore": "Den Ort entdecken",
+    "today": "Heute",
+    "closedToday": "Heute geschlossen",
+    "scroll": "Eintreten",
+    "playVideo": "Video abspielen",
+    "pauseVideo": "Video pausieren"
   },
   "quick": {
     "title": "Reserviere deinen Tisch",
@@ -35,31 +39,11 @@
     "personsN": "{n} Pers.",
     "more": "Mehr als {n} Personen? Frag nach einer <link>privaten Feier</link>."
   },
-  "experience": {
-    "eyebrow": "Das GOIA-Erlebnis",
-    "title": "Eine Lounge, um sich Zeit zu nehmen",
-    "intro": "Bernsteinlicht, Marmor, Samt und sanfter Rauch: Im GOIA lädt jedes Detail zum Entschleunigen ein.",
-    "ambiance_t": "Atmosphäre",
-    "ambiance": "Ein intimes Ambiente, gedämpftes Licht und Plätze für zwei oder die ganze Runde.",
-    "shisha_t": "Die Shishas",
-    "shisha": "Premium-Köpfe, ausgewählte Tabake und Hauskreationen – sorgfältig von unseren Shisha-Meistern zubereitet.",
-    "service_t": "Der Service",
-    "service": "Ein aufmerksames Team, regelmäßiger Kohlewechsel und Desserts zum Teilen.",
-    "music_t": "Die Musik",
-    "music": "Deep House und orientalische Klänge – am Wochenende mit DJ."
-  },
-  "menuPreview": {
-    "eyebrow": "Die Karte",
-    "title": "Unsere Signatures",
-    "text": "Von Hauskreationen bis zu neu interpretierten Klassikern – und frisch gemixte Mocktails.",
-    "shishas": "Signature-Shishas",
-    "drinks": "Mocktails",
-    "cta": "Die ganze Karte entdecken"
-  },
   "gallery": {
     "eyebrow": "Momente",
-    "title": "Die GOIA-Atmosphäre",
-    "follow": "Folge uns auf Instagram"
+    "title": "Gesehen im GOIA",
+    "follow": "Folge uns auf Instagram",
+    "hint": "Weiterscrollen"
   },
   "events": {
     "eyebrow": "Agenda",
@@ -111,5 +95,39 @@
   },
   "common": {
     "comingSoon": "Die neue Website ist bald online."
+  },
+  "place": {
+    "eyebrow": "Der Ort",
+    "title": "Bernstein, grüner Marmor und langsamer Rauch",
+    "body": "GOIA ist eine Huqqa Lounge in Kehl, ein paar Tramstationen von Straßburg entfernt. Das Licht fällt durch geriffeltes Glas, die Tische sind aus grünem Marmor, und der Abend richtet sich nach dem Takt der Shisha.",
+    "aside": "Huqqa — Lounge"
+  },
+  "ambiance": {
+    "eyebrow": "Die Atmosphäre",
+    "title": "Drei Materialien, ein Abend",
+    "amber_t": "Bernstein",
+    "amber": "Hinter geriffeltem Glas ein warmes Licht, das den ganzen Raum färbt.",
+    "marble_t": "Marmor",
+    "marble": "Tische aus grünem Marmor für Shishas, Teller und Gläser.",
+    "smoke_t": "Rauch",
+    "smoke": "Die Rauchschwaden steigen langsam vor den beleuchteten Bögen auf."
+  },
+  "table": {
+    "eyebrow": "Am Tisch",
+    "title": "Was auf den Marmor kommt",
+    "shisha_t": "Shisha",
+    "shisha": "Frisch vorbereitet. Die aktuellen Sorten stehen auf der Karte.",
+    "sweets_t": "Süßes",
+    "sweets": "Wie dieser Spekulatius-Cheesecake auf weißem Teller.",
+    "glass_t": "Im Glas",
+    "glass": "Maracuja, getrocknete Zitrusfrüchte, kräftige Farben.",
+    "menu": "Zur Karte",
+    "news": "Neuheiten auf Instagram"
+  },
+  "booking": {
+    "eyebrow": "Reservierung",
+    "title": "Tisch reservieren",
+    "lead": "Wähle Tag, Uhrzeit und Personenzahl.",
+    "or": "Oder schreib uns"
   }
 }
