@@ -7,6 +7,7 @@ import { fontVariables } from "../fonts";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { Cursor } from "@/components/cursor";
+import { CookieBanner } from "@/components/cookie-banner";
 import { LogoSymbol } from "@/components/brand/logo-symbol";
 import "../globals.css";
 
@@ -34,7 +35,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   setRequestLocale(locale);
   // Seuls les textes utilisés par les composants client partent dans le navigateur.
   const all = await getMessages();
-  const messages = { nav: all.nav, quick: all.quick, flow: all.flow };
+  const messages = { nav: all.nav, quick: all.quick, flow: all.flow, cancelPage: all.cancelPage, consent: all.consent };
   return (
     <html lang={locale} className={fontVariables}>
       <body className="min-h-dvh bg-ivory">
@@ -44,6 +45,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           <main id="main">{children}</main>
           <SiteFooter />
           <Cursor />
+          <CookieBanner />
         </NextIntlClientProvider>
       </body>
     </html>

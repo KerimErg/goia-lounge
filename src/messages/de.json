@@ -7,7 +7,6 @@
     "home": "Start",
     "menu": "Karte",
     "booking": "Reservieren",
-    "privatization": "Private Events",
     "contact": "Kontakt",
     "events": "Events",
     "openMenu": "Menü öffnen",
@@ -37,7 +36,7 @@
     "pickDate": "Datum wählen",
     "closed": "An diesem Tag geschlossen",
     "personsN": "{n} Pers.",
-    "more": "Mehr als {n} Personen? Frag nach einer <link>privaten Feier</link>."
+    "more": "Mehr als {n} Personen? Schreib uns auf <link>Instagram</link>."
   },
   "gallery": {
     "eyebrow": "Galerie",
@@ -161,7 +160,7 @@
     "keepRef": "Bitte notiere die Referenz, sie wird bei der Ankunft benötigt.",
     "home": "Zur Startseite",
     "personsN": "{n} Pers.",
-    "more": "Mehr als {n} Personen? Frag nach einer <link>privaten Feier</link>.",
+    "more": "Mehr als {n} Personen? Schreib uns auf <link>Instagram</link>.",
     "title": "Tisch reservieren",
     "lead": "Dein Tisch in weniger als einer Minute."
   },
@@ -177,6 +176,28 @@
     "tag_premium": "Premium",
     "note": "Preise in Euro inkl. MwSt. Shishas nur für Volljährige.",
     "book": "Tisch reservieren",
-    "empty": "Die Karte folgt in Kürze."
+    "empty": "Die Karte folgt in Kürze.",
+    "items": "Artikel"
+  },
+  "cancelPage": {
+    "title": "Reservierung stornieren",
+    "confirmQ": "Möchtest du diese Reservierung stornieren?",
+    "cancel": "Ja, stornieren",
+    "keep": "Nein, Tisch behalten",
+    "done": "Deine Reservierung ist storniert. Danke fürs Bescheidgeben!",
+    "already": "Diese Reservierung ist bereits storniert.",
+    "notFound": "Reservierung nicht gefunden. Bitte prüfe den Link aus der E-Mail.",
+    "tooLate": "Für eine Online-Stornierung ist es zu spät ({h} Std. vorher). Schreib uns auf Instagram.",
+    "error": "Ein Fehler ist aufgetreten. Bitte erneut versuchen."
+  },
+  "contactPage": {
+    "lead": "Eine Frage oder eine Gruppe mit mehr als 8 Personen? Schreib uns auf Instagram, wir antworten schnell."
+  },
+  "consent": {
+    "title": "Datenschutz",
+    "text": "Diese Website verwendet keine Werbe- oder Analyse-Cookies. Nur die Anfahrtskarte (OpenStreetMap) ist ein externer Dienst: Wenn du zustimmst, wird deine IP-Adresse an diesen Dienst übermittelt. <link>Mehr erfahren</link>",
+    "accept": "Karte akzeptieren",
+    "decline": "Ablehnen",
+    "settings": "Datenschutz-Einstellungen"
   }
 }

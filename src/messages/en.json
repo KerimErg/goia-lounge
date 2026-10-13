@@ -7,7 +7,6 @@
     "home": "Home",
     "menu": "Menu",
     "booking": "Book",
-    "privatization": "Private events",
     "contact": "Contact",
     "events": "Events",
     "openMenu": "Open menu",
@@ -37,7 +36,7 @@
     "pickDate": "Pick a date",
     "closed": "Closed that day",
     "personsN": "{n} guests",
-    "more": "More than {n} guests? Ask about <link>private hire</link>."
+    "more": "More than {n} guests? Message us on <link>Instagram</link>."
   },
   "gallery": {
     "eyebrow": "Gallery",
@@ -161,7 +160,7 @@
     "keepRef": "Keep this reference, you'll be asked for it on arrival.",
     "home": "Back to home",
     "personsN": "{n} guests",
-    "more": "More than {n} guests? Ask about <link>private hire</link>.",
+    "more": "More than {n} guests? Message us on <link>Instagram</link>.",
     "title": "Book a table",
     "lead": "Your table in under a minute."
   },
@@ -177,6 +176,28 @@
     "tag_premium": "Premium",
     "note": "Prices in euros, VAT included. Shishas for adults only.",
     "book": "Book a table",
-    "empty": "The menu is coming soon."
+    "empty": "The menu is coming soon.",
+    "items": "items"
+  },
+  "cancelPage": {
+    "title": "Cancel my booking",
+    "confirmQ": "Do you want to cancel this booking?",
+    "cancel": "Yes, cancel",
+    "keep": "No, keep my table",
+    "done": "Your booking is cancelled. Thank you for letting us know!",
+    "already": "This booking is already cancelled.",
+    "notFound": "Booking not found. Please check the link from your email.",
+    "tooLate": "It's too late to cancel online ({h} h before arrival). Please message us on Instagram.",
+    "error": "Something went wrong. Please try again."
+  },
+  "contactPage": {
+    "lead": "A question, or a group of more than 8? Message us on Instagram, we reply quickly."
+  },
+  "consent": {
+    "title": "Privacy",
+    "text": "This site uses no advertising or analytics cookies. Only the access map (OpenStreetMap) is an external service: if you accept it, your IP address is sent to that service. <link>Learn more</link>",
+    "accept": "Accept the map",
+    "decline": "Decline",
+    "settings": "Privacy settings"
   }
 }

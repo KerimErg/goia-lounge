@@ -36,39 +36,31 @@ const HOURS: Record<number, [string, string]> = {
   5: ["17:00", "03:00"], 6: ["17:00", "03:00"], 0: ["15:00", "01:00"],
 };
 
-/* ---------- Salle : 3 zones, 18 tables ---------- */
+/* ---------- Salle : intérieur + terrasse, 30 tables (à ajuster dans l'admin) ---------- */
 const ZONES = [
-  { slug: "lounge", order: 1, outdoor: false, name: l("Lounge", "Lounge", "Lounge"),
-    description: l("Canapés profonds, lumière tamisée, au cœur de l'ambiance.", "Tiefe Sofas, gedämpftes Licht, mitten im Geschehen.", "Deep sofas, dimmed lights, right in the heart of the atmosphere.") },
-  { slug: "vip", order: 2, outdoor: false, name: l("Carré VIP", "VIP-Bereich", "VIP area"),
-    description: l("Espaces privatifs pour les groupes, service dédié.", "Private Nischen für Gruppen, eigener Service.", "Private booths for groups, dedicated service.") },
-  { slug: "terrasse", order: 3, outdoor: true, name: l("Terrasse", "Terrasse", "Terrace"),
-    description: l("Chauffée en saison froide, ouverte selon la météo.", "Im Winter beheizt, je nach Wetter geöffnet.", "Heated in the cold season, open depending on the weather.") },
+  { slug: "interieur", order: 1, outdoor: false, name: l("Intérieur", "Innenbereich", "Indoor"),
+    description: l("Au cœur du lounge.", "Mitten in der Lounge.", "Inside the lounge.") },
+  { slug: "terrasse", order: 2, outdoor: true, name: l("Terrasse", "Terrasse", "Terrace"),
+    description: l("En plein air, selon la météo.", "Draußen, je nach Wetter.", "Outdoors, weather permitting.") },
 ] as const;
 
 type T = { zone: string; label: string; min: number; max: number; shape: TableShape; x: number; y: number; w: number; h: number; rotation?: number };
+/** Génère une rangée de tables identiques sur le plan (coordonnées sur 1000 × 700). */
+const row = (zone: string, prefix: string, start: number, count: number, size: [number, number], shape: TableShape, y: number): T[] =>
+  Array.from({ length: count }, (_, i) => ({
+    zone, label: `${prefix}${start + i}`, min: size[0], max: size[1], shape,
+    x: 60 + i * (880 / Math.max(count, 1)), y, w: size[1] >= 8 ? 150 : size[1] >= 4 ? 110 : 80, h: size[1] >= 8 ? 90 : 80,
+  }));
 const TABLES: T[] = [
-  // Lounge (8)
-  { zone: "lounge", label: "L1", min: 1, max: 2, shape: "ROUND", x: 80, y: 90, w: 90, h: 90 },
-  { zone: "lounge", label: "L2", min: 1, max: 2, shape: "ROUND", x: 230, y: 90, w: 90, h: 90 },
-  { zone: "lounge", label: "L3", min: 2, max: 4, shape: "SQUARE", x: 400, y: 80, w: 120, h: 120 },
-  { zone: "lounge", label: "L4", min: 2, max: 4, shape: "SQUARE", x: 580, y: 80, w: 120, h: 120 },
-  { zone: "lounge", label: "L5", min: 2, max: 4, shape: "SQUARE", x: 760, y: 80, w: 120, h: 120 },
-  { zone: "lounge", label: "L6", min: 4, max: 6, shape: "BOOTH", x: 80, y: 330, w: 220, h: 130 },
-  { zone: "lounge", label: "L7", min: 4, max: 6, shape: "BOOTH", x: 390, y: 330, w: 220, h: 130 },
-  { zone: "lounge", label: "L8", min: 3, max: 6, shape: "RECT", x: 700, y: 330, w: 200, h: 120 },
-  // VIP (4)
-  { zone: "vip", label: "V1", min: 4, max: 8, shape: "BOOTH", x: 90, y: 100, w: 300, h: 180 },
-  { zone: "vip", label: "V2", min: 4, max: 8, shape: "BOOTH", x: 560, y: 100, w: 300, h: 180 },
-  { zone: "vip", label: "V3", min: 6, max: 10, shape: "BOOTH", x: 90, y: 400, w: 360, h: 200 },
-  { zone: "vip", label: "V4", min: 2, max: 4, shape: "ROUND", x: 640, y: 440, w: 140, h: 140 },
-  // Terrasse (6)
-  { zone: "terrasse", label: "T1", min: 1, max: 2, shape: "ROUND", x: 80, y: 120, w: 90, h: 90 },
-  { zone: "terrasse", label: "T2", min: 1, max: 2, shape: "ROUND", x: 240, y: 120, w: 90, h: 90 },
-  { zone: "terrasse", label: "T3", min: 2, max: 4, shape: "SQUARE", x: 420, y: 110, w: 120, h: 120 },
-  { zone: "terrasse", label: "T4", min: 2, max: 4, shape: "SQUARE", x: 620, y: 110, w: 120, h: 120 },
-  { zone: "terrasse", label: "T5", min: 4, max: 6, shape: "RECT", x: 120, y: 380, w: 220, h: 120 },
-  { zone: "terrasse", label: "T6", min: 4, max: 8, shape: "RECT", x: 480, y: 380, w: 280, h: 130 },
+  // Intérieur : 20 tables (12 de 2, 5 de 4, 3 de 8)
+  ...row("interieur", "I", 1, 6, [1, 2], "ROUND", 60),
+  ...row("interieur", "I", 7, 6, [1, 2], "ROUND", 200),
+  ...row("interieur", "I", 13, 5, [2, 4], "SQUARE", 360),
+  ...row("interieur", "I", 18, 3, [4, 8], "BOOTH", 540),
+  // Terrasse : 10 tables (6 de 2, 3 de 4, 1 de 8)
+  ...row("terrasse", "T", 1, 6, [1, 2], "ROUND", 100),
+  ...row("terrasse", "T", 7, 3, [2, 4], "SQUARE", 320),
+  ...row("terrasse", "T", 10, 1, [4, 8], "RECT", 520),
 ];
 
 /* ---------- Carte : 25 chichas, 20 boissons (FR / DE / EN) ---------- */
@@ -184,6 +176,10 @@ async function main() {
       latitude: 48.5717, longitude: 7.8113,
       phone: "+49 0000 000000", whatsapp: "490000000000", email: "kontakt@example.com",
       instagramUrl: "https://www.instagram.com/goia.kehl/",
+      // Réservation en ligne : 8 personnes max (au-delà : Instagram), 45 personnes présentes max,
+      // 12 arrivées max par créneau de 30 min pour éviter le rush.
+      maxOnlinePartySize: 8, maxGuestsAtOnce: 45, maxGuestsPerSlot: 12,
+      notifyEmail: process.env.SEED_NOTIFY_EMAIL || null,
     },
   });
   await prisma.openingHours.createMany({
@@ -212,7 +208,9 @@ async function main() {
     await prisma.menuCategory.create({
       data: {
         slug: c.slug, section: c.section, name: c.name, description: c.description, order: ci,
-        items: { create: c.items.map((it, ii) => ({ name: it.name, description: it.desc, priceCents: it.price, tags: it.tags ?? [], preorderable: !!it.preorderable, order: ii })) },
+        imageUrl: { SHISHA: "/images/goia/chicha-fumee-ambiance.jpg", DRINK: "/images/goia/table-desserts-cocktails.jpg", FOOD: "/images/goia/cheesecake-speculoos.jpg" }[c.section],
+        items: { create: c.items.map((it, ii) => ({ name: it.name, description: it.desc, priceCents: it.price, tags: it.tags ?? [], preorderable: !!it.preorderable, order: ii,
+          imageUrl: it.name.fr.startsWith("Cheesecake spéculoos") ? "/images/goia/cheesecake-speculoos.jpg" : null })) },
       },
     });
     itemCount += c.items.length;
@@ -274,7 +272,7 @@ async function main() {
   const preorderable = await prisma.menuItem.findMany({ where: { preorderable: true }, select: { id: true } });
   let created = 0;
   let attempts = 0;
-  while (created < 30 && attempts++ < 500) {
+  while (created < 20 && attempts++ < 500) {
     const day = addDays(today, 1 + Math.floor(rand() * 21));
     const [opensAt, closesAt] = HOURS[weekdayOf(day)];
     const open = toMinutes(opensAt);
@@ -287,7 +285,7 @@ async function main() {
     const startDay = m >= 1440 ? addDays(day, 1) : day; // créneau après minuit
     const startAt = kehlToUtc(startDay, time);
     const endAt = new Date(startAt.getTime() + settings.duration * 60000);
-    const party = pick([2, 2, 2, 3, 4, 4, 5, 6, 8]);
+    const party = pick([2, 2, 2, 3, 4, 4, 5, 6]);
     const candidates = tables.filter((t) => t.minCovers <= party && party <= t.maxCovers)
       .sort((a, b) => a.maxCovers - b.maxCovers);
     const table = candidates.find((t) => !overlaps(t.id, startAt.getTime(), endAt.getTime()));

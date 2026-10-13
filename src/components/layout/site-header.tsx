@@ -11,7 +11,6 @@ import { cn } from "@/lib/utils";
 
 const LINKS = [
   { href: "/carte", key: "menu" },
-  { href: "/privatisation", key: "privatization" },
   { href: "/contact", key: "contact" },
 ] as const;
 

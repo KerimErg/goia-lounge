@@ -7,7 +7,6 @@
     "home": "Accueil",
     "menu": "La carte",
     "booking": "Réserver",
-    "privatization": "Privatisation",
     "contact": "Contact",
     "events": "Événements",
     "openMenu": "Ouvrir le menu",
@@ -37,7 +36,7 @@
     "pickDate": "Choisir une date",
     "closed": "Fermé ce jour-là",
     "personsN": "{n} pers.",
-    "more": "Plus de {n} personnes ? Pensez à la <link>privatisation</link>."
+    "more": "Plus de {n} personnes ? Écrivez-nous sur <link>Instagram</link>."
   },
   "gallery": {
     "eyebrow": "Galerie",
@@ -161,7 +160,7 @@
     "keepRef": "Gardez cette référence, elle vous sera demandée à l'arrivée.",
     "home": "Retour à l'accueil",
     "personsN": "{n} pers.",
-    "more": "Plus de {n} personnes ? Pensez à la <link>privatisation</link>.",
+    "more": "Plus de {n} personnes ? Écrivez-nous sur <link>Instagram</link>.",
     "title": "Réserver une table",
     "lead": "Votre table en moins d'une minute."
   },
@@ -177,6 +176,28 @@
     "tag_premium": "Premium",
     "note": "Prix en euros, TVA incluse. Chichas réservées aux personnes majeures.",
     "book": "Réserver une table",
-    "empty": "La carte arrive bientôt."
+    "empty": "La carte arrive bientôt.",
+    "items": "articles"
+  },
+  "cancelPage": {
+    "title": "Annuler ma réservation",
+    "confirmQ": "Voulez-vous annuler cette réservation ?",
+    "cancel": "Oui, annuler",
+    "keep": "Non, je garde ma table",
+    "done": "Votre réservation est annulée. Merci d'avoir prévenu !",
+    "already": "Cette réservation est déjà annulée.",
+    "notFound": "Réservation introuvable. Vérifiez le lien reçu par e-mail.",
+    "tooLate": "Il est trop tard pour annuler en ligne ({h} h avant l'arrivée). Écrivez-nous sur Instagram.",
+    "error": "Une erreur est survenue. Réessayez."
+  },
+  "contactPage": {
+    "lead": "Une question, un groupe de plus de 8 personnes ? Écrivez-nous sur Instagram, nous répondons rapidement."
+  },
+  "consent": {
+    "title": "Confidentialité",
+    "text": "Ce site n'utilise aucun cookie publicitaire ni de mesure d'audience. Seule la carte du plan d'accès (OpenStreetMap) est un service externe : si vous l'acceptez, votre adresse IP est transmise à ce service. <link>En savoir plus</link>",
+    "accept": "Accepter la carte",
+    "decline": "Refuser",
+    "settings": "Paramètres de confidentialité"
   }
 }

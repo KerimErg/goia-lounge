@@ -3,7 +3,7 @@ import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
 import { BookingFlow } from "@/components/booking/booking-flow";
 import { Ornament } from "@/components/ornament";
 import { tr } from "@/lib/localized";
-import { getVenue } from "@/lib/venue";
+import { contactLinks, getVenue } from "@/lib/venue";
 
 export const dynamic = "force-dynamic";
 
@@ -35,6 +35,7 @@ export default async function ReservationPage({ params, searchParams }: {
         maxParty={settings.maxOnlinePartySize}
         maxDaysAhead={settings.maxDaysAhead}
         initial={{ date: sp.date, time: sp.time, persons: sp.persons, zone: sp.zone }}
+        instagram={contactLinks(settings).instagram}
       />
     </section>
   );

@@ -126,7 +126,13 @@ model Settings {
   lastSeatingBeforeCloseMin Int      @default(60)
   minLeadMin                Int      @default(60)
   maxDaysAhead              Int      @default(60)
-  maxOnlinePartySize        Int      @default(10)
+  maxOnlinePartySize        Int      @default(8)
+  /// Plafond de personnes présentes en même temps (toutes tables confondues)
+  maxGuestsAtOnce           Int      @default(45)
+  /// Plafond de personnes qui arrivent sur un même créneau (évite le rush à l'accueil)
+  maxGuestsPerSlot          Int      @default(12)
+  /// Adresse qui reçoit une copie de chaque réservation / annulation
+  notifyEmail               String?
   cancelHoursBefore         Int      @default(3)
   // Acompte Stripe (désactivé par défaut)
   depositEnabled            Boolean  @default(false)
@@ -283,6 +289,7 @@ model MenuCategory {
   section     MenuSection
   name        Json
   description Json?
+  imageUrl    String?
   order       Int         @default(0)
   active      Boolean     @default(true)
   items       MenuItem[]
@@ -295,6 +302,7 @@ model MenuItem {
   name         Json
   description  Json?
   priceCents   Int
+  imageUrl     String?
   /// ex. ["signature", "new", "premium", "vegan"]
   tags         String[]     @default([])
   available    Boolean      @default(true)

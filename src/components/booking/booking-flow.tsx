@@ -16,8 +16,8 @@ const OCCASIONS = ["NONE", "BIRTHDAY", "FRIENDS", "DATE", "BUSINESS", "OTHER"] a
  * Réservation en 3 étapes : soirée (date, personnes, espace, heure libre) → coordonnées → confirmation.
  * Champs natifs (date, listes) : fiables et cliquables sur tous les téléphones.
  */
-export function BookingFlow({ zones, maxParty, maxDaysAhead, initial }: {
-  zones: Zone[]; maxParty: number; maxDaysAhead: number;
+export function BookingFlow({ zones, maxParty, maxDaysAhead, initial, instagram }: {
+  zones: Zone[]; maxParty: number; maxDaysAhead: number; instagram: string | null;
   initial: { date?: string; time?: string; persons?: string; zone?: string };
 }) {
   const t = useTranslations("flow");
@@ -150,7 +150,7 @@ export function BookingFlow({ zones, maxParty, maxDaysAhead, initial }: {
 
             <div className="mt-10 flex flex-col-reverse items-center justify-between gap-5 sm:flex-row">
               <p className="text-sm text-ink/60">
-                {t.rich("more", { n: maxParty, link: (c) => <Link href="/privatisation" className="underline underline-offset-4">{c}</Link> })}
+                {t.rich("more", { n: maxParty, link: (c) => instagram ? <a href={instagram} target="_blank" rel="noopener" className="underline underline-offset-4">{c}</a> : <>{c}</> })}
               </p>
               <Button size="lux" type="button" disabled={!date || !time} onClick={() => { setError(""); setStep(2); }} className="w-full sm:w-auto">{t("continue")}</Button>
             </div>

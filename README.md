@@ -25,10 +25,24 @@ Admin : http://localhost:3000/admin (identifiants affichés par le seed).
 - **Langues** : `/fr` (par défaut), `/de`, `/en` avec next-intl. Textes d'interface dans `src/messages/*.json` ; contenus (carte, zones, événements) traduits en base `{fr, de, en}`.
 - **Admin** : `/admin`, réservé à l'équipe (rôles ADMIN / STAFF). Les clients n'ont pas de compte.
 
+## Réservations automatiques
+
+- Confirmation immédiate, sans intervention : table attribuée automatiquement (la plus petite qui convient).
+- **Plafonds** (réglages en base) : 8 personnes max en ligne (au-delà : Instagram), **45 personnes présentes max**, **12 arrivées max par créneau de 30 min** pour éviter le rush ; durée d'une table 2 h 30.
+- Verrou PostgreSQL par soirée + contrainte d'exclusion : ni surréservation ni double réservation, même en cas de clics simultanés.
+- E-mails (Resend) : confirmation au client avec lien d'annulation (jusqu'à 3 h avant), copie à l'établissement (`NOTIFY_EMAIL`), récapitulatif de la soirée chaque jour vers 16 h (Vercel Cron).
+- Salle : Intérieur (20 tables) et Terrasse (10 tables), à ajuster dans l'admin.
+
+## RGPD / DSGVO
+
+- Impressum et Datenschutzerklärung complètes (DE / FR / EN) — **compléter `src/content/legal.ts`** (exploitant, téléphone, e-mail, USt-IdNr).
+- Bandeau de confidentialité : aucun cookie publicitaire ni de mesure d'audience ; la carte OpenStreetMap ne se charge qu'avec l'accord du visiteur (rappelable dans le pied de page).
+- Conservation : empreintes anti-abus effacées après 24 h, clients anonymisés 12 mois après leur dernière visite (cron quotidien).
+
 ## Déploiement Vercel (résumé, détaillé à l'étape 7)
 
 1. Base Neon : copier la connexion **poolée** dans `DATABASE_URL` (avec `pgbouncer=true`) et la **directe** dans `DIRECT_URL`.
-2. Variables Vercel (Production + Preview) : `DATABASE_URL`, `DIRECT_URL`, `NEXTAUTH_SECRET`, `NEXTAUTH_URL` (= domaine exact).
+2. Variables Vercel (Production + Preview) : `DATABASE_URL`, `DIRECT_URL`, `NEXTAUTH_SECRET`, `NEXTAUTH_URL` (= domaine exact), puis pour les e-mails `RESEND_API_KEY`, `EMAIL_FROM`, `NOTIFY_EMAIL`, et `CRON_SECRET`.
 3. Le script `vercel-build` exécute `prisma generate && prisma migrate deploy && next build` : les migrations sont appliquées à chaque déploiement.
 4. Seed (une seule fois, depuis votre machine) : `DATABASE_URL="<directe>" DIRECT_URL="<directe>" SEED_ALLOW_RESET=yes SEED_ADMIN_PASSWORD="…" npm run db:seed`.
 

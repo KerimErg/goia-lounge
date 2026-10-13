@@ -1,4 +1,5 @@
 import "server-only";
+import type { Prisma } from "@prisma/client";
 import { prisma } from "./prisma";
 import { addDays, kehlToUtc, nowInKehl, toMinutes } from "./time";
 import { arrivalSlots, dayWindow, type SpecialDayRow } from "./slots";
@@ -32,8 +33,10 @@ type Ctx = Awaited<ReturnType<typeof bookingContext>>;
  * Tables libres pour chaque créneau d'une soirée. Une table convient si elle est active,
  * réservable en ligne, accepte le nombre de personnes, est dans l'espace demandé (si précisé),
  * et n'a ni réservation active ni blocage qui chevauche [arrivée, arrivée + durée).
+ * En plus : pas plus de maxGuestsAtOnce personnes présentes en même temps,
+ * ni plus de maxGuestsPerSlot personnes qui arrivent sur le même créneau.
  */
-export async function availability(ctx: Ctx, ymd: string, persons: number, zoneSlug?: string | null) {
+export async function availability(ctx: Ctx, ymd: string, persons: number, zoneSlug?: string | null, db: Prisma.TransactionClient = prisma) {
   const { settings, hours, specials, rules } = ctx;
   const slots = arrivalSlots(ymd, hours, rules, specials);
   const w = dayWindow(ymd, hours, specials);
@@ -43,7 +46,7 @@ export async function availability(ctx: Ctx, ymd: string, persons: number, zoneS
   const first = arrivalInstant(ymd, slots[0], w.open);
   const last = new Date(arrivalInstant(ymd, slots[slots.length - 1], w.open).getTime() + durationMs);
 
-  const tables = await prisma.table.findMany({
+  const tables = await db.table.findMany({
     where: {
       active: true, onlineBookable: true, minCovers: { lte: persons }, maxCovers: { gte: persons },
       zone: { active: true, ...(zoneSlug ? { slug: zoneSlug } : {}) },
@@ -56,8 +59,26 @@ export async function availability(ctx: Ctx, ymd: string, persons: number, zoneS
     },
   });
 
+  // Réservations actives de la soirée, pour les plafonds de capacité
+  const booked = await db.reservation.findMany({
+    where: { status: { in: ["PENDING", "CONFIRMED", "SEATED"] }, startAt: { lt: last }, endAt: { gt: first } },
+    select: { startAt: true, endAt: true, partySize: true },
+  });
+  const STEP = 15 * 60_000;
+  /** Respecte les plafonds : personnes présentes à tout instant, et arrivées sur le même créneau. */
+  const capacityOk = (s: number, e: number) => {
+    const arrivals = booked.filter((r) => r.startAt.getTime() === s).reduce((n, r) => n + r.partySize, 0);
+    if (arrivals + persons > settings.maxGuestsPerSlot) return false;
+    for (let t = s; t < e; t += STEP) {
+      const present = booked.filter((r) => r.startAt.getTime() <= t && r.endAt.getTime() > t).reduce((n, r) => n + r.partySize, 0);
+      if (present + persons > settings.maxGuestsAtOnce) return false;
+    }
+    return true;
+  };
+
   const tablesFor = (time: string) => {
     const s = arrivalInstant(ymd, time, w.open).getTime(), e = s + durationMs;
+    if (!capacityOk(s, e)) return [];
     return tables
       .filter((t) => !t.reservations.some((r) => r.startAt.getTime() < e && r.endAt.getTime() > s))
       .filter((t) => !t.blocks.some((b) => b.startsAt.getTime() < e && b.endsAt.getTime() > s))
