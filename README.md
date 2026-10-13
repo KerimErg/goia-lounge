@@ -32,24 +32,21 @@ Admin : http://localhost:3000/admin (identifiants affichés par le seed).
 3. Le script `vercel-build` exécute `prisma generate && prisma migrate deploy && next build` : les migrations sont appliquées à chaque déploiement.
 4. Seed (une seule fois, depuis votre machine) : `DATABASE_URL="<directe>" DIRECT_URL="<directe>" SEED_ALLOW_RESET=yes SEED_ADMIN_PASSWORD="…" npm run db:seed`.
 
-## Direction artistique « lounge de nuit »
+## Design de l'accueil
 
-Inspirée des grands lounges de Dubaï (hero plein écran, ambiance immersive, arches), avec les couleurs du logo officiel.
+Simple et lisible, inspiré des sites de grands lounges : peu de texte, titres clairs.
 
-| Rôle | Couleur | D'où elle vient |
-|---|---|---|
-| Encre | `#1B1511` | hero, galerie, réservation, pied de page |
-| Taupe | `#7A6A5A` | fond du logo : bandeau défilant, menu mobile, tuile Instagram |
-| Ivoire | `#F7F2EA` | lettres du logo : section des arches |
-| Marbre vert | `#0F3B3C` | tables en marbre : section « À table » (veines en SVG) |
-| Ambre | `#C98A45` | lumière derrière le verre cannelé : petits accents |
+1. **Accueil plein écran** : ambiance du lounge en fond, fumée, logo, une phrase, « Réserver une table » et « Voir la carte », bandeau horaires / adresse / Instagram.
+2. **Bienvenue** : une photo, une phrase, un bouton.
+3. **Notre carte** : Chichas, Boissons, Desserts (photo + une ligne) et « Voir toute la carte ».
+4. **Galerie** : 4 photos + Instagram.
+5. **Événements / Avis** : seulement s'ils sont publiés dans l'admin.
+6. **Réserver une table** puis **Nous trouver** (adresse, horaires, accès, carte OSM).
 
-- **Parcours** : hero plein écran (ambiance floutée + fumée + logo + bandeau d'infos) → bandeau de mots défilant → trois arches (ambre, marbre, fumée) → À table (photo qui suit le pointeur) → mosaïque photo → [événements / avis s'ils existent] → réservation plein écran + infos pratiques → pied de page.
-- **Photos basse définition** (miniatures Instagram ≈ 450 px) : affichées à une taille où elles restent nettes ; les grands fonds sont des versions volontairement floutées (`bg-*.jpg`). Avec des originaux HD ou une vidéo, remplacez-les dans `src/content/media.ts`.
-- **Typographies** auto-hébergées (DSGVO) : Italiana (titres), Jost (texte), Cormorant Garamond italique (accents).
-- **Animations** : entrée du hero en CSS (aucune attente du JavaScript), titres ligne par ligne, révélations par masque, parallaxe, bandeau défilant, fumée WebGL (démarrée au repos, coupée sans GPU). Tout est désactivé avec « réduire les animations ».
-- **Vidéo du hero** : déposez les fichiers dans `public/videos/` et renseignez-les dans `src/content/media.ts` (paysage + portrait, sans son, en boucle, bouton pause).
-- **Aucune donnée inventée à l'accueil** : pas de prix ni de saveurs, événements et avis affichés seulement s'ils sont publiés, coordonnées provisoires masquées.
+- **Couleurs du logo** : encre `#1B1511`, taupe `#7A6A5A`, ivoire `#F7F2EA`, lin `#ECE4D7`, marbre vert `#0F3B3C`, ambre `#C98A45` (petits accents).
+- **Typographies** auto-hébergées (DSGVO) : Italiana (titres), Jost (texte).
+- **Photos basse définition** (≈ 450 px) : affichées petites pour rester nettes ; les grands fonds sont floutés volontairement. Remplacez-les dans `src/content/media.ts` par des originaux HD ou une vidéo (`public/videos/`).
+- **Aucune donnée inventée à l'accueil** : pas de prix, coordonnées provisoires masquées.
 
 > ⚠️ La carte (chichas, boissons, prix) et les 3 événements créés par le seed sont des **exemples** : les événements sont créés non publiés, la carte doit être remplacée par la vraie avant la mise en ligne.
 

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Pause, Play } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { InstagramIcon } from "@/components/brand/icons";
 import { Logo } from "@/components/brand/logo";
@@ -81,10 +82,8 @@ export function HeroStage({ media, address, instagram, text }: {
       <h1 id="hero-title" className="sr-only">GOIA — Huqqa Lounge, Kehl</h1>
 
       <motion.div style={{ y: contentY, opacity: contentOpacity }} className="container-page relative z-10 flex flex-1 flex-col items-center justify-center pt-20 text-center">
-        <p style={{ animationDelay: "0.2s" }} className="enter-rise eyebrow text-[0.68rem] text-ivory/85">{text.eyebrow}</p>
-
         {/* Logo : chaque lettre monte derrière un masque */}
-        <div className="mt-8 w-[min(86vw,760px)] overflow-hidden">
+        <div className="w-[min(86vw,720px)] overflow-hidden">
           <div className="enter-mask" style={{ animationDelay: "0.35s" }}>
             <Logo className="w-full text-ivory drop-shadow-[0_8px_40px_rgb(27_21_17/0.5)]" />
           </div>
@@ -96,7 +95,7 @@ export function HeroStage({ media, address, instagram, text }: {
         </p>
         <div style={{ animationDelay: "1.3s" }} className="enter-rise mt-10 grid w-full max-w-sm gap-3 sm:flex sm:max-w-none sm:justify-center">
           <Button asChild size="lux" variant="light"><a href="#reserver">{text.book}</a></Button>
-          <Button asChild size="lux" variant="outline" className="text-ivory backdrop-blur-sm"><a href="#ambiance">{text.explore}</a></Button>
+          <Button asChild size="lux" variant="outline" className="text-ivory backdrop-blur-sm"><Link href="/carte">{text.explore}</Link></Button>
         </div>
       </motion.div>
 
@@ -109,7 +108,7 @@ export function HeroStage({ media, address, instagram, text }: {
             {instagram ? (
               <a href={instagram} target="_blank" rel="noopener" className="inline-flex items-center gap-2 transition-colors hover:text-ivory"><InstagramIcon className="size-3.5" />@goia.kehl</a>
             ) : (
-              <a href="#ambiance" className="transition-colors hover:text-ivory">{text.scroll} ↓</a>
+              <a href="#bienvenue" className="transition-colors hover:text-ivory">{text.scroll} ↓</a>
             )}
           </p>
         </div>

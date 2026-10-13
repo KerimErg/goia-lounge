@@ -15,11 +15,11 @@ export async function SiteFooter() {
 
   return (
     <footer className="border-t border-ivory/10 bg-ink text-ivory">
-      <div className="container-page pt-20 pb-10 sm:pt-28">
-        <Logo className="w-full max-w-[1100px] text-ivory/95" />
-        <p className="eyebrow mt-6 text-[0.7rem] tracking-[0.6em] text-taupe-light">Huqqa — Lounge · {s.city}</p>
+      <div className="container-page pt-16 pb-10">
+        <Logo className="w-48 text-ivory sm:w-56" />
+        <p className="eyebrow mt-4 text-[0.62rem] tracking-[0.5em] text-taupe-light">Huqqa — Lounge</p>
 
-        <div className="mt-16 grid gap-12 border-t border-ivory/15 pt-12 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid gap-10 border-t border-ivory/15 pt-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <h2 className="eyebrow text-[0.62rem] text-taupe-light">{info("address")}</h2>
             <address className="mt-4 text-sm leading-relaxed not-italic">{s.venueName}<br />{s.street}<br />{s.postalCode} {s.city}</address>

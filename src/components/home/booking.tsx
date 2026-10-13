@@ -3,14 +3,13 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Car, Mail, Phone, TramFront } from "lucide-react";
 import { InstagramIcon, WhatsAppIcon } from "@/components/brand/icons";
 import { Link } from "@/i18n/navigation";
-import { LineTitle } from "@/components/motion";
 import { Reveal } from "@/components/reveal";
 import { PHOTOS } from "@/content/media";
 import { prisma } from "@/lib/prisma";
 import { tr } from "@/lib/localized";
 import { nowInKehl } from "@/lib/time";
 import { contactLinks, dayName, getVenue, groupHours, isOpenNow } from "@/lib/venue";
-import { cn, splitLines } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { QuickBooking } from "./quick-booking";
 import { VenueMap } from "./venue-map";
 
@@ -37,8 +36,8 @@ export async function Booking() {
         <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_50%_40%,rgb(27_21_17/0.45),rgb(27_21_17/0.9)_80%)]" />
         <div className="container-page flex flex-col items-center text-center">
           <Reveal><p className="eyebrow text-ivory/85">{t("eyebrow")}</p></Reveal>
-          <LineTitle id="booking-title" lines={splitLines(t("title"), 2)} className="mt-6 text-[clamp(3.2rem,10vw,9rem)] leading-[0.9]" />
-          <Reveal delay={0.1}><p className="mt-8 max-w-lg font-accent text-2xl leading-snug text-ivory/90">{t("lead")}</p></Reveal>
+          <h2 id="booking-title" className="mt-5 text-[clamp(2.8rem,7vw,5.6rem)] leading-none">{t("title")}</h2>
+          <p className="mt-6 max-w-lg text-lg text-ivory/85">{t("lead")}</p>
           <Reveal delay={0.15} className="mt-12 w-full max-w-5xl text-left">
             <QuickBooking
               hours={hours}
@@ -65,7 +64,8 @@ export async function Booking() {
 
       <div className="container-page pb-20">
         {/* Infos pratiques */}
-        <div id="infos" className="grid gap-12 pt-16 lg:grid-cols-12 lg:gap-10">
+        <h2 className="pt-20 text-center text-[clamp(2.4rem,5vw,4rem)] leading-none">{info("title")}</h2>
+        <div id="infos" className="grid gap-12 pt-14 lg:grid-cols-12 lg:gap-10">
           <div className="grid gap-10 sm:grid-cols-2 lg:col-span-7">
             <div>
               <h3 className="eyebrow text-[0.65rem] text-ivory">{info("address")}</h3>

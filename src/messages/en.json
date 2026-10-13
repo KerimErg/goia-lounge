@@ -17,9 +17,9 @@
   },
   "hero": {
     "eyebrow": "Huqqa lounge · Kehl",
-    "lead": "Shisha, sweets and colourful glasses once evening falls, just across the Rhine.",
+    "lead": "Shisha lounge in Kehl, right next to Strasbourg.",
     "book": "Book a table",
-    "explore": "See the place",
+    "explore": "See the menu",
     "today": "Tonight",
     "closedToday": "Closed today",
     "scroll": "Step in",
@@ -40,8 +40,8 @@
     "more": "More than {n} guests? Ask about <link>private hire</link>."
   },
   "gallery": {
-    "eyebrow": "Moments",
-    "title": "The GOIA mood",
+    "eyebrow": "Gallery",
+    "title": "The atmosphere",
     "follow": "Follow us on Instagram",
     "hint": "Keep scrolling"
   },
@@ -96,35 +96,27 @@
   "common": {
     "comingSoon": "The new website is coming very soon."
   },
-  "ambiance": {
-    "eyebrow": "The mood",
-    "title": "GOIA in three textures",
-    "amber_t": "Amber",
-    "amber": "Behind fluted glass, a warm light that tints the whole room.",
-    "marble_t": "Marble",
-    "marble": "Green marble tables for shishas, plates and glasses.",
-    "smoke_t": "Smoke",
-    "smoke": "Smoke curls slowly up past the glowing arches."
-  },
-  "table": {
-    "eyebrow": "At the table",
-    "title": "What lands on the marble",
-    "shisha_t": "Shisha",
-    "shisha": "Prepared to order. Current flavours are on the menu.",
-    "sweets_t": "Sweets",
-    "sweets": "Like this speculoos cheesecake on a white plate.",
-    "glass_t": "In the glass",
-    "glass": "Passion fruit, dried citrus, bright colours.",
-    "menu": "See the menu",
-    "news": "What's new on Instagram"
-  },
   "booking": {
     "eyebrow": "Booking",
     "title": "Book a table",
-    "lead": "Pick the day, your arrival time and the number of guests.",
+    "lead": "Choose the day, time and number of guests.",
     "or": "Or message us"
   },
-  "marquee": {
-    "words": "Shisha|Sweets|Colourful glasses|Huqqa lounge|Kehl"
+  "welcome": {
+    "eyebrow": "Welcome",
+    "title": "Welcome to GOIA",
+    "text": "A warm lounge to spend the evening with friends: shisha, drinks and desserts in a relaxed setting.",
+    "cta": "Book a table"
+  },
+  "menuCards": {
+    "eyebrow": "The menu",
+    "title": "Our menu",
+    "shisha_t": "Shishas",
+    "shisha": "Classics and house creations.",
+    "drinks_t": "Drinks",
+    "drinks": "Cold and hot drinks.",
+    "sweets_t": "Desserts",
+    "sweets": "Sweets to share.",
+    "cta": "See the full menu"
   }
 }

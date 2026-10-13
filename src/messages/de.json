@@ -17,9 +17,9 @@
   },
   "hero": {
     "eyebrow": "Huqqa Lounge · Kehl",
-    "lead": "Shisha, Süßes und bunte Gläser, wenn es Abend wird – direkt am Rhein.",
+    "lead": "Shisha Lounge in Kehl, direkt bei Straßburg.",
     "book": "Tisch reservieren",
-    "explore": "Den Ort entdecken",
+    "explore": "Zur Karte",
     "today": "Heute",
     "closedToday": "Heute geschlossen",
     "scroll": "Eintreten",
@@ -40,8 +40,8 @@
     "more": "Mehr als {n} Personen? Frag nach einer <link>privaten Feier</link>."
   },
   "gallery": {
-    "eyebrow": "Momente",
-    "title": "GOIA-Atmosphäre",
+    "eyebrow": "Galerie",
+    "title": "Die Atmosphäre",
     "follow": "Folge uns auf Instagram",
     "hint": "Weiterscrollen"
   },
@@ -96,35 +96,27 @@
   "common": {
     "comingSoon": "Die neue Website ist bald online."
   },
-  "ambiance": {
-    "eyebrow": "Die Atmosphäre",
-    "title": "Das GOIA in drei Materialien",
-    "amber_t": "Bernstein",
-    "amber": "Hinter geriffeltem Glas ein warmes Licht, das den ganzen Raum färbt.",
-    "marble_t": "Marmor",
-    "marble": "Tische aus grünem Marmor für Shishas, Teller und Gläser.",
-    "smoke_t": "Rauch",
-    "smoke": "Die Rauchschwaden steigen langsam vor den beleuchteten Bögen auf."
-  },
-  "table": {
-    "eyebrow": "Am Tisch",
-    "title": "Was auf den Marmor kommt",
-    "shisha_t": "Shisha",
-    "shisha": "Frisch vorbereitet. Die aktuellen Sorten stehen auf der Karte.",
-    "sweets_t": "Süßes",
-    "sweets": "Wie dieser Spekulatius-Cheesecake auf weißem Teller.",
-    "glass_t": "Im Glas",
-    "glass": "Maracuja, getrocknete Zitrusfrüchte, kräftige Farben.",
-    "menu": "Zur Karte",
-    "news": "Neuheiten auf Instagram"
-  },
   "booking": {
     "eyebrow": "Reservierung",
     "title": "Tisch reservieren",
     "lead": "Wähle Tag, Uhrzeit und Personenzahl.",
     "or": "Oder schreib uns"
   },
-  "marquee": {
-    "words": "Shisha|Süßes|Bunte Gläser|Huqqa Lounge|Kehl"
+  "welcome": {
+    "eyebrow": "Willkommen",
+    "title": "Willkommen im GOIA",
+    "text": "Eine gemütliche Lounge für den Abend mit Freunden: Shisha, Getränke und Desserts in entspannter Atmosphäre.",
+    "cta": "Tisch reservieren"
+  },
+  "menuCards": {
+    "eyebrow": "Die Karte",
+    "title": "Unsere Karte",
+    "shisha_t": "Shishas",
+    "shisha": "Klassiker und Hauskreationen.",
+    "drinks_t": "Getränke",
+    "drinks": "Kalte und warme Getränke.",
+    "sweets_t": "Desserts",
+    "sweets": "Süßes zum Teilen.",
+    "cta": "Ganze Karte ansehen"
   }
 }
