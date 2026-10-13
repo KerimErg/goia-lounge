@@ -2,26 +2,25 @@
 @import "tw-animate-css";
 
 /*
- * GOIA — direction « Marbre, taupe & abricot »
+ * GOIA — direction « Taupe & marbre »
  * Tirée du logo (taupe #7A6A5A, lettres ivoire) et des photos du lieu :
  * marbre vert des tables, lumière d'ambre derrière le verre cannelé,
  * agrumes et fruit de la passion. Le sombre (ink) est réservé aux moments immersifs.
  */
 :root {
   --radius: 0.75rem;
-  --ink: #0b2624; /* vert nuit : le marbre des tables, à la place du noir */
-  --ink-soft: #12332f;
+  --ink: #1b1511;
+  --ink-soft: #2a211b;
   --taupe: #7a6a5a;
   --taupe-deep: #5e5145;
   --taupe-light: #a89785;
-  --linen: #ebe2d3;
-  --ivory: #f6efe3;
+  --linen: #ece4d7;
+  --ivory: #f7f2ea;
   --marble: #0f3b3c;
   --marble-deep: #0a2829;
   --amber: #c98a45;
   --ember: #b4532a;
-  --champagne: #e3a06f; /* abricot : fruit de la passion et agrumes séchés des cocktails */
-  --apricot-deep: #9e5226; /* abricot foncé, lisible sur ivoire */
+  --champagne: #c8a97e;
 
   --background: var(--ivory);
   --foreground: var(--ink);
@@ -77,7 +76,6 @@
   --color-amber: var(--amber);
   --color-ember: var(--ember);
   --color-champagne: var(--champagne);
-  --color-apricot-deep: var(--apricot-deep);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);

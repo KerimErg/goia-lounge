@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   };
 }
 
-export const viewport: Viewport = { themeColor: "#0b2624", colorScheme: "dark" };
+export const viewport: Viewport = { themeColor: "#1b1511", colorScheme: "dark" };
 
 export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
   const { locale } = await params;

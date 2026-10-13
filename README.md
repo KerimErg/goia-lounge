@@ -57,8 +57,7 @@ Simple et lisible, inspiré des sites de grands lounges : peu de texte, titres c
 5. **Événements / Avis** : seulement s'ils sont publiés dans l'admin.
 6. **Réserver une table** puis **Nous trouver** (adresse, horaires, accès, carte OSM).
 
-- **Couleurs « Marbre, taupe & abricot »** : vert nuit `#0B2624` (le marbre des tables, à la place du noir), taupe du logo `#7A6A5A`, ivoire papier `#F6EFE3`, abricot `#E3A06F` (fruit de la passion, agrumes séchés). Motif : l'arche des niches lumineuses.
-- **Carte** façon carte imprimée : papier ivoire, photos en arche, prix sur filet pointillé, ingrédients en italique.
+- **Couleurs du logo** : encre `#1B1511`, taupe `#7A6A5A`, ivoire `#F7F2EA`, lin `#ECE4D7`, marbre vert `#0F3B3C`, ambre `#C98A45` (petits accents).
 - **Typographies** auto-hébergées (DSGVO) : Italiana (titres), Jost (texte).
 - **Photos basse définition** (≈ 450 px) : affichées petites pour rester nettes ; les grands fonds sont floutés volontairement. Remplacez-les dans `src/content/media.ts` par des originaux HD ou une vidéo (`public/videos/`).
 - **Aucune donnée inventée à l'accueil** : pas de prix, coordonnées provisoires masquées.

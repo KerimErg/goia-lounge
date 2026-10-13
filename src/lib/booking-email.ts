@@ -15,10 +15,10 @@ async function send(to: string, subject: string, html: string, replyTo?: string)
 }
 
 const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
-const frame = (body: string) => `<div style="font-family:Georgia,serif;max-width:520px;margin:auto;padding:32px;background:#f7f2ea;color:#0b2624">
+const frame = (body: string) => `<div style="font-family:Georgia,serif;max-width:520px;margin:auto;padding:32px;background:#f7f2ea;color:#1b1511">
 <h1 style="font-weight:400;letter-spacing:.25em;text-align:center;margin:0 0 24px">GOIA</h1>${body}</div>`;
 const button = (href: string, label: string) =>
-  `<p style="text-align:center;margin:28px 0"><a href="${href}" style="background:#0b2624;color:#f7f2ea;padding:14px 26px;text-decoration:none;font-family:Arial,sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase">${label}</a></p>`;
+  `<p style="text-align:center;margin:28px 0"><a href="${href}" style="background:#1b1511;color:#f7f2ea;padding:14px 26px;text-decoration:none;font-family:Arial,sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase">${label}</a></p>`;
 
 export type BookingMail = {
   locale: Lang; reference: string; firstName: string; lastName: string; email: string; phone: string;
