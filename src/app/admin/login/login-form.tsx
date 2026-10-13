@@ -28,7 +28,7 @@ export function LoginForm() {
         });
       }}
     >
-      <p className="font-display text-4xl text-brass-light">GOIA</p>
+      <p className="font-display text-4xl text-brass">GOIA</p>
       <h1 className="mt-1 text-2xl">Espace équipe</h1>
       <div className="mt-6 grid gap-4">
         <div className="grid gap-2"><Label htmlFor="email">E-mail</Label><Input id="email" name="email" type="email" autoComplete="username" required /></div>

@@ -2,38 +2,47 @@
 @import "tw-animate-css";
 
 /*
- * GOIA — palette provisoire (à ajuster avec le logo et les photos Instagram) :
- * noir profond, laiton, bordeaux. Site uniquement en mode sombre.
+ * GOIA — palette tirée du logo et des photos :
+ * nuit (fond), taupe du logo, marbre vert canard des tables, lueur ambrée, ivoire.
  */
 :root {
-  --radius: 0.875rem;
-  --background: #0b0a0c;
-  --foreground: #eee7da;
-  --card: #141216;
-  --card-foreground: #eee7da;
-  --popover: #18161b;
-  --popover-foreground: #eee7da;
-  --primary: #c6a15b;          /* laiton */
-  --primary-foreground: #14100a;
-  --secondary: #1d1a20;
-  --secondary-foreground: #eee7da;
-  --muted: #1a181d;
-  --muted-foreground: #9d968b;
-  --accent: #5e1a24;           /* bordeaux */
-  --accent-foreground: #f3d9dd;
+  --radius: 0.75rem;
+  --night: #0e0d0c;
+  --espresso: #171412;
+  --taupe: #7a6a5a;
+  --taupe-dark: #5f5246;
+  --teal: #0b3f47;
+  --teal-deep: #072a30;
+  --amber: #d39b52;
+  --brass: #c9a46a;
+  --ivory: #f2ede4;
+  --sand: #d8cfc2;
+  --burgundy: #6e1f2b;
+
+  --background: var(--night);
+  --foreground: var(--ivory);
+  --card: var(--espresso);
+  --card-foreground: var(--ivory);
+  --popover: #1c1815;
+  --popover-foreground: var(--ivory);
+  --primary: var(--brass);
+  --primary-foreground: #17120b;
+  --secondary: #221d19;
+  --secondary-foreground: var(--ivory);
+  --muted: #1d1916;
+  --muted-foreground: #a99f92;
+  --accent: var(--teal);
+  --accent-foreground: var(--ivory);
   --destructive: #d9604f;
-  --border: #2a262c;
-  --input: #2f2a31;
-  --ring: #c6a15b;
-  --surface: #110f12;
-  --brass: #c6a15b;
-  --brass-light: #e3c88f;
-  --burgundy: #5e1a24;
+  --border: rgb(242 237 228 / 0.12);
+  --input: rgb(242 237 228 / 0.18);
+  --ring: var(--brass);
 }
 
 @theme inline {
   --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-display), Georgia, serif;
+  --font-display: var(--font-display), "Didot", Georgia, serif;
+  --font-accent: var(--font-accent), Georgia, serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -52,16 +61,24 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-surface: var(--surface);
+  --color-night: var(--night);
+  --color-espresso: var(--espresso);
+  --color-taupe: var(--taupe);
+  --color-taupe-dark: var(--taupe-dark);
+  --color-teal: var(--teal);
+  --color-teal-deep: var(--teal-deep);
+  --color-amber: var(--amber);
   --color-brass: var(--brass);
-  --color-brass-light: var(--brass-light);
+  --color-ivory: var(--ivory);
+  --color-sand: var(--sand);
   --color-burgundy: var(--burgundy);
-  --radius-sm: calc(var(--radius) - 6px);
-  --radius-md: calc(var(--radius) - 4px);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 6px);
   --shadow-soft: 0 10px 30px -18px rgb(0 0 0 / 0.9);
-  --shadow-lift: 0 24px 60px -24px rgb(0 0 0 / 0.95);
+  --shadow-lift: 0 30px 70px -30px rgb(0 0 0 / 0.95);
+  --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @layer base {
@@ -71,19 +88,58 @@
   html {
     color-scheme: dark;
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
   }
   body {
     @apply bg-background font-sans text-foreground antialiased;
+    font-weight: 350;
   }
   h1, h2, h3 {
-    @apply font-display font-medium tracking-tight;
+    @apply font-display font-normal;
+    letter-spacing: 0.02em;
   }
   ::selection {
     background: var(--brass);
-    color: #14100a;
+    color: #17120b;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   }
 }
 
 @utility container-page {
-  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10;
 }
+
+/* Petites capitales espacées, comme « HUQQA – LOUNGE » sous le logo */
+@utility eyebrow {
+  @apply font-sans text-[0.7rem] font-medium uppercase;
+  letter-spacing: 0.38em;
+}
+
+/* Fine ligne dorée décorative */
+@utility gold-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--brass), transparent);
+}
+
+/* Texture « marbre vert canard » des tables, en pur CSS */
+@utility bg-marble {
+  background:
+    radial-gradient(ellipse at 20% 10%, rgb(255 255 255 / 0.05), transparent 45%),
+    radial-gradient(ellipse at 80% 70%, rgb(0 0 0 / 0.35), transparent 55%),
+    linear-gradient(160deg, var(--teal) 0%, var(--teal-deep) 100%);
+}
+
+/* Bouton souligné animé */
+@utility link-underline {
+  background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat;
+  transition: background-size 0.5s var(--ease-lux);
+  &:hover { background-size: 100% 1px; }
+}
+
+/* Leaflet (carte des infos pratiques) en tons sombres */
+.leaflet-container { font-family: inherit; background: var(--espresso); }
+.leaflet-tile-pane { filter: grayscale(1) invert(1) brightness(0.75) contrast(0.9) sepia(0.25); }
+.leaflet-popup-content-wrapper, .leaflet-popup-tip { background: var(--espresso); color: var(--ivory); }

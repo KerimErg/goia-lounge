@@ -1,19 +1,115 @@
 {
   "meta": {
     "title": "GOIA Lounge — Shisha lounge in Kehl, next to Strasbourg",
-    "description": "GOIA Lounge, an elegant shisha lounge in Kehl, a few minutes from Strasbourg. Signature shishas, mocktails, DJ nights. Book your table online."
+    "description": "GOIA, an elegant huqqa lounge in Kehl, just across from Strasbourg: signature shishas, mocktails, desserts and DJ nights. Book your table online."
   },
   "nav": {
     "home": "Home",
     "menu": "Menu",
     "booking": "Book",
     "privatization": "Private events",
-    "contact": "Contact"
+    "contact": "Contact",
+    "events": "Events",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "language": "Language",
+    "skip": "Skip to content"
   },
-  "common": {
-    "comingSoon": "The new website is coming very soon.",
+  "hero": {
+    "eyebrow": "Huqqa · Lounge · Kehl",
+    "tagline": "Exceptional shishas, mocktails and softly lit nights, just across from Strasbourg.",
     "book": "Book a table",
     "seeMenu": "See the menu",
-    "adultsOnly": "Adults only (18+)"
+    "scroll": "Discover"
+  },
+  "quick": {
+    "title": "Book your table",
+    "date": "Date",
+    "time": "Arrival",
+    "persons": "Guests",
+    "zone": "Area",
+    "anyZone": "No preference",
+    "check": "Check availability",
+    "pickDate": "Pick a date",
+    "closed": "Closed that day",
+    "personsN": "{n} guests",
+    "more": "More than {n} guests? Ask about <link>private hire</link>."
+  },
+  "experience": {
+    "eyebrow": "The GOIA experience",
+    "title": "A lounge made for taking your time",
+    "intro": "Amber light, marble, velvet and soft smoke: at GOIA, every detail invites you to slow down.",
+    "ambiance_t": "The atmosphere",
+    "ambiance": "An intimate setting, dimmed lights and spaces for two or for the whole group.",
+    "shisha_t": "The shishas",
+    "shisha": "Premium bowls, selected tobaccos and house creations, carefully prepared by our shisha masters.",
+    "service_t": "The service",
+    "service": "An attentive team, regular coal changes and desserts made for sharing.",
+    "music_t": "The music",
+    "music": "Deep house and oriental sounds, with DJ nights at the weekend."
+  },
+  "menuPreview": {
+    "eyebrow": "The menu",
+    "title": "Our signatures",
+    "text": "From house creations to reimagined classics, and freshly made mocktails.",
+    "shishas": "Signature shishas",
+    "drinks": "Mocktails",
+    "cta": "Discover the full menu"
+  },
+  "gallery": {
+    "eyebrow": "Moments",
+    "title": "The GOIA atmosphere",
+    "follow": "Follow us on Instagram"
+  },
+  "events": {
+    "eyebrow": "Agenda",
+    "title": "Upcoming events",
+    "empty": "No events announced right now. Follow us on Instagram so you don't miss a thing.",
+    "book": "Book for this night",
+    "type_DJ": "DJ night",
+    "type_SPORT": "Sport",
+    "type_THEME": "Themed night",
+    "type_LIVE": "Live",
+    "type_OTHER": "Event"
+  },
+  "reviews": {
+    "eyebrow": "Reviews",
+    "title": "What our guests say",
+    "empty": "Been to GOIA? Your review really helps us.",
+    "google": "See and leave a Google review",
+    "instagram": "Our moments on Instagram",
+    "source": "via {source}"
+  },
+  "info": {
+    "eyebrow": "Practical info",
+    "title": "Find us",
+    "address": "Address",
+    "hours": "Opening hours",
+    "closed": "Closed",
+    "openNow": "Open now",
+    "closedNow": "Closed now",
+    "access": "Getting here from Strasbourg",
+    "tram": "Tram D, “Kehl Bahnhof” stop, a short walk away.",
+    "parking": "Public car parks around Kehl station.",
+    "contact": "Contact",
+    "directions": "Directions",
+    "mapConsent": "The map is provided by OpenStreetMap. Displaying it sends your IP address to this service.",
+    "mapLoad": "Show map"
+  },
+  "footer": {
+    "tagline": "Huqqa lounge in Kehl, just across from Strasbourg.",
+    "adults": "Adults only (18+)",
+    "tobacco": "Smoking seriously harms you and others around you.",
+    "impressum": "Legal notice (Impressum)",
+    "privacy": "Privacy",
+    "rights": "All rights reserved."
+  },
+  "placeholder": {
+    "title": "Page in preparation",
+    "text": "This page is coming in an upcoming step.",
+    "back": "Back to home"
+  },
+  "common": {
+    "comingSoon": "The new website is coming very soon."
   }
 }

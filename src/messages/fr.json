@@ -1,19 +1,115 @@
 {
   "meta": {
     "title": "GOIA Lounge — Chicha lounge à Kehl, près de Strasbourg",
-    "description": "GOIA Lounge, chicha lounge élégant à Kehl, à deux pas de Strasbourg. Chichas signature, mocktails, soirées DJ. Réservez votre table en ligne."
+    "description": "GOIA, huqqa lounge élégant à Kehl, à deux pas de Strasbourg : chichas signature, mocktails, desserts et soirées DJ. Réservez votre table en ligne."
   },
   "nav": {
     "home": "Accueil",
     "menu": "La carte",
     "booking": "Réserver",
     "privatization": "Privatisation",
-    "contact": "Contact"
+    "contact": "Contact",
+    "events": "Événements",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "language": "Langue",
+    "skip": "Aller au contenu"
   },
-  "common": {
-    "comingSoon": "Le nouveau site arrive très bientôt.",
+  "hero": {
+    "eyebrow": "Huqqa · Lounge · Kehl",
+    "tagline": "Chichas d'exception, mocktails et nuits feutrées, à deux pas de Strasbourg.",
     "book": "Réserver une table",
     "seeMenu": "Voir la carte",
-    "adultsOnly": "Réservé aux personnes majeures (18+)"
+    "scroll": "Découvrir"
+  },
+  "quick": {
+    "title": "Réservez votre table",
+    "date": "Date",
+    "time": "Arrivée",
+    "persons": "Personnes",
+    "zone": "Espace",
+    "anyZone": "Peu importe",
+    "check": "Vérifier la disponibilité",
+    "pickDate": "Choisir une date",
+    "closed": "Fermé ce jour-là",
+    "personsN": "{n} pers.",
+    "more": "Plus de {n} personnes ? Pensez à la <link>privatisation</link>."
+  },
+  "experience": {
+    "eyebrow": "L'expérience GOIA",
+    "title": "Un lounge pensé pour prendre son temps",
+    "intro": "Lumière ambrée, marbre, velours et volutes : au GOIA, chaque détail invite à ralentir.",
+    "ambiance_t": "L'ambiance",
+    "ambiance": "Un décor intimiste, des lumières tamisées et des espaces pour se retrouver, à deux ou entre amis.",
+    "shisha_t": "Les chichas",
+    "shisha": "Têtes premium, tabacs sélectionnés et créations maison, préparées avec soin par nos chichamen.",
+    "service_t": "Le service",
+    "service": "Une équipe attentive, des changements de charbon réguliers et des desserts faits pour être partagés.",
+    "music_t": "La musique",
+    "music": "Deep house et sonorités orientales, et des soirées DJ le week-end."
+  },
+  "menuPreview": {
+    "eyebrow": "La carte",
+    "title": "Nos signatures",
+    "text": "Des créations maison aux classiques revisités, et des mocktails préparés minute.",
+    "shishas": "Chichas signature",
+    "drinks": "Mocktails",
+    "cta": "Découvrir toute la carte"
+  },
+  "gallery": {
+    "eyebrow": "Instants",
+    "title": "L'ambiance GOIA",
+    "follow": "Suivez-nous sur Instagram"
+  },
+  "events": {
+    "eyebrow": "Agenda",
+    "title": "Événements à venir",
+    "empty": "Pas d'événement annoncé pour le moment. Suivez-nous sur Instagram pour ne rien manquer.",
+    "book": "Réserver pour cette soirée",
+    "type_DJ": "Soirée DJ",
+    "type_SPORT": "Sport",
+    "type_THEME": "Soirée à thème",
+    "type_LIVE": "Live",
+    "type_OTHER": "Événement"
+  },
+  "reviews": {
+    "eyebrow": "Avis",
+    "title": "Ils parlent de nous",
+    "empty": "Vous êtes venus au GOIA ? Votre avis nous aide beaucoup.",
+    "google": "Voir et laisser un avis Google",
+    "instagram": "Nos moments sur Instagram",
+    "source": "via {source}"
+  },
+  "info": {
+    "eyebrow": "Infos pratiques",
+    "title": "Nous trouver",
+    "address": "Adresse",
+    "hours": "Horaires",
+    "closed": "Fermé",
+    "openNow": "Ouvert maintenant",
+    "closedNow": "Fermé actuellement",
+    "access": "Accès depuis Strasbourg",
+    "tram": "Tram D, arrêt « Kehl Bahnhof », à quelques pas.",
+    "parking": "Parkings publics autour de la gare de Kehl.",
+    "contact": "Contact",
+    "directions": "Itinéraire",
+    "mapConsent": "La carte est fournie par OpenStreetMap. En l'affichant, votre adresse IP est transmise à ce service.",
+    "mapLoad": "Afficher la carte"
+  },
+  "footer": {
+    "tagline": "Huqqa lounge à Kehl, à deux pas de Strasbourg.",
+    "adults": "Réservé aux personnes majeures (18+)",
+    "tobacco": "Fumer nuit gravement à votre santé et à celle de votre entourage.",
+    "impressum": "Mentions légales (Impressum)",
+    "privacy": "Confidentialité",
+    "rights": "Tous droits réservés."
+  },
+  "placeholder": {
+    "title": "Page en préparation",
+    "text": "Cette page arrive dans une prochaine étape du site.",
+    "back": "Retour à l'accueil"
+  },
+  "common": {
+    "comingSoon": "Le nouveau site arrive très bientôt."
   }
 }

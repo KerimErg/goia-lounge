@@ -4,7 +4,7 @@ Site et système de réservation de **GOIA Lounge**, chicha lounge à Kehl.
 Base technique reprise du site `KerimErg/location` (Next.js 15, Tailwind + shadcn/ui, Prisma + PostgreSQL, NextAuth), adaptée à la restauration :
 véhicules → **tables**, agences → **zones**, jours de location → **créneaux horaires**.
 
-> 🚧 Construction par étapes : **1. base + seed (fait)** → 2. design + accueil → 3. carte → 4. réservation + plan de salle → 5. privatisation + contact → 6. admin → 7. légal + SEO.
+> 🚧 Construction par étapes : 1. base + seed ✓ → **2. design + accueil ✓** → 3. carte → 4. réservation + plan de salle → 5. privatisation + contact → 6. admin → 7. légal + SEO.
 
 ## Démarrage local
 
@@ -32,6 +32,15 @@ Admin : http://localhost:3000/admin (identifiants affichés par le seed).
 3. Le script `vercel-build` exécute `prisma generate && prisma migrate deploy && next build` : les migrations sont appliquées à chaque déploiement.
 4. Seed (une seule fois, depuis votre machine) : `DATABASE_URL="<directe>" DIRECT_URL="<directe>" SEED_ALLOW_RESET=yes SEED_ADMIN_PASSWORD="…" npm run db:seed`.
 
+## Identité visuelle
+
+- **Logo** : `public/images/goia/logo-goia.svg`, vectorisé depuis le logo officiel (composant `src/components/brand/logo.tsx`).
+- **Couleurs** (`src/app/globals.css`) : nuit `#0E0D0C`, taupe `#7A6A5A` (fond du logo), marbre vert canard `#0B3F47`, laiton `#C9A46A`, ivoire `#F2EDE4`.
+- **Polices** auto-hébergées (aucun appel à Google, conforme DSGVO) : Italiana (titres), Jost (texte), Cormorant Garamond italique (accents).
+- **Accueil** : fumée animée en canvas (pause hors écran et si « réduire les animations »), apparitions au défilement, curseur doux sur ordinateur.
+- **Carte OSM** chargée uniquement après clic (consentement).
+- **Avis** : seuls les avis réels publiés depuis l'admin s'affichent ; sinon, invitation à laisser un avis.
+
 ## À compléter
 
-Adresse (provisoire : Bahnhofstraße 6, 77694 Kehl, à confirmer), téléphone, WhatsApp, email, horaires réels, logo, couleurs et photos de l'Instagram @goia.kehl.
+Adresse (provisoire : Bahnhofstraße 6, 77694 Kehl, à confirmer), téléphone, WhatsApp, email, horaires réels, carte réelle, photos haute définition (les actuelles font ≈ 450 px).
