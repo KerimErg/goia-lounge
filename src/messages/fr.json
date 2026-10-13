@@ -1,19 +1,182 @@
 {
   "meta": {
     "title": "GOIA Lounge — Chicha lounge à Kehl, près de Strasbourg",
-    "description": "GOIA Lounge, chicha lounge élégant à Kehl, à deux pas de Strasbourg. Chichas signature, mocktails, soirées DJ. Réservez votre table en ligne."
+    "description": "GOIA, huqqa lounge élégant à Kehl, à deux pas de Strasbourg : chichas signature, mocktails, desserts et soirées DJ. Réservez votre table en ligne."
   },
   "nav": {
     "home": "Accueil",
     "menu": "La carte",
     "booking": "Réserver",
     "privatization": "Privatisation",
-    "contact": "Contact"
+    "contact": "Contact",
+    "events": "Événements",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "language": "Langue",
+    "skip": "Aller au contenu"
+  },
+  "hero": {
+    "eyebrow": "Huqqa lounge · Kehl",
+    "lead": "Chicha lounge à Kehl, à deux pas de Strasbourg.",
+    "book": "Réserver une table",
+    "explore": "Voir la carte",
+    "today": "Ce soir",
+    "closedToday": "Fermé aujourd'hui",
+    "scroll": "Entrer",
+    "playVideo": "Lire la vidéo",
+    "pauseVideo": "Mettre la vidéo en pause"
+  },
+  "quick": {
+    "title": "Réservez votre table",
+    "date": "Date",
+    "time": "Arrivée",
+    "persons": "Personnes",
+    "zone": "Espace",
+    "anyZone": "Peu importe",
+    "check": "Vérifier la disponibilité",
+    "pickDate": "Choisir une date",
+    "closed": "Fermé ce jour-là",
+    "personsN": "{n} pers.",
+    "more": "Plus de {n} personnes ? Pensez à la <link>privatisation</link>."
+  },
+  "gallery": {
+    "eyebrow": "Galerie",
+    "title": "L'ambiance",
+    "follow": "Suivez-nous sur Instagram",
+    "hint": "Faites défiler"
+  },
+  "events": {
+    "eyebrow": "Agenda",
+    "title": "Événements à venir",
+    "empty": "Pas d'événement annoncé pour le moment. Suivez-nous sur Instagram pour ne rien manquer.",
+    "book": "Réserver pour cette soirée",
+    "type_DJ": "Soirée DJ",
+    "type_SPORT": "Sport",
+    "type_THEME": "Soirée à thème",
+    "type_LIVE": "Live",
+    "type_OTHER": "Événement"
+  },
+  "reviews": {
+    "eyebrow": "Avis",
+    "title": "Ils parlent de nous",
+    "empty": "Vous êtes venus au GOIA ? Votre avis nous aide beaucoup.",
+    "google": "Voir et laisser un avis Google",
+    "instagram": "Nos moments sur Instagram",
+    "source": "via {source}"
+  },
+  "info": {
+    "eyebrow": "Infos pratiques",
+    "title": "Nous trouver",
+    "address": "Adresse",
+    "hours": "Horaires",
+    "closed": "Fermé",
+    "openNow": "Ouvert maintenant",
+    "closedNow": "Fermé actuellement",
+    "access": "Accès depuis Strasbourg",
+    "tram": "Tram D, arrêt « Kehl Bahnhof », à quelques pas.",
+    "parking": "Parkings publics autour de la gare de Kehl.",
+    "contact": "Contact",
+    "directions": "Itinéraire",
+    "mapConsent": "La carte est fournie par OpenStreetMap. En l'affichant, votre adresse IP est transmise à ce service.",
+    "mapLoad": "Afficher la carte"
+  },
+  "footer": {
+    "tagline": "Huqqa lounge à Kehl, à deux pas de Strasbourg.",
+    "adults": "Réservé aux personnes majeures (18+)",
+    "tobacco": "Fumer nuit gravement à votre santé et à celle de votre entourage.",
+    "impressum": "Mentions légales (Impressum)",
+    "privacy": "Confidentialité",
+    "rights": "Tous droits réservés."
+  },
+  "placeholder": {
+    "title": "Page en préparation",
+    "text": "Cette page arrive dans une prochaine étape du site.",
+    "back": "Retour à l'accueil"
   },
   "common": {
-    "comingSoon": "Le nouveau site arrive très bientôt.",
+    "comingSoon": "Le nouveau site arrive très bientôt."
+  },
+  "booking": {
+    "eyebrow": "Réservation",
+    "title": "Réserver une table",
+    "lead": "Choisissez le jour, l'heure et le nombre de personnes.",
+    "or": "Ou écrivez-nous"
+  },
+  "welcome": {
+    "eyebrow": "Bienvenue",
+    "title": "Bienvenue au GOIA",
+    "text": "Un lounge chaleureux pour passer la soirée entre amis : chicha, boissons et desserts, dans une ambiance détendue.",
+    "cta": "Réserver une table"
+  },
+  "menuCards": {
+    "eyebrow": "La carte",
+    "title": "Notre carte",
+    "shisha_t": "Chichas",
+    "shisha": "Classiques et créations maison.",
+    "drinks_t": "Boissons",
+    "drinks": "Boissons fraîches et chaudes.",
+    "sweets_t": "Desserts",
+    "sweets": "Douceurs à partager.",
+    "cta": "Voir toute la carte"
+  },
+  "flow": {
+    "step1": "Votre soirée",
+    "step2": "Vos coordonnées",
+    "step3": "Confirmation",
+    "date": "Date",
+    "persons": "Personnes",
+    "zone": "Espace",
+    "anyZone": "Peu importe",
+    "time": "Heure d'arrivée",
+    "pickDate": "Choisissez une date pour voir les horaires.",
+    "loading": "Recherche des tables libres…",
+    "closed": "Le lounge est fermé ce jour-là. Choisissez une autre date.",
+    "full": "Complet",
+    "noneFree": "Plus de table libre ce jour-là pour ce nombre de personnes.",
+    "continue": "Continuer",
+    "back": "Modifier",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "phone": "Téléphone",
+    "email": "E-mail",
+    "occasion": "Occasion",
+    "occ_NONE": "Aucune en particulier",
+    "occ_BIRTHDAY": "Anniversaire",
+    "occ_FRIENDS": "Soirée entre amis",
+    "occ_DATE": "En amoureux",
+    "occ_BUSINESS": "Professionnel",
+    "occ_OTHER": "Autre",
+    "message": "Une demande particulière ? (facultatif)",
+    "adult": "Je confirme que toutes les personnes ont 18 ans ou plus.",
+    "privacy": "J'accepte que mes données soient utilisées pour gérer ma réservation (<link>confidentialité</link>).",
+    "confirm": "Confirmer la réservation",
+    "sending": "Envoi…",
+    "required": "Merci de remplir les champs obligatoires.",
+    "errUnavailable": "Désolé, ce créneau vient d'être pris. Choisissez une autre heure.",
+    "errRate": "Trop de tentatives. Réessayez dans quelques minutes.",
+    "errGeneric": "Une erreur est survenue. Réessayez ou contactez-nous.",
+    "thanks": "Merci {name}, votre table est réservée.",
+    "reference": "Référence",
+    "emailed": "Un e-mail de confirmation vous a été envoyé.",
+    "keepRef": "Gardez cette référence, elle vous sera demandée à l'arrivée.",
+    "home": "Retour à l'accueil",
+    "personsN": "{n} pers.",
+    "more": "Plus de {n} personnes ? Pensez à la <link>privatisation</link>.",
+    "title": "Réserver une table",
+    "lead": "Votre table en moins d'une minute."
+  },
+  "menuPage": {
+    "title": "La carte",
+    "sec_SHISHA": "Chichas",
+    "sec_DRINK": "Boissons",
+    "sec_FOOD": "Douceurs",
+    "extras": "Suppléments",
+    "tag_signature": "Signature",
+    "tag_new": "Nouveau",
+    "tag_popular": "Populaire",
+    "tag_premium": "Premium",
+    "note": "Prix en euros, TVA incluse. Chichas réservées aux personnes majeures.",
     "book": "Réserver une table",
-    "seeMenu": "Voir la carte",
-    "adultsOnly": "Réservé aux personnes majeures (18+)"
+    "empty": "La carte arrive bientôt."
   }
 }

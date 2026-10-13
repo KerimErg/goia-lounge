@@ -1,17 +1,34 @@
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
+import { Hero } from "@/components/home/hero";
+import { Welcome } from "@/components/home/welcome";
+import { MenuCards } from "@/components/home/menu-cards";
+import { Gallery } from "@/components/home/gallery";
+import { Events } from "@/components/home/events";
+import { Reviews } from "@/components/home/reviews";
+import { Booking } from "@/components/home/booking";
+import { contactLinks, getVenue } from "@/lib/venue";
 
-/** Page provisoire (étape 1). L'accueil complet arrive à l'étape 2. */
+export const revalidate = 300;
+
+/**
+ * Accueil : un parcours plutôt qu'une pile de blocs.
+ * Simple et lisible : Accueil plein écran → Bienvenue → Notre carte → Galerie
+ * → [Événements / Avis s'ils existent] → Réserver + Nous trouver → pied de page.
+ */
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const t = await getTranslations("common");
+  const { settings } = await getVenue();
+  const { instagram } = contactLinks(settings);
   return (
-    <main className="grid min-h-dvh place-items-center px-6 text-center">
-      <div>
-        <p className="text-xs tracking-[0.35em] text-brass uppercase">Shisha Lounge · Kehl</p>
-        <h1 className="mt-4 text-7xl text-brass-light sm:text-8xl">GOIA</h1>
-        <p className="mt-6 text-muted-foreground">{t("comingSoon")}</p>
-      </div>
-    </main>
+    <>
+      <Hero />
+      <Welcome />
+      <MenuCards />
+      <Gallery instagramUrl={instagram} />
+      <Events />
+      <Reviews googleReviewsUrl={settings.googleReviewsUrl} />
+      <Booking />
+    </>
   );
 }

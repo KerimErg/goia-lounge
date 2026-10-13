@@ -2,38 +2,50 @@
 @import "tw-animate-css";
 
 /*
- * GOIA — palette provisoire (à ajuster avec le logo et les photos Instagram) :
- * noir profond, laiton, bordeaux. Site uniquement en mode sombre.
+ * GOIA — direction « Taupe & marbre »
+ * Tirée du logo (taupe #7A6A5A, lettres ivoire) et des photos du lieu :
+ * marbre vert des tables, lumière d'ambre derrière le verre cannelé,
+ * agrumes et fruit de la passion. Le sombre (ink) est réservé aux moments immersifs.
  */
 :root {
-  --radius: 0.875rem;
-  --background: #0b0a0c;
-  --foreground: #eee7da;
-  --card: #141216;
-  --card-foreground: #eee7da;
-  --popover: #18161b;
-  --popover-foreground: #eee7da;
-  --primary: #c6a15b;          /* laiton */
-  --primary-foreground: #14100a;
-  --secondary: #1d1a20;
-  --secondary-foreground: #eee7da;
-  --muted: #1a181d;
-  --muted-foreground: #9d968b;
-  --accent: #5e1a24;           /* bordeaux */
-  --accent-foreground: #f3d9dd;
-  --destructive: #d9604f;
-  --border: #2a262c;
-  --input: #2f2a31;
-  --ring: #c6a15b;
-  --surface: #110f12;
-  --brass: #c6a15b;
-  --brass-light: #e3c88f;
-  --burgundy: #5e1a24;
+  --radius: 0.75rem;
+  --ink: #1b1511;
+  --ink-soft: #2a211b;
+  --taupe: #7a6a5a;
+  --taupe-deep: #5e5145;
+  --taupe-light: #a89785;
+  --linen: #ece4d7;
+  --ivory: #f7f2ea;
+  --marble: #0f3b3c;
+  --marble-deep: #0a2829;
+  --amber: #c98a45;
+  --ember: #b4532a;
+  --champagne: #c8a97e;
+
+  --background: var(--ivory);
+  --foreground: var(--ink);
+  --card: #fffdf8;
+  --card-foreground: var(--ink);
+  --popover: #fffdf8;
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--ivory);
+  --secondary: var(--linen);
+  --secondary-foreground: var(--ink);
+  --muted: var(--linen);
+  --muted-foreground: #6f6357;
+  --accent: var(--linen);
+  --accent-foreground: var(--ink);
+  --destructive: #a63b26;
+  --border: rgb(27 21 17 / 0.14);
+  --input: rgb(27 21 17 / 0.2);
+  --ring: var(--taupe);
 }
 
 @theme inline {
   --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-display), Georgia, serif;
+  --font-display: var(--font-display), "Didot", Georgia, serif;
+  --font-accent: var(--font-accent), Georgia, serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -52,16 +64,25 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-surface: var(--surface);
-  --color-brass: var(--brass);
-  --color-brass-light: var(--brass-light);
-  --color-burgundy: var(--burgundy);
-  --radius-sm: calc(var(--radius) - 6px);
-  --radius-md: calc(var(--radius) - 4px);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-taupe: var(--taupe);
+  --color-taupe-deep: var(--taupe-deep);
+  --color-taupe-light: var(--taupe-light);
+  --color-linen: var(--linen);
+  --color-ivory: var(--ivory);
+  --color-marble: var(--marble);
+  --color-marble-deep: var(--marble-deep);
+  --color-amber: var(--amber);
+  --color-ember: var(--ember);
+  --color-champagne: var(--champagne);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 6px);
-  --shadow-soft: 0 10px 30px -18px rgb(0 0 0 / 0.9);
-  --shadow-lift: 0 24px 60px -24px rgb(0 0 0 / 0.95);
+  --shadow-soft: 0 10px 30px -18px rgb(27 21 17 / 0.45);
+  --shadow-lift: 0 30px 70px -30px rgb(27 21 17 / 0.55);
+  --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @layer base {
@@ -69,21 +90,124 @@
     @apply border-border outline-ring/50;
   }
   html {
-    color-scheme: dark;
+    color-scheme: light;
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
   }
   body {
     @apply bg-background font-sans text-foreground antialiased;
+    font-weight: 350;
   }
   h1, h2, h3 {
-    @apply font-display font-medium tracking-tight;
+    @apply font-display font-normal;
+    letter-spacing: 0.01em;
+    text-wrap: balance;
   }
   ::selection {
-    background: var(--brass);
-    color: #14100a;
+    background: var(--taupe);
+    color: var(--ivory);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   }
 }
 
 @utility container-page {
-  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10;
+}
+
+/* Petites capitales espacées, comme « HUQQA – LOUNGE » sous le logo */
+@utility eyebrow {
+  @apply font-sans text-[0.7rem] font-medium uppercase;
+  letter-spacing: 0.38em;
+}
+
+/* Filet fin qui prend la couleur du texte */
+@utility rule {
+  height: 1px;
+  background: currentColor;
+  opacity: 0.35;
+}
+
+/* Marbre vert des tables : veines en SVG (feTurbulence) sur un vert profond */
+@utility bg-marble {
+  background-color: var(--marble);
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='900'><filter id='m'><feTurbulence type='turbulence' baseFrequency='0.0035 0.009' numOctaves='5' seed='11' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.86  0 0 0 0 0.95  0 0 0 0 0.92  -7 0 0 0 1.05'/></filter><rect width='100%' height='100%' filter='url(%23m)' opacity='0.22'/></svg>"),
+    radial-gradient(ellipse at 15% 0%, rgb(255 255 255 / 0.07), transparent 50%),
+    linear-gradient(165deg, var(--marble) 0%, var(--marble-deep) 100%);
+  background-size: 900px 900px, auto, auto;
+}
+
+/* Grain discret (papier) pour les surfaces claires et taupe */
+@utility bg-grain {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.09 0'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>");
+}
+
+/* Arche : le motif des niches lumineuses du lounge */
+@utility arch {
+  border-radius: 999px 999px 0 0;
+}
+
+/* Lien souligné animé */
+@utility link-underline {
+  background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat;
+  transition: background-size 0.5s var(--ease-lux);
+  &:hover { background-size: 100% 1px; }
+}
+
+/* Texte vertical (étiquettes en marge) */
+@utility text-vertical {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+/* Leaflet (carte des infos pratiques) en tons chauds */
+.leaflet-container { font-family: inherit; background: var(--linen); }
+.leaflet-tile-pane { filter: grayscale(0.85) sepia(0.25) contrast(0.95); }
+
+@keyframes scrollcue {
+  0% { transform: translateY(-100%); }
+  60%, 100% { transform: translateY(200%); }
+}
+
+@keyframes slowzoom {
+  from { transform: scale(1.04); }
+  to { transform: scale(1.16); }
+}
+
+/* Bandeau de mots qui défile en continu */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Entrée du hero en CSS pur : démarre dès le premier affichage, sans attendre le JavaScript */
+@keyframes rise-in {
+  from { opacity: 0.01; transform: translateY(24px); } /* 0.01 et non 0 : reste comptée par Chrome pour le LCP */
+  to { opacity: 1; transform: none; }
+}
+@keyframes mask-up {
+  from { transform: translateY(105%); }
+  to { transform: none; }
+}
+@utility enter-rise {
+  animation: rise-in 1.2s var(--ease-lux) both;
+}
+@utility enter-mask {
+  animation: mask-up 1.5s var(--ease-lux) both;
+}
+
+/* Champs de formulaire élégants : libellé en petites capitales, ligne fine */
+@utility field-label {
+  @apply mb-2 block font-sans text-[0.62rem] font-medium tracking-[0.3em] uppercase;
+  color: var(--taupe-deep);
+}
+@utility field-input {
+  @apply h-12 w-full rounded-none border-0 border-b bg-transparent px-0 text-base outline-none transition-colors;
+  border-color: rgb(27 21 17 / 0.25);
+  color: var(--ink);
+  &:focus { border-color: var(--ink); }
+  &:disabled { opacity: 0.45; }
 }

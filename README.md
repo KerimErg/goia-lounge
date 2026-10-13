@@ -4,7 +4,7 @@ Site et système de réservation de **GOIA Lounge**, chicha lounge à Kehl.
 Base technique reprise du site `KerimErg/location` (Next.js 15, Tailwind + shadcn/ui, Prisma + PostgreSQL, NextAuth), adaptée à la restauration :
 véhicules → **tables**, agences → **zones**, jours de location → **créneaux horaires**.
 
-> 🚧 Construction par étapes : **1. base + seed (fait)** → 2. design + accueil → 3. carte → 4. réservation + plan de salle → 5. privatisation + contact → 6. admin → 7. légal + SEO.
+> 🚧 Construction par étapes : 1. base + seed ✓ → **2. design + accueil ✓** → 3. carte → 4. réservation + plan de salle → 5. privatisation + contact → 6. admin → 7. légal + SEO.
 
 ## Démarrage local
 
@@ -32,6 +32,24 @@ Admin : http://localhost:3000/admin (identifiants affichés par le seed).
 3. Le script `vercel-build` exécute `prisma generate && prisma migrate deploy && next build` : les migrations sont appliquées à chaque déploiement.
 4. Seed (une seule fois, depuis votre machine) : `DATABASE_URL="<directe>" DIRECT_URL="<directe>" SEED_ALLOW_RESET=yes SEED_ADMIN_PASSWORD="…" npm run db:seed`.
 
+## Design de l'accueil
+
+Simple et lisible, inspiré des sites de grands lounges : peu de texte, titres clairs.
+
+1. **Accueil plein écran** : ambiance du lounge en fond, fumée, logo, une phrase, « Réserver une table » et « Voir la carte », bandeau horaires / adresse / Instagram.
+2. **Bienvenue** : une photo, une phrase, un bouton.
+3. **Notre carte** : Chichas, Boissons, Desserts (photo + une ligne) et « Voir toute la carte ».
+4. **Galerie** : 4 photos + Instagram.
+5. **Événements / Avis** : seulement s'ils sont publiés dans l'admin.
+6. **Réserver une table** puis **Nous trouver** (adresse, horaires, accès, carte OSM).
+
+- **Couleurs du logo** : encre `#1B1511`, taupe `#7A6A5A`, ivoire `#F7F2EA`, lin `#ECE4D7`, marbre vert `#0F3B3C`, ambre `#C98A45` (petits accents).
+- **Typographies** auto-hébergées (DSGVO) : Italiana (titres), Jost (texte).
+- **Photos basse définition** (≈ 450 px) : affichées petites pour rester nettes ; les grands fonds sont floutés volontairement. Remplacez-les dans `src/content/media.ts` par des originaux HD ou une vidéo (`public/videos/`).
+- **Aucune donnée inventée à l'accueil** : pas de prix, coordonnées provisoires masquées.
+
+> ⚠️ La carte (chichas, boissons, prix) et les 3 événements créés par le seed sont des **exemples** : les événements sont créés non publiés, la carte doit être remplacée par la vraie avant la mise en ligne.
+
 ## À compléter
 
-Adresse (provisoire : Bahnhofstraße 6, 77694 Kehl, à confirmer), téléphone, WhatsApp, email, horaires réels, logo, couleurs et photos de l'Instagram @goia.kehl.
+Adresse (provisoire : Bahnhofstraße 6, 77694 Kehl, à confirmer), téléphone, WhatsApp, email, horaires réels, carte réelle, photos haute définition (les actuelles font ≈ 450 px), vidéo du lieu pour le hero.

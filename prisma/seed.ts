@@ -146,6 +146,12 @@ const MENU: Cat[] = [
     { name: l("Citronnade gingembre", "Ingwer-Zitronade", "Ginger lemonade"), price: 600 },
     { name: l("Pomme Kiwi", "Apfel Kiwi", "Apple Kiwi"), price: 650 },
   ] },
+  // Douceurs
+  { slug: "desserts", section: "FOOD", name: l("Douceurs", "Süßes", "Sweets"), items: [
+    { name: l("Cheesecake spéculoos", "Spekulatius-Cheesecake", "Speculoos cheesecake"), desc: l("Fait maison, base biscuitée croustillante", "Hausgemacht, knuspriger Keksboden", "Homemade, crunchy biscuit base"), price: 750, tags: ["signature"] },
+    { name: l("Cheesecake fruits rouges", "Beeren-Cheesecake", "Red berry cheesecake"), price: 750 },
+    { name: l("Assiette de fruits frais", "Frischer Obstteller", "Fresh fruit platter"), desc: l("À partager, selon la saison", "Zum Teilen, je nach Saison", "To share, seasonal"), price: 1400 },
+  ] },
 ];
 
 const EXTRAS: { section: MenuSection; name: L; price: number }[] = [
@@ -213,7 +219,18 @@ async function main() {
   }
   await prisma.menuExtra.createMany({ data: EXTRAS.map((e, i) => ({ section: e.section, name: e.name, priceCents: e.price, order: i })) });
 
-  /* Événements (3 prochaines semaines) */
+  /* Galerie : photos fournies par le GOIA (à remplacer par les originaux haute définition) */
+  const g = (file: string, alt: L, order: number, width = 447, height = 447) => ({ url: `/images/goia/${file}`, alt, width, height, order });
+  await prisma.galleryImage.createMany({
+    data: [
+      g("chicha-fumee-ambiance.jpg", l("Chicha et volutes de fumée dans la lumière tamisée du GOIA", "Shisha und Rauchschwaden im gedämpften Licht des GOIA", "Shisha and swirling smoke in GOIA's soft light"), 0),
+      g("table-desserts-cocktails.jpg", l("Table dressée avec desserts et cocktails sans alcool", "Gedeckter Tisch mit Desserts und alkoholfreien Cocktails", "Table set with desserts and alcohol-free cocktails"), 1),
+      g("cheesecake-speculoos.jpg", l("Cheesecake spéculoos maison", "Hausgemachter Spekulatius-Cheesecake", "Homemade speculoos cheesecake"), 2, 387, 516),
+      g("chicha-cocktail-dessert.jpg", l("Chicha, cocktail et cheesecake sur table en marbre", "Shisha, Cocktail und Cheesecake auf Marmortisch", "Shisha, cocktail and cheesecake on a marble table"), 3),
+    ],
+  });
+
+  /* Événements d'exemple (3 prochaines semaines) — NON publiés : à valider ou remplacer dans l'admin */
   const today = nowInKehl().ymd;
   const nextWeekday = (from: string, wd: number) => { let d = addDays(from, 1); while (weekdayOf(d) !== wd) d = addDays(d, 1); return d; };
   const fri = nextWeekday(today, 5);
@@ -221,13 +238,13 @@ async function main() {
   const sat2 = addDays(nextWeekday(today, 6), 7);
   await prisma.event.createMany({
     data: [
-      { slug: "goia-nights-dj", type: "DJ", published: true, startsAt: kehlToUtc(fri, "21:00"),
+      { slug: "goia-nights-dj", type: "DJ", published: false, startsAt: kehlToUtc(fri, "21:00"),
         title: l("GOIA Nights — DJ set", "GOIA Nights — DJ-Set", "GOIA Nights — DJ set"),
         description: l("Deep house et sonorités orientales jusqu'à la fermeture. Réservation conseillée.", "Deep House und orientalische Klänge bis zum Schluss. Reservierung empfohlen.", "Deep house and oriental sounds until closing. Booking recommended.") },
-      { slug: "soiree-match", type: "SPORT", published: true, startsAt: kehlToUtc(wed, "20:45"),
+      { slug: "soiree-match", type: "SPORT", published: false, startsAt: kehlToUtc(wed, "20:45"),
         title: l("Soirée match sur grand écran", "Fußballabend auf Großbildleinwand", "Match night on the big screen"),
         description: l("Les grands matchs européens en direct, ambiance lounge.", "Die großen europäischen Spiele live, Lounge-Atmosphäre.", "The big European games live, in a lounge atmosphere.") },
-      { slug: "nuit-orientale", type: "THEME", published: true, startsAt: kehlToUtc(sat2, "21:30"),
+      { slug: "nuit-orientale", type: "THEME", published: false, startsAt: kehlToUtc(sat2, "21:30"),
         title: l("Nuit orientale", "Orientalische Nacht", "Oriental night"),
         description: l("Percussions live et chichas signature à l'honneur.", "Live-Percussion und Signature-Shishas im Mittelpunkt.", "Live percussion and our signature shishas in the spotlight.") },
     ],
