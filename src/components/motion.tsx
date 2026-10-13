@@ -15,21 +15,20 @@ export function MaskReveal({ children, className, from = "bottom", delay = 0 }: 
 }) {
   const reduce = useReducedMotion();
   const hidden = { bottom: "inset(100% 0% 0% 0%)", left: "inset(0% 100% 0% 0%)", right: "inset(0% 0% 0% 100%)" }[from];
-  if (reduce) return <div className={cn("relative overflow-hidden", className)}><div className="absolute inset-0">{children}</div></div>;
   return (
     <motion.div
       className={cn("relative overflow-hidden", className)}
       initial={{ clipPath: hidden }}
       whileInView={{ clipPath: "inset(0% 0% 0% 0%)" }}
       viewport={{ once: true, margin: "0px 0px -12% 0px" }}
-      transition={{ duration: 1.4, delay, ease: EASE }}
+      transition={reduce ? { duration: 0 } : { duration: 1.4, delay, ease: EASE }}
     >
       <motion.div
         className="absolute inset-0"
         initial={{ scale: 1.2 }}
         whileInView={{ scale: 1 }}
         viewport={{ once: true, margin: "0px 0px -12% 0px" }}
-        transition={{ duration: 2, delay, ease: EASE }}
+        transition={reduce ? { duration: 0 } : { duration: 2, delay, ease: EASE }}
       >
         {children}
       </motion.div>
@@ -57,10 +56,10 @@ export function LineTitle({ lines, as: Tag = "h2", className, delay = 0, id }: {
         <span key={i} className="block overflow-hidden pb-[0.08em]">
           <motion.span
             className="block"
-            initial={reduce ? false : { y: "105%" }}
+            initial={{ y: "105%" }}
             whileInView={{ y: "0%" }}
             viewport={{ once: true, margin: "0px 0px -10% 0px" }}
-            transition={{ duration: 1.1, delay: delay + i * 0.1, ease: EASE }}
+            transition={reduce ? { duration: 0 } : { duration: 1.1, delay: delay + i * 0.1, ease: EASE }}
           >
             {l}
           </motion.span>
