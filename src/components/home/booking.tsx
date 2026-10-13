@@ -30,7 +30,7 @@ export async function Booking() {
       {/* Plein écran : la table du GOIA, floutée, en fond */}
       <div className="relative isolate overflow-hidden pt-28 pb-24 sm:pt-36 sm:pb-32">
         <Image src={PHOTOS.tableBlur} alt="" fill sizes="100vw" quality={70} className="-z-20 scale-110 object-cover" />
-        <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_50%_40%,rgb(27_21_17/0.45),rgb(27_21_17/0.9)_80%)]" />
+        <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_50%_40%,rgb(11_38_36/0.45),rgb(11_38_36/0.9)_80%)]" />
         <div className="container-page flex flex-col items-center text-center">
           <Reveal><p className="eyebrow text-champagne">{t("eyebrow")}</p></Reveal>
           <h2 id="booking-title" className="mt-5 text-[clamp(2.8rem,7vw,5.6rem)] leading-none">{t("title")}</h2>

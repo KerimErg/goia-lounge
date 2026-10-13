@@ -21,14 +21,14 @@ export async function MenuCards() {
         <Reveal className="text-center">
           <p className="eyebrow text-taupe-deep">{t("eyebrow")}</p>
           <h2 id="menu-title" className="mt-5 text-[clamp(2.6rem,5.5vw,4.4rem)] leading-none">{t("title")}</h2>
-          <Ornament className="mx-auto mt-6 text-champagne" />
+          <Ornament className="mx-auto mt-6 text-apricot-deep" />
         </Reveal>
         <ul className="mx-auto mt-12 grid max-w-3xl gap-4 sm:mt-14 sm:grid-cols-2 sm:gap-8">
           {CARDS.map((c, i) => (
             <li key={c.key}>
               {/* Mobile : ligne compacte (photo + texte) ; ordinateur : carte verticale */}
               <Link href="/carte" className="group flex items-center gap-5 bg-ivory p-3 sm:block sm:bg-transparent sm:p-0 sm:text-center">
-                <MaskReveal delay={0.1 * i} className="aspect-square w-24 shrink-0 sm:aspect-[4/5] sm:w-full sm:outline sm:outline-1 sm:outline-offset-[10px] sm:outline-champagne/50">
+                <MaskReveal delay={0.1 * i} className="aspect-square w-24 shrink-0 sm:arch sm:aspect-[3/4] sm:w-full">
                   <Image src={c.src} alt="" fill sizes="(min-width: 640px) 320px, 96px" className="object-cover transition-transform duration-700 group-hover:scale-105" />
                 </MaskReveal>
                 <div>

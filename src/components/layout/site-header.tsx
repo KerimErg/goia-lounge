@@ -54,7 +54,7 @@ export function SiteHeader() {
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-[background-color,color,box-shadow] duration-500",
-        open ? "bg-taupe text-ivory" : overHero ? "bg-transparent text-ivory" : "bg-ivory/92 text-ink shadow-[0_1px_0_rgb(27_21_17/0.08)] backdrop-blur-xl",
+        open ? "bg-taupe text-ivory" : overHero ? "bg-transparent text-ivory" : "bg-ivory/92 text-ink shadow-[0_1px_0_rgb(11_38_36/0.08)] backdrop-blur-xl",
       )}
     >
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-ink focus:px-4 focus:py-2 focus:text-ivory">{t("skip")}</a>

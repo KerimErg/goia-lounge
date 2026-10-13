@@ -9,11 +9,10 @@
  */
 export type HeroVideo = { landscape: { mp4: string; webm?: string }; portrait?: { mp4: string; webm?: string } };
 
-export const HERO_MEDIA: { poster: string; posterPortrait: string; video: HeroVideo | null } = {
-  // Fonds d'ambiance volontairement flous (générés depuis les photos du lieu, basse définition) :
-  // à remplacer par une vidéo ou des photos HD dès qu'elles sont disponibles.
-  poster: "/images/goia/bg-fumee.jpg",
-  posterPortrait: "/images/goia/bg-fumee-portrait.jpg",
+export const HERO_MEDIA: { poster: string; inset: string; video: HeroVideo | null } = {
+  // Photos de la carte officielle (nettes) : arche principale + médaillon
+  poster: "/images/menu/mojito-framboise.jpg",
+  inset: "/images/menu/chicha-classique.jpg",
   video: null,
 };
 

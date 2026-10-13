@@ -12,6 +12,8 @@ const buttonVariants = cva(
         default: "bg-ink text-ivory bg-[linear-gradient(var(--taupe),var(--taupe))] bg-no-repeat bg-[length:0%_100%] hover:bg-[length:100%_100%] transition-[background-size,color,box-shadow] duration-500 ease-[var(--ease-lux)]",
         // Ivoire, pour les fonds sombres, taupe ou marbre
         light: "bg-ivory text-ink bg-[linear-gradient(var(--linen),var(--linen))] bg-no-repeat bg-[length:0%_100%] hover:bg-[length:100%_100%] transition-[background-size,color] duration-500 ease-[var(--ease-lux)]",
+        // Abricot (accent de la marque), texte vert nuit
+        apricot: "bg-champagne text-ink bg-[linear-gradient(var(--ivory),var(--ivory))] bg-no-repeat bg-[length:0%_100%] hover:bg-[length:100%_100%] transition-[background-size,color] duration-500 ease-[var(--ease-lux)]",
         dark: "bg-foreground text-background hover:bg-foreground/90",
         destructive: "bg-destructive text-white hover:bg-destructive/90",
         // Contour qui prend la couleur du texte de la section
