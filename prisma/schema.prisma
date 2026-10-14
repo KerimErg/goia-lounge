@@ -1,5 +1,6 @@
 // GOIA Lounge — PostgreSQL (Neon en production)
-// DATABASE_URL : connexion poolée (application) · DIRECT_URL : connexion directe (migrations).
+// DATABASE_URL : connexion poolée (application) · DATABASE_URL_UNPOOLED : connexion directe (migrations).
+// Ce sont les noms créés automatiquement par l'intégration Neon de Vercel (onglet Storage).
 // Toutes les dates/heures sont stockées en UTC ; l'heure de Kehl (Europe/Berlin)
 // est convertie dans src/lib/time.ts.
 // Les textes traduits sont des objets JSON { "fr": "...", "de": "...", "en": "..." }.
@@ -12,7 +13,7 @@ generator client {
 datasource db {
   provider   = "postgresql"
   url        = env("DATABASE_URL")
-  directUrl  = env("DIRECT_URL")
+  directUrl  = env("DATABASE_URL_UNPOOLED")
   extensions = [btree_gist]
 }
 

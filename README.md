@@ -10,7 +10,7 @@ véhicules → **tables**, agences → **zones**, jours de location → **créne
 
 ```bash
 npm install
-cp .env.example .env        # renseignez DATABASE_URL, DIRECT_URL, NEXTAUTH_SECRET
+cp .env.example .env        # renseignez DATABASE_URL, DATABASE_URL_UNPOOLED, NEXTAUTH_SECRET
 npm run db:deploy           # applique les migrations (prisma/migrations)
 SEED_ADMIN_PASSWORD="un-mot-de-passe" npm run db:seed
 npm run dev                 # http://localhost:3000 → redirige vers /fr
@@ -41,10 +41,10 @@ Admin : http://localhost:3000/admin (identifiants affichés par le seed).
 
 ## Déploiement Vercel (résumé, détaillé à l'étape 7)
 
-1. Base Neon : copier la connexion **poolée** dans `DATABASE_URL` (avec `pgbouncer=true`) et la **directe** dans `DIRECT_URL`.
-2. Variables Vercel (Production + Preview) : `DATABASE_URL`, `DIRECT_URL`, `NEXTAUTH_SECRET`, `NEXTAUTH_URL` (= domaine exact), puis pour les e-mails `RESEND_API_KEY`, `EMAIL_FROM`, `NOTIFY_EMAIL`, et `CRON_SECRET`.
+1. Base Neon : dans Vercel, onglet **Storage → Neon → Connect** (crée `DATABASE_URL` et `DATABASE_URL_UNPOOLED` automatiquement). Ou à la main : connexion **poolée** dans `DATABASE_URL`, **directe** dans `DATABASE_URL_UNPOOLED`.
+2. Variables Vercel (Production + Preview) : `NEXTAUTH_SECRET`, `NEXTAUTH_URL` (= domaine exact), puis pour les e-mails `RESEND_API_KEY`, `EMAIL_FROM`, `NOTIFY_EMAIL`, et `CRON_SECRET`.
 3. Le script `vercel-build` exécute `prisma generate && prisma migrate deploy && next build` : les migrations sont appliquées à chaque déploiement.
-4. Seed (une seule fois, depuis votre machine) : `DATABASE_URL="<directe>" DIRECT_URL="<directe>" SEED_ALLOW_RESET=yes SEED_ADMIN_PASSWORD="…" npm run db:seed`.
+4. Premier déploiement : la base vide est remplie automatiquement (carte, horaires, salle, sans données de démo) et l'accès propriétaire est créé depuis `ADMIN_EMAIL` / `ADMIN_PASSWORD` (voir `scripts/bootstrap.ts`).
 
 ## Design de l'accueil
 
