@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { MaskReveal } from "@/components/motion";
 import { Button } from "@/components/ui/button";
+import { Ornament } from "@/components/ornament";
 
 /**
  * Bienvenue — mise en page éditoriale, façon magazine : grande photo en arche cernée d'un filet doré,
@@ -35,17 +36,22 @@ export async function Welcome() {
           </div>
         </div>
 
-        {/* Texte */}
-        <div className="md:col-span-6 md:col-start-7 lg:col-span-5 lg:col-start-8">
-          <p className="eyebrow flex items-center gap-4 text-[0.62rem] text-taupe-deep"><span className="h-px w-10 bg-champagne" aria-hidden />Huqqa — Lounge</p>
-          <h2 id="welcome-title" className="mt-8 text-[clamp(3.2rem,6.4vw,6rem)] leading-[0.95]">
-            <span className="block">{first}</span>
-            <span className="block">
-              {rest.length > 0 && <span className="font-accent text-[0.8em] text-taupe-deep italic">{rest.join(" ")} </span>}
-              {last}
-            </span>
+        {/* Texte : composition centrée, façon faire-part */}
+        <div className="flex flex-col items-center text-center md:col-span-6 md:col-start-7 lg:col-span-5 lg:col-start-8">
+          <p className="eyebrow flex items-center gap-4 text-[0.6rem] text-taupe-deep">
+            <span className="h-px w-8 bg-champagne sm:w-12" aria-hidden />Huqqa · Lounge<span className="h-px w-8 bg-champagne sm:w-12" aria-hidden />
+          </p>
+          <h2 id="welcome-title" className="mt-9 flex flex-col items-center">
+            <span className="text-[clamp(3rem,5.6vw,5.2rem)] leading-none">{first}</span>
+            {rest.length > 0 && (
+              <span className="my-3 flex items-center gap-5 font-accent text-[clamp(1.6rem,2.6vw,2.4rem)] leading-none text-taupe-deep italic">
+                <span className="h-px w-10 bg-champagne/70 sm:w-16" aria-hidden />{rest.join(" ")}<span className="h-px w-10 bg-champagne/70 sm:w-16" aria-hidden />
+              </span>
+            )}
+            <span className="pl-[0.18em] text-[clamp(3.6rem,7.4vw,7rem)] leading-none tracking-[0.18em]">{last}</span>
           </h2>
-          <div className="sd-rise mt-12 grid gap-3 sm:flex" style={{ "--i": 1 } as CSSProperties}>
+          <Ornament className="mt-8 text-champagne" />
+          <div className="sd-rise mt-10 grid w-full max-w-xs gap-3 sm:flex sm:max-w-none sm:justify-center" style={{ "--i": 1 } as CSSProperties}>
             <Button asChild size="lux"><a href="#reserver">{t("cta")}</a></Button>
             <Button asChild size="lux" variant="outline"><Link href="/carte">{nav("explore")}</Link></Button>
           </div>
