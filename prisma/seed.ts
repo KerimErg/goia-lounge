@@ -160,10 +160,11 @@ async function main() {
     data: Object.entries(HOURS).map(([d, [opensAt, closesAt]]) => ({ weekday: Number(d), opensAt, closesAt })),
   });
 
-  /* Compte admin */
+  /* Compte admin (pas au déploiement : scripts/bootstrap.ts crée l'accès propriétaire depuis ADMIN_EMAIL) */
+  const skipAdmin = process.env.SEED_SKIP_ADMIN === "yes";
   const email = (process.env.SEED_ADMIN_EMAIL || "admin@goia.test").toLowerCase();
   const password = process.env.SEED_ADMIN_PASSWORD || randomBytes(9).toString("base64url");
-  await prisma.user.create({ data: { email, name: "Admin GOIA", role: "ADMIN", passwordHash: await bcrypt.hash(password, 10) } });
+  if (!skipAdmin) await prisma.user.create({ data: { email, name: "Admin GOIA", role: "ADMIN", passwordHash: await bcrypt.hash(password, 10) } });
 
   /* Salle */
   const zoneIds: Record<string, string> = {};
@@ -222,69 +223,75 @@ async function main() {
     ],
   });
 
-  /* Clients */
-  const customers = [];
-  for (let i = 0; i < 22; i++) {
-    const firstName = FIRST[i % FIRST.length];
-    const lastName = pick(LAST);
-    customers.push(await prisma.customer.create({
-      data: {
-        firstName, lastName,
-        email: `${firstName.normalize("NFD").replace(/[^\w]/g, "").toLowerCase()}.${lastName.normalize("NFD").replace(/[^\w]/g, "").toLowerCase()}${i}@example.com`,
-        phone: `+49 151 ${String(1000000 + i * 7919).slice(0, 7)}`,
-        locale: pick(["fr", "fr", "de", "de", "en"]), vip: i % 9 === 0,
-      },
-    }));
+  /* Données de démonstration (clients .example, réservations fictives) : seulement en local,
+     ou si SEED_DEMO=yes. Sur le vrai site, la base démarre sans aucune réservation. */
+  const demo = /@(localhost|127\.0\.0\.1|postgres)(:|\/)/.test(process.env.DATABASE_URL ?? "") && process.env.SEED_DEMO !== "no" || process.env.SEED_DEMO === "yes";
+  let demoCustomers = 0, created = 0;
+  if (demo) {
+    /* Clients */
+    const customers = [];
+    for (let i = 0; i < 22; i++) {
+      const firstName = FIRST[i % FIRST.length];
+      const lastName = pick(LAST);
+      customers.push(await prisma.customer.create({
+        data: {
+          firstName, lastName,
+          email: `${firstName.normalize("NFD").replace(/[^\w]/g, "").toLowerCase()}.${lastName.normalize("NFD").replace(/[^\w]/g, "").toLowerCase()}${i}@example.com`,
+          phone: `+49 151 ${String(1000000 + i * 7919).slice(0, 7)}`,
+          locale: pick(["fr", "fr", "de", "de", "en"]), vip: i % 9 === 0,
+        },
+      }));
+    }
+
+    /* 30 réservations sur les 3 prochaines semaines, sans chevauchement (vérifié par la base) */
+    const settings = { slot: 30, duration: 150, lastSeatingBeforeClose: 60 };
+    const busy: Record<string, { start: number; end: number }[]> = {};
+    const overlaps = (tableId: string, s: number, e: number) => (busy[tableId] ?? []).some((b) => s < b.end && b.start < e);
+    const statuses: ReservationStatus[] = ["CONFIRMED", "CONFIRMED", "CONFIRMED", "CONFIRMED", "CONFIRMED", "PENDING", "CANCELLED"];
+    const occasions: Occasion[] = ["NONE", "NONE", "FRIENDS", "BIRTHDAY", "DATE", "NONE", "BUSINESS"];
+    const preorderable = await prisma.menuItem.findMany({ where: { preorderable: true }, select: { id: true } });
+    let attempts = 0;
+    while (created < 20 && attempts++ < 500) {
+      const day = addDays(today, 1 + Math.floor(rand() * 21));
+      const [opensAt, closesAt] = HOURS[weekdayOf(day)];
+      const open = toMinutes(opensAt);
+      let close = toMinutes(closesAt);
+      if (close <= open) close += 1440;
+      const slots = [];
+      for (let m = open; m <= close - settings.lastSeatingBeforeClose; m += settings.slot) slots.push(m);
+      const m = pick(slots);
+      const time = fromMinutes(m);
+      const startDay = m >= 1440 ? addDays(day, 1) : day; // créneau après minuit
+      const startAt = kehlToUtc(startDay, time);
+      const endAt = new Date(startAt.getTime() + settings.duration * 60000);
+      const party = pick([2, 2, 2, 3, 4, 4, 5, 6]);
+      const candidates = tables.filter((t) => t.minCovers <= party && party <= t.maxCovers)
+        .sort((a, b) => a.maxCovers - b.maxCovers);
+      const table = candidates.find((t) => !overlaps(t.id, startAt.getTime(), endAt.getTime()));
+      if (!table) continue;
+      const status = pick(statuses);
+      if (status !== "CANCELLED") (busy[table.id] ??= []).push({ start: startAt.getTime(), end: endAt.getTime() });
+      const customer = pick(customers);
+      const occasion = pick(occasions);
+      await prisma.reservation.create({
+        data: {
+          reference: `GO-${randomBytes(4).toString("hex").slice(0, 6).toUpperCase()}`,
+          status, source: pick(["WEBSITE", "WEBSITE", "WEBSITE", "PHONE"] as const),
+          customerId: customer.id, startAt, endAt, partySize: party, preferredZoneId: table.zoneId,
+          occasion, specialRequest: occasion === "BIRTHDAY" ? "Bougie sur le dessert si possible 🎂" : null,
+          preorder: preorderable.length && rand() < 0.3 ? [{ menuItemId: pick(preorderable).id, quantity: 1 }] : undefined,
+          locale: customer.locale, adultConfirmed: true, privacyAcceptedAt: new Date(),
+          cancelledBy: status === "CANCELLED" ? "client" : null,
+          tables: { create: [{ tableId: table.id, startAt, endAt }] },
+        },
+      });
+      created++;
+    }
+    demoCustomers = customers.length;
   }
 
-  /* 30 réservations sur les 3 prochaines semaines, sans chevauchement (vérifié par la base) */
-  const settings = { slot: 30, duration: 150, lastSeatingBeforeClose: 60 };
-  const busy: Record<string, { start: number; end: number }[]> = {};
-  const overlaps = (tableId: string, s: number, e: number) => (busy[tableId] ?? []).some((b) => s < b.end && b.start < e);
-  const statuses: ReservationStatus[] = ["CONFIRMED", "CONFIRMED", "CONFIRMED", "CONFIRMED", "CONFIRMED", "PENDING", "CANCELLED"];
-  const occasions: Occasion[] = ["NONE", "NONE", "FRIENDS", "BIRTHDAY", "DATE", "NONE", "BUSINESS"];
-  const preorderable = await prisma.menuItem.findMany({ where: { preorderable: true }, select: { id: true } });
-  let created = 0;
-  let attempts = 0;
-  while (created < 20 && attempts++ < 500) {
-    const day = addDays(today, 1 + Math.floor(rand() * 21));
-    const [opensAt, closesAt] = HOURS[weekdayOf(day)];
-    const open = toMinutes(opensAt);
-    let close = toMinutes(closesAt);
-    if (close <= open) close += 1440;
-    const slots = [];
-    for (let m = open; m <= close - settings.lastSeatingBeforeClose; m += settings.slot) slots.push(m);
-    const m = pick(slots);
-    const time = fromMinutes(m);
-    const startDay = m >= 1440 ? addDays(day, 1) : day; // créneau après minuit
-    const startAt = kehlToUtc(startDay, time);
-    const endAt = new Date(startAt.getTime() + settings.duration * 60000);
-    const party = pick([2, 2, 2, 3, 4, 4, 5, 6]);
-    const candidates = tables.filter((t) => t.minCovers <= party && party <= t.maxCovers)
-      .sort((a, b) => a.maxCovers - b.maxCovers);
-    const table = candidates.find((t) => !overlaps(t.id, startAt.getTime(), endAt.getTime()));
-    if (!table) continue;
-    const status = pick(statuses);
-    if (status !== "CANCELLED") (busy[table.id] ??= []).push({ start: startAt.getTime(), end: endAt.getTime() });
-    const customer = pick(customers);
-    const occasion = pick(occasions);
-    await prisma.reservation.create({
-      data: {
-        reference: `GO-${randomBytes(4).toString("hex").slice(0, 6).toUpperCase()}`,
-        status, source: pick(["WEBSITE", "WEBSITE", "WEBSITE", "PHONE"] as const),
-        customerId: customer.id, startAt, endAt, partySize: party, preferredZoneId: table.zoneId,
-        occasion, specialRequest: occasion === "BIRTHDAY" ? "Bougie sur le dessert si possible 🎂" : null,
-        preorder: preorderable.length && rand() < 0.3 ? [{ menuItemId: pick(preorderable).id, quantity: 1 }] : undefined,
-        locale: customer.locale, adultConfirmed: true, privacyAcceptedAt: new Date(),
-        cancelledBy: status === "CANCELLED" ? "client" : null,
-        tables: { create: [{ tableId: table.id, startAt, endAt }] },
-      },
-    });
-    created++;
-  }
-
-  console.log(`✓ ${ZONES.length} zones, ${tables.length} tables, ${itemCount} produits (${MENU.filter((c) => c.section === "SHISHA").reduce((n, c) => n + c.items.length, 0)} chichas), ${EXTRAS.length} suppléments, 3 événements, ${customers.length} clients, ${created} réservations`);
-  console.log(`✓ Compte admin : ${email} / ${process.env.SEED_ADMIN_PASSWORD ? "(mot de passe SEED_ADMIN_PASSWORD)" : password}`);
+  console.log(`✓ ${ZONES.length} zones, ${tables.length} tables, ${itemCount} produits (${MENU.filter((c) => c.section === "SHISHA").reduce((n, c) => n + c.items.length, 0)} chichas), ${EXTRAS.length} suppléments, 3 événements, ${demoCustomers} clients, ${created} réservations${demo ? " (démo)" : ""}`);
+  if (!skipAdmin) console.log(`✓ Compte admin : ${email} / ${process.env.SEED_ADMIN_PASSWORD ? "(mot de passe SEED_ADMIN_PASSWORD)" : password}`);
   console.log("  Aucun avis n'a été créé : ajoutez de vrais avis depuis l'admin.");
 }
 
