@@ -32,3 +32,5 @@ export function IntroCurtain() {
 export function ScrollProgress() {
   return <div className="scroll-progress" aria-hidden />;
 }
+
+export { InView } from "./in-view";
