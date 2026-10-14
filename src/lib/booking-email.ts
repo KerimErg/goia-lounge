@@ -64,3 +64,21 @@ export function sendDailySummary(to: string, dateLabel: string, rows: { time: st
     : "<p>Aucune réservation pour ce soir.</p>";
   return send(to, `Ce soir · ${rows.length} réservation(s) · ${total} pers.`, frame(`<h2 style="font-weight:400">Réservations — ${esc(dateLabel)}</h2>${list}`));
 }
+
+const C = {
+  fr: { subject: (v: string) => `Votre réservation au ${v} est annulée`, hi: "Bonjour", body: "Nous sommes désolés : votre réservation a été annulée par le lounge.", ref: "Référence", persons: "personnes", contact: "Pour toute question, répondez simplement à cet e-mail ou écrivez-nous sur Instagram.", end: "À bientôt au GOIA." },
+  de: { subject: (v: string) => `Deine Reservierung im ${v} wurde storniert`, hi: "Hallo", body: "Es tut uns leid: Deine Reservierung wurde von der Lounge storniert.", ref: "Referenz", persons: "Personen", contact: "Bei Fragen antworte einfach auf diese E-Mail oder schreib uns auf Instagram.", end: "Bis bald im GOIA." },
+  en: { subject: (v: string) => `Your booking at ${v} has been cancelled`, hi: "Hello", body: "We're sorry: your booking has been cancelled by the lounge.", ref: "Reference", persons: "guests", contact: "Any question? Simply reply to this email or message us on Instagram.", end: "See you soon at GOIA." },
+};
+
+/** Au client : sa réservation a été annulée par l'équipe (depuis l'admin). */
+export function sendCustomerCancellation(m: BookingMail, replyTo?: string | null) {
+  const t = C[m.locale];
+  return send(m.email, t.subject(m.venue), frame(`<p>${t.hi} ${esc(m.firstName)},</p><p>${t.body}</p>
+<p style="font-size:20px;margin:20px 0"><s>${esc(m.dateLabel)} · ${m.time}</s><br>${m.persons} ${t.persons}</p>
+<p>${t.ref} : <strong style="letter-spacing:.1em">${m.reference}</strong></p>
+<p style="color:#5e5145">${t.contact}</p><p>${t.end}</p>`), replyTo ?? undefined);
+}
+
+/** Les envois sont-ils configurés (clé Resend + adresse d'expédition) ? */
+export const emailConfigured = () => !!(process.env.RESEND_API_KEY && process.env.EMAIL_FROM);

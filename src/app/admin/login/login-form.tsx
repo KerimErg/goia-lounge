@@ -6,6 +6,7 @@ import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Logo } from "@/components/brand/logo";
 
 export function LoginForm() {
   const router = useRouter();
@@ -15,7 +16,7 @@ export function LoginForm() {
 
   return (
     <form
-      className="w-full max-w-sm rounded-3xl border bg-card p-8 shadow-lift"
+      className="w-full max-w-sm rounded-[2rem] bg-ivory p-8 text-ink shadow-lift sm:p-10"
       onSubmit={(e) => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
@@ -28,14 +29,15 @@ export function LoginForm() {
         });
       }}
     >
-      <p className="font-display text-4xl text-taupe">GOIA</p>
-      <h1 className="mt-1 text-2xl">Espace équipe</h1>
+      <Logo className="mx-auto w-32 text-ink" />
+      <p className="eyebrow mt-3 text-center text-[0.55rem] text-taupe-deep">Huqqa — Lounge</p>
+      <h1 className="mt-8 text-center font-display text-3xl">Espace équipe</h1>
       <div className="mt-6 grid gap-4">
         <div className="grid gap-2"><Label htmlFor="email">E-mail</Label><Input id="email" name="email" type="email" autoComplete="username" required /></div>
         <div className="grid gap-2"><Label htmlFor="password">Mot de passe</Label><Input id="password" name="password" type="password" autoComplete="current-password" required /></div>
       </div>
       {error && <p role="alert" className="mt-4 text-sm text-destructive">{error}</p>}
-      <Button type="submit" className="mt-6 w-full" disabled={pending}>{pending ? "Connexion…" : "Se connecter"}</Button>
+      <Button type="submit" size="lux" className="mt-8 w-full" disabled={pending}>{pending ? "Connexion…" : "Se connecter"}</Button>
     </form>
   );
 }
