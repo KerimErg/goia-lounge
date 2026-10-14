@@ -63,6 +63,10 @@ export async function SiteFooter() {
           </p>
         </div>
       </div>
+      {/* Grand logo en fin de page : monte doucement quand on arrive en bas */}
+      <div aria-hidden className="overflow-clip px-5 pb-6 sm:px-8">
+        <div className="sd-logo"><Logo className="w-full text-champagne/20" title="" /></div>
+      </div>
     </footer>
   );
 }

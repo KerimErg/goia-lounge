@@ -87,21 +87,21 @@ export function HeroStage({ media, address, instagram, text }: {
       <motion.div style={{ y: contentY, opacity: contentOpacity }} className="container-page relative z-10 flex flex-1 flex-col items-center justify-center pt-20 text-center">
         {/* Logo : chaque lettre monte derrière un masque */}
         <div className="w-[min(86vw,720px)] overflow-hidden">
-          <div className="enter-mask" style={{ animationDelay: "0.35s" }}>
+          <div className="enter-mask" style={{ animationDelay: "(0.35s)" }}>
             <Logo className="w-full text-ivory drop-shadow-[0_8px_40px_rgb(27_21_17/0.5)]" />
           </div>
         </div>
-        <p style={{ animationDelay: "0.9s" }} className="enter-rise eyebrow mt-6 text-[clamp(0.62rem,1.4vw,0.85rem)] tracking-[0.7em] text-ivory/90">Huqqa — Lounge</p>
+        <p style={{ animationDelay: "(0.9s)" }} className="enter-rise eyebrow mt-6 text-[clamp(0.62rem,1.4vw,0.85rem)] tracking-[0.7em] text-ivory/90">Huqqa — Lounge</p>
 
-        <div style={{ animationDelay: "1.1s" }} className="enter-rise mt-8 text-champagne"><Ornament /></div>
-        <div style={{ animationDelay: "1.3s" }} className="enter-rise mt-10 grid w-full max-w-sm gap-3 sm:flex sm:max-w-none sm:justify-center">
+        <div style={{ animationDelay: "(1.1s)" }} className="enter-rise mt-8 text-champagne"><Ornament /></div>
+        <div style={{ animationDelay: "(1.3s)" }} className="enter-rise mt-10 grid w-full max-w-sm gap-3 sm:flex sm:max-w-none sm:justify-center">
           <Button asChild size="lux" variant="light"><a href="#reserver">{text.book}</a></Button>
           <Button asChild size="lux" variant="outline" className="text-ivory backdrop-blur-sm"><Link href="/carte">{text.explore}</Link></Button>
         </div>
       </motion.div>
 
       {/* Bandeau d'infos */}
-      <div style={{ animationDelay: "1.5s" }} className="enter-rise relative z-10 border-t border-ivory/15 bg-ink/30 backdrop-blur-md">
+      <div style={{ animationDelay: "(1.5s)" }} className="enter-rise relative z-10 border-t border-ivory/15 bg-ink/30 backdrop-blur-md">
         <div className="container-page grid grid-cols-2 items-center gap-4 py-4 text-[0.68rem] tracking-[0.2em] text-ivory/85 uppercase sm:grid-cols-3">
           <p className="flex items-center gap-2.5"><span className="size-1.5 animate-pulse rounded-full bg-amber motion-reduce:animate-none" aria-hidden />{text.tonight}</p>
           <p className="hidden text-center sm:block">{address}</p>
