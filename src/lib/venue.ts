@@ -9,7 +9,10 @@ export const getVenue = cache(async () => {
     prisma.openingHours.findMany({ orderBy: { weekday: "asc" } }),
     prisma.zone.findMany({ where: { active: true }, orderBy: { order: "asc" } }),
   ]);
-  if (!settings) throw new Error("Réglages absents : lancez le seed (npm run db:seed).");
+  if (!settings) {
+    console.error("[venue] Réglages absents dans la base : elle n'a pas été remplie (voir scripts/bootstrap.ts).");
+    throw new Error("Réglages absents : lancez le seed (npm run db:seed).");
+  }
   return { settings, hours, zones };
 });
 
