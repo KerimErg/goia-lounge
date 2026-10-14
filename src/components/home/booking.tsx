@@ -5,11 +5,9 @@ import { InstagramIcon, WhatsAppIcon } from "@/components/brand/icons";
 import { Reveal } from "@/components/reveal";
 import { Ornament } from "@/components/ornament";
 import { PHOTOS } from "@/content/media";
-import { prisma } from "@/lib/prisma";
 import { tr } from "@/lib/localized";
-import { nowInKehl } from "@/lib/time";
 import { contactLinks, getVenue } from "@/lib/venue";
-import { QuickBooking } from "./quick-booking";
+import { LiveBooking } from "@/components/booking/live-booking";
 import { VenueInfo } from "@/components/venue-info";
 
 /**
@@ -18,11 +16,9 @@ import { VenueInfo } from "@/components/venue-info";
  */
 export async function Booking() {
   const t = await getTranslations("booking");
-  const q = await getTranslations("quick");
   const info = await getTranslations("info");
   const locale = await getLocale();
-  const { settings: s, hours, zones } = await getVenue();
-  const specials = await prisma.specialDay.findMany({ where: { date: { gte: new Date(`${nowInKehl().ymd}T00:00:00Z`) } } });
+  const { settings: s, zones } = await getVenue();
   const links = contactLinks(s);
 
   return (
@@ -36,18 +32,14 @@ export async function Booking() {
           <h2 id="booking-title" className="mt-5 text-[clamp(2.8rem,7vw,5.6rem)] leading-none">{t("title")}</h2>
           <Ornament className="mx-auto mt-6 text-champagne" />
           <p className="mt-6 max-w-lg text-lg text-ivory/85">{t("lead")}</p>
-          <Reveal delay={0.15} className="mt-12 w-full max-w-5xl text-left">
-            <QuickBooking
-              hours={hours}
-              specials={specials.map((d) => ({ date: d.date.toISOString().slice(0, 10), closed: d.closed, opensAt: d.opensAt, closesAt: d.closesAt }))}
-              rules={{ slotIntervalMin: s.slotIntervalMin, lastSeatingBeforeCloseMin: s.lastSeatingBeforeCloseMin, minLeadMin: s.minLeadMin, maxDaysAhead: s.maxDaysAhead }}
+          <div className="mt-12 w-full">
+            <LiveBooking
               zones={zones.map((z) => ({ slug: z.slug, name: tr(z.name, locale) }))}
               maxParty={s.maxOnlinePartySize}
+              maxDaysAhead={s.maxDaysAhead}
+              instagram={links.instagram}
             />
-          </Reveal>
-          <p className="mt-6 text-sm text-ivory/85">
-            {q.rich("more", { n: s.maxOnlinePartySize, link: (c) => links.instagram ? <a href={links.instagram} target="_blank" rel="noopener" className="underline decoration-ivory/40 underline-offset-4 hover:decoration-ivory">{c}</a> : <>{c}</> })}
-          </p>
+          </div>
           {(links.whatsapp || links.phone || links.email || links.instagram) && (
             <div className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm">
               <span className="eyebrow text-[0.62rem] text-ivory/80">{t("or")}</span>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
-import { BookingFlow } from "@/components/booking/booking-flow";
+import { LiveBooking } from "@/components/booking/live-booking";
 import { Ornament } from "@/components/ornament";
 import { tr } from "@/lib/localized";
 import { contactLinks, getVenue } from "@/lib/venue";
@@ -30,7 +30,7 @@ export default async function ReservationPage({ params, searchParams }: {
         <h1 className="mt-6 text-[clamp(2.8rem,7vw,5.2rem)] leading-none">{t("title")}</h1>
         <p className="mt-5 text-ivory/70">{t("lead")}</p>
       </div>
-      <BookingFlow
+      <LiveBooking
         zones={zones.map((z) => ({ slug: z.slug, name: tr(z.name, lang) }))}
         maxParty={settings.maxOnlinePartySize}
         maxDaysAhead={settings.maxDaysAhead}

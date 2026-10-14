@@ -40,7 +40,7 @@ export async function availability(ctx: Ctx, ymd: string, persons: number, zoneS
   const { settings, hours, specials, rules } = ctx;
   const slots = arrivalSlots(ymd, hours, rules, specials);
   const w = dayWindow(ymd, hours, specials);
-  if (!w || slots.length === 0) return { slots: [] as { time: string; available: boolean }[], tablesFor: () => [] as string[] };
+  if (!w || slots.length === 0) return { slots: [] as { time: string; available: boolean; left: number }[], tablesFor: () => [] as string[] };
 
   const durationMs = settings.defaultDurationMin * 60_000;
   const first = arrivalInstant(ymd, slots[0], w.open);
@@ -65,16 +65,17 @@ export async function availability(ctx: Ctx, ymd: string, persons: number, zoneS
     select: { startAt: true, endAt: true, partySize: true },
   });
   const STEP = 15 * 60_000;
-  /** Respecte les plafonds : personnes présentes à tout instant, et arrivées sur le même créneau. */
-  const capacityOk = (s: number, e: number) => {
+  /** Places encore disponibles sur un créneau : le plus petit des deux plafonds (présents, arrivées). */
+  const placesLeft = (s: number, e: number) => {
     const arrivals = booked.filter((r) => r.startAt.getTime() === s).reduce((n, r) => n + r.partySize, 0);
-    if (arrivals + persons > settings.maxGuestsPerSlot) return false;
+    let left = settings.maxGuestsPerSlot - arrivals;
     for (let t = s; t < e; t += STEP) {
       const present = booked.filter((r) => r.startAt.getTime() <= t && r.endAt.getTime() > t).reduce((n, r) => n + r.partySize, 0);
-      if (present + persons > settings.maxGuestsAtOnce) return false;
+      left = Math.min(left, settings.maxGuestsAtOnce - present);
     }
-    return true;
+    return Math.max(0, left);
   };
+  const capacityOk = (s: number, e: number) => placesLeft(s, e) >= persons;
 
   const tablesFor = (time: string) => {
     const s = arrivalInstant(ymd, time, w.open).getTime(), e = s + durationMs;
@@ -84,5 +85,12 @@ export async function availability(ctx: Ctx, ymd: string, persons: number, zoneS
       .filter((t) => !t.blocks.some((b) => b.startsAt.getTime() < e && b.endsAt.getTime() > s))
       .map((t) => t.id);
   };
-  return { slots: slots.map((time) => ({ time, available: tablesFor(time).length > 0 })), tablesFor, open: w.open };
+  return {
+    slots: slots.map((time) => {
+      const s = arrivalInstant(ymd, time, w.open).getTime();
+      return { time, available: tablesFor(time).length > 0, left: placesLeft(s, s + durationMs) };
+    }),
+    tablesFor,
+    open: w.open,
+  };
 }
