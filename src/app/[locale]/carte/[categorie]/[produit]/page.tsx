@@ -44,7 +44,6 @@ export default async function MenuItemPage({ params }: { params: Promise<{ local
   const f = await find(categorie, produit);
   if (!f) notFound();
   const { cats, c, it } = f;
-  const shisha = c.section === "SHISHA";
   const tags = it.tags.filter((g) => TAGS.includes(g)).map((g) => t(`tag_${g}`));
   const idx = c.items.findIndex((x) => x.id === it.id);
   const prev = c.items[(idx - 1 + c.items.length) % c.items.length];
@@ -57,7 +56,7 @@ export default async function MenuItemPage({ params }: { params: Promise<{ local
       <div className="mx-auto max-w-6xl lg:grid lg:grid-cols-2 lg:items-start lg:gap-16 lg:px-10 lg:pt-12">
         {/* Photo */}
         <div className="relative lg:sticky lg:top-28">
-          <div className={`enter-rise relative overflow-hidden bg-ink lg:rounded-[2rem] lg:outline lg:outline-1 lg:outline-offset-[12px] lg:outline-champagne/60 ${shisha ? "aspect-[4/5] lg:aspect-[2/3]" : "aspect-square"}`}>
+          <div className={`enter-rise relative overflow-hidden bg-ink lg:rounded-[2rem] lg:outline lg:outline-1 lg:outline-offset-[12px] lg:outline-champagne/60 aspect-[4/5] lg:aspect-[2/3]`}>
             {it.imageUrl ? (
               <Image src={it.imageUrl} alt={tr(it.name, lang)} fill priority sizes="(min-width: 1024px) 560px, 100vw" className="animate-[slowzoom_18s_ease-in-out_infinite_alternate] object-cover motion-reduce:animate-none" />
             ) : (

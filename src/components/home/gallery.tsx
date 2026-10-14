@@ -6,13 +6,13 @@ import { Logo } from "@/components/brand/logo";
 import { Words } from "@/components/fx";
 import { Ornament } from "@/components/ornament";
 
-// Cinq images qui défilent comme une story Instagram (le lieu, puis deux envies de la carte)
+// Cinq images verticales (9:16, haute définition) qui défilent comme une story Instagram
 const SLIDES = [
-  { src: "/images/goia/chicha-fumee-ambiance.jpg", alt: "Chicha et volutes de fumée dans la lumière tamisée du GOIA" },
-  { src: "/images/menu/rubis-des-iles.jpg", alt: "Cocktail Rubis des Îles" },
-  { src: "/images/goia/table-desserts-cocktails.jpg", alt: "Table dressée avec desserts et boissons" },
-  { src: "/images/menu/fondant-chocolat.jpg", alt: "Fondant au chocolat" },
-  { src: "/images/goia/chicha-cocktail-dessert.jpg", alt: "Chicha, cocktail et cheesecake sur une table en marbre" },
+  { src: "/images/ambiance/chicha-classique.jpg", alt: "Chicha au GOIA" },
+  { src: "/images/ambiance/mojito-fraise.jpg", alt: "Mojito Fraise" },
+  { src: "/images/ambiance/quasar.jpg", alt: "Tête Quasar" },
+  { src: "/images/ambiance/rubis-des-iles.jpg", alt: "Rubis des Îles" },
+  { src: "/images/ambiance/mojito-classic.jpg", alt: "Mojito Classic" },
 ];
 
 /**
@@ -49,7 +49,7 @@ export async function Gallery({ instagramUrl }: { instagramUrl: string | null })
           <div className="relative aspect-[9/16] overflow-hidden rounded-[2rem] bg-ink shadow-lift ring-1 ring-ink/10">
             {SLIDES.map((s, i) => (
               <div key={s.src} style={{ "--i": i } as CSSProperties} className="story-slide absolute inset-0">
-                <Image src={s.src} alt={s.alt} fill sizes="360px" className="story-zoom object-cover" />
+                <Image src={s.src} alt={s.alt} fill sizes="(min-width: 640px) 360px, 78vw" quality={85} className="story-zoom object-cover" />
               </div>
             ))}
             <div aria-hidden className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-ink/60 to-transparent" />

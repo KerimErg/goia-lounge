@@ -63,7 +63,7 @@ export default async function MenuCategoryPage({ params }: { params: Promise<{ l
               href={`/carte/${c.slug}/${it.slug}`}
               className="group relative block overflow-hidden rounded-[1.4rem] bg-ink text-ivory shadow-soft transition-[transform,box-shadow] duration-500 ease-[var(--ease-lux)] hover:-translate-y-1.5 hover:shadow-lift"
             >
-              <div className={`relative ${shisha ? "aspect-[2/3]" : "aspect-[4/5]"}`}>
+              <div className="relative aspect-[2/3]">
                 {it.imageUrl ? (
                   <Image src={it.imageUrl} alt={tr(it.name, lang)} fill sizes="(min-width: 768px) 320px, 50vw" className="object-cover transition-transform duration-[1.2s] ease-[var(--ease-lux)] group-hover:scale-[1.07]" />
                 ) : (
