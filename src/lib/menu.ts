@@ -1,6 +1,6 @@
 import "server-only";
 import { cache } from "react";
-import { prisma } from "./prisma";
+import { logged, prisma } from "./prisma";
 import { tr } from "./localized";
 
 /** « Quasar + Tête Quasar » → « quasar-tete-quasar » (adresse lisible de chaque produit). */
@@ -12,11 +12,11 @@ export const euro = (cents: number, locale: string) =>
 
 /** Carte complète (catégories actives non vides, produits disponibles), lue une fois par requête. */
 export const getMenu = cache(async () => {
-  const cats = await prisma.menuCategory.findMany({
+  const cats = await logged("getMenu", prisma.menuCategory.findMany({
     where: { active: true },
     orderBy: [{ section: "asc" }, { order: "asc" }],
     include: { items: { where: { available: true }, orderBy: { order: "asc" } } },
-  });
+  }));
   return cats
     .filter((c) => c.items.length)
     .map((c) => ({ ...c, items: c.items.map((it) => ({ ...it, slug: slugify(tr(it.name, "fr")) })) }));

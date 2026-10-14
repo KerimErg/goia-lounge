@@ -1,14 +1,14 @@
 import { cache } from "react";
-import { prisma } from "./prisma";
+import { logged, prisma } from "./prisma";
 import { nowInKehl, toMinutes, addDays, weekdayOf } from "./time";
 
 /** Réglages, horaires et zones : lus une fois par requête (React cache). */
 export const getVenue = cache(async () => {
-  const [settings, hours, zones] = await Promise.all([
+  const [settings, hours, zones] = await logged("getVenue", Promise.all([
     prisma.settings.findUnique({ where: { id: 1 } }),
     prisma.openingHours.findMany({ orderBy: { weekday: "asc" } }),
     prisma.zone.findMany({ where: { active: true }, orderBy: { order: "asc" } }),
-  ]);
+  ]));
   if (!settings) {
     console.error("[venue] Réglages absents dans la base : elle n'a pas été remplie (voir scripts/bootstrap.ts).");
     throw new Error("Réglages absents : lancez le seed (npm run db:seed).");
