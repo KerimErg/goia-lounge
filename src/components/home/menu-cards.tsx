@@ -1,55 +1,72 @@
-import Image from "next/image";
 import type { CSSProperties } from "react";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Words } from "@/components/fx";
 import { Button } from "@/components/ui/button";
 import { Ornament } from "@/components/ornament";
+import { CategoryIcon } from "@/components/menu/category-icon";
+import { getMenu, euro } from "@/lib/menu";
+import { tr } from "@/lib/localized";
 
-// Photos de la carte officielle
-const CARDS = [
-  { key: "shisha", slug: "chichas", src: "/images/menu/quasar-tete-quasar.jpg", r: "-6deg", pos: "" },
-  { key: "drinks", slug: "cocktails", src: "/images/menu/mojito-framboise.jpg", r: "0deg", pos: "" },
-  { key: "sweets", slug: "desserts", src: "/images/goia/cheesecake-speculoos.jpg", r: "6deg", pos: "" },
-] as const;
+const SHOWN = 4;
 
 /**
- * Notre carte : trois catégories (photo + nom + une ligne) qui montent en éventail au défilement,
- * un grand mot en filigrane qui glisse derrière, et un bouton vers la carte.
+ * Notre carte, sans photos (elles sont dans Bienvenue et L'ambiance) : un aperçu du vrai menu.
+ * Une carte par catégorie avec le pictogramme doré dans un rond encre, comme sur la page de la carte,
+ * et les premiers produits avec leur prix, reliés par des pointillés.
  */
 export async function MenuCards() {
   const t = await getTranslations("menuCards");
+  const lang = await getLocale();
+  const cats = await getMenu();
+  if (cats.length === 0) return null;
+
   return (
     <section className="relative isolate overflow-clip bg-linen py-24 text-ink sm:py-32" aria-labelledby="menu-title">
-      {/* Filigrane : glisse horizontalement pendant le défilement */}
-      <div aria-hidden data-text={`${t("shisha_t")} · ${t("drinks_t")} · ${t("sweets_t")} ·`} style={{ "--from": "5%", "--to": "-35%" } as CSSProperties} className="ghost-text sd-drift pointer-events-none absolute top-1/2 left-0 -z-10 -translate-y-1/2 font-display text-[clamp(7rem,22vw,20rem)] leading-none whitespace-nowrap text-transparent [-webkit-text-stroke:1px_rgb(200_169_126/0.55)]" />
       <div className="container-page">
         <div className="text-center">
           <p className="eyebrow text-taupe-deep">{t("eyebrow")}</p>
           <h2 id="menu-title" className="mt-5 text-[clamp(2.6rem,5.5vw,4.4rem)] leading-none"><Words text={t("title")} /></h2>
           <Ornament className="mx-auto mt-6 text-champagne" />
         </div>
-        <ul className="mx-auto mt-12 grid max-w-5xl gap-4 sm:mt-14 sm:grid-cols-3 sm:gap-6 lg:gap-10">
-          {CARDS.map((c, i) => (
-            <li key={c.key} style={{ "--i": i, "--r": c.r } as CSSProperties} className="sd-rise">
-              {/* Mobile : ligne compacte (photo + texte) ; ordinateur : carte verticale */}
-              <Link href={`/carte/${c.slug}`} className="group flex items-center gap-5 bg-ivory p-3 shadow-[0_1px_0_rgb(27_21_17/0.04)] transition-[transform,box-shadow] duration-500 ease-[var(--ease-lux)] hover:-translate-y-2 sm:block sm:bg-transparent sm:p-0 sm:text-center sm:shadow-none">
-                <div className="relative aspect-square w-24 shrink-0 overflow-hidden sm:aspect-[4/5] sm:w-full sm:rounded-t-full sm:outline sm:outline-1 sm:outline-offset-[10px] sm:outline-champagne/50">
-                  <Image src={c.src} alt="" fill sizes="(min-width: 640px) 320px, 96px" className={`object-cover ${c.pos} transition-transform duration-[1.2s] ease-[var(--ease-lux)] group-hover:scale-110`} />
-                  {/* Pastille « Voir » qui apparaît au survol */}
-                  <span aria-hidden className="absolute inset-0 hidden place-items-center sm:grid">
-                    <span className="grid size-20 scale-50 place-items-center rounded-full bg-ivory/90 text-[0.6rem] tracking-[0.3em] text-ink uppercase opacity-0 backdrop-blur-sm transition-all duration-500 ease-[var(--ease-lux)] group-hover:scale-100 group-hover:opacity-100">{t("see")}</span>
-                  </span>
-                </div>
-                <div>
-                  <h3 className="text-[1.9rem] leading-none sm:mt-8 sm:text-[2.2rem]">{t(`${c.key}_t`)}</h3>
-                  <p className="mt-2 text-ink/70">{t(c.key)}</p>
-                </div>
+
+        <ul className="mx-auto mt-16 grid max-w-6xl gap-14 sm:mt-20 md:grid-cols-3 md:gap-6 lg:gap-8">
+          {cats.map((c, i) => (
+            <li key={c.id} style={{ "--i": i } as CSSProperties} className="sd-rise">
+              <Link
+                href={`/carte/${c.slug}`}
+                className="group relative flex h-full flex-col rounded-[2rem] bg-ivory px-7 pt-14 pb-8 shadow-soft transition-[transform,box-shadow] duration-500 ease-[var(--ease-lux)] hover:-translate-y-2 hover:shadow-lift sm:px-9"
+              >
+                {/* Pictogramme posé à cheval sur le haut de la carte */}
+                <span className="absolute -top-10 left-1/2 grid size-20 -translate-x-1/2 place-items-center rounded-full bg-ink text-champagne ring-4 ring-linen transition-transform duration-500 ease-[var(--ease-lux)] group-hover:scale-105">
+                  <CategoryIcon section={c.section} className="size-10" />
+                </span>
+                <span className="absolute top-5 right-6 font-display text-sm text-taupe">{String(i + 1).padStart(2, "0")}</span>
+
+                <h3 className="text-center text-[2.1rem] leading-none">{tr(c.name, lang)}</h3>
+                <span aria-hidden className="mx-auto mt-4 block h-px w-10 bg-champagne transition-all duration-500 group-hover:w-20" />
+
+                <ul className="mt-7 space-y-3.5">
+                  {c.items.slice(0, SHOWN).map((it) => (
+                    <li key={it.id} className="flex items-baseline gap-3 text-[0.95rem]">
+                      <span>{tr(it.name, lang)}</span>
+                      <span aria-hidden className="mb-1 flex-1 border-b border-dotted border-ink/25" />
+                      <span className="tabular-nums text-taupe-deep">{it.priceCents != null ? euro(it.priceCents, lang) : "—"}</span>
+                    </li>
+                  ))}
+                </ul>
+                {c.items.length > SHOWN && <p className="mt-3.5 text-sm text-ink/50">{t("more", { n: c.items.length - SHOWN })}</p>}
+
+                <span className="mt-auto flex items-center justify-center gap-3 pt-8 text-[0.68rem] tracking-[0.3em] uppercase">
+                  {t("see")}
+                  <span aria-hidden className="grid size-8 place-items-center rounded-full border border-ink/20 transition-all duration-500 group-hover:border-ink group-hover:bg-ink group-hover:text-ivory">→</span>
+                </span>
               </Link>
             </li>
           ))}
         </ul>
-        <div className="mt-14 text-center">
+
+        <div className="mt-16 text-center">
           <Button asChild size="lux"><Link href="/carte">{t("cta")}</Link></Button>
         </div>
       </div>

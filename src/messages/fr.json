@@ -101,7 +101,7 @@
     "title": "Bienvenue au GOIA",
     "text": "Un lounge chaleureux pour passer la soirée entre amis : chichas et cocktails, dans une ambiance détendue.",
     "cta": "Réserver une table",
-    "photoMain": "Chicha servie au GOIA",
+    "photoMain": "Chicha Quasar au GOIA",
     "photoSmall": "Pornstar Martini"
   },
   "menuCards": {
@@ -114,7 +114,8 @@
     "cta": "Voir toute la carte",
     "sweets_t": "Desserts",
     "sweets": "Cheesecake spéculoos",
-    "see": "Voir"
+    "see": "Voir",
+    "more": "+ {n} autres"
   },
   "flow": {
     "step1": "Votre soirée",

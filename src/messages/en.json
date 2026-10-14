@@ -101,7 +101,7 @@
     "title": "Welcome to GOIA",
     "text": "A warm lounge to spend the evening with friends: shishas and cocktails in a relaxed setting.",
     "cta": "Book a table",
-    "photoMain": "Shisha served at GOIA",
+    "photoMain": "Quasar shisha at GOIA",
     "photoSmall": "Pornstar Martini"
   },
   "menuCards": {
@@ -114,7 +114,8 @@
     "cta": "See the full menu",
     "sweets_t": "Desserts",
     "sweets": "Speculoos cheesecake",
-    "see": "View"
+    "see": "View",
+    "more": "+ {n} more"
   },
   "flow": {
     "step1": "Your evening",

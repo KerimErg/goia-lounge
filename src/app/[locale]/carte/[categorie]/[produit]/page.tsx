@@ -112,9 +112,8 @@ export default async function MenuItemPage({ params }: { params: Promise<{ local
             </div>
           )}
 
-          <div className="mt-10 grid gap-3 sm:flex">
-            <Button asChild size="lux"><Link href="/reservation">{t("book")}</Link></Button>
-            <Button asChild size="lux" variant="outline" className="hidden lg:inline-flex"><Link href={`/carte/${c.slug}`}>← {tr(c.name, lang)}</Link></Button>
+          <div className="mt-10 hidden lg:block">
+            <Button asChild size="lux" variant="outline"><Link href={`/carte/${c.slug}`}>← {tr(c.name, lang)}</Link></Button>
           </div>
 
           {/* Précédent / suivant */}
