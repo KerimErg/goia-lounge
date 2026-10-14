@@ -101,7 +101,7 @@
     "title": "Welcome to GOIA",
     "text": "A warm lounge to spend the evening with friends: shishas and cocktails in a relaxed setting.",
     "cta": "Book a table",
-    "photoMain": "Mojito Classic served at GOIA",
+    "photoMain": "Shisha served at GOIA",
     "photoSmall": "Pornstar Martini"
   },
   "menuCards": {
@@ -178,7 +178,12 @@
     "items": "items",
     "ingredients": "Ingredients",
     "tag_bestseller": "Best seller",
-    "tag_classique": "Classic"
+    "tag_classique": "Classic",
+    "all": "Full menu",
+    "more": "Discover also",
+    "prev": "Previous",
+    "next": "Next",
+    "flavours": "All our flavours available"
   },
   "cancelPage": {
     "title": "Cancel my booking",

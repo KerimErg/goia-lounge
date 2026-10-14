@@ -26,7 +26,7 @@ export async function Welcome() {
         <div className="relative mx-auto w-[78%] max-w-md md:col-span-6 md:w-full lg:col-span-5 lg:col-start-2">
           <div className="rounded-t-full outline outline-1 outline-offset-[14px] outline-champagne/60">
             <MaskReveal className="aspect-[4/5] rounded-t-full">
-              <Image src="/images/menu/mojito-classic.jpg" alt={t("photoMain")} fill sizes="(min-width: 768px) 420px, 78vw" className="object-cover" />
+              <Image src="/images/menu/chicha-classique.jpg" alt={t("photoMain")} fill sizes="(min-width: 768px) 420px, 78vw" className="object-cover" />
             </MaskReveal>
           </div>
           <div style={{ "--from": "40px", "--to": "-60px" } as CSSProperties} className="sd-lift absolute -right-[10%] -bottom-[12%] w-[44%] border-[6px] border-ivory shadow-lift sm:-right-[22%]">

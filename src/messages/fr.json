@@ -101,7 +101,7 @@
     "title": "Bienvenue au GOIA",
     "text": "Un lounge chaleureux pour passer la soirée entre amis : chichas et cocktails, dans une ambiance détendue.",
     "cta": "Réserver une table",
-    "photoMain": "Mojito Classic servi au GOIA",
+    "photoMain": "Chicha servie au GOIA",
     "photoSmall": "Pornstar Martini"
   },
   "menuCards": {
@@ -178,7 +178,12 @@
     "items": "articles",
     "ingredients": "Ingrédients",
     "tag_bestseller": "Best seller",
-    "tag_classique": "Classique"
+    "tag_classique": "Classique",
+    "all": "Toute la carte",
+    "more": "À découvrir aussi",
+    "prev": "Précédent",
+    "next": "Suivant",
+    "flavours": "Tous nos goûts disponibles"
   },
   "cancelPage": {
     "title": "Annuler ma réservation",
