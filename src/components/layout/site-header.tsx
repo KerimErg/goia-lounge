@@ -60,6 +60,12 @@ export function SiteHeader() {
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-ink focus:px-4 focus:py-2 focus:text-ivory">{t("skip")}</a>
       <div className="container-page grid h-18 grid-cols-[1fr_auto_1fr] items-center sm:h-20">
         <nav aria-label="Navigation" className="hidden items-center gap-9 lg:flex">
+          {/* Ordinateur : « Réserver » en haut à gauche */}
+          <BookLink
+            className={cn("eyebrow px-5 py-3 text-[0.66rem] transition-colors duration-300", light ? "bg-ivory text-ink hover:bg-linen" : "bg-ink text-ivory hover:bg-taupe")}
+          >
+            {t("booking")}
+          </BookLink>
           {LINKS.map((l) => (
             <Link key={l.href} href={l.href} className={cn("eyebrow link-underline py-1 text-[0.66rem]", pathname === l.href ? "opacity-100" : "opacity-80 hover:opacity-100")}>
               {t(l.key)}
@@ -89,7 +95,7 @@ export function SiteHeader() {
           <BookLink
             label={t("booking")}
             className={cn(
-              "eyebrow flex size-11 items-center justify-center text-[0.66rem] transition-colors duration-300 sm:size-auto sm:px-5 sm:py-3",
+              "eyebrow flex size-11 items-center justify-center text-[0.66rem] transition-colors duration-300 sm:size-auto sm:px-5 sm:py-3 lg:hidden",
               light ? "bg-ivory text-ink hover:bg-linen" : "bg-ink text-ivory hover:bg-taupe",
             )}
           >

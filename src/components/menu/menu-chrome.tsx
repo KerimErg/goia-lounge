@@ -16,13 +16,13 @@ export function MenuBand({ src, className, children }: { src?: string | null; cl
 }
 
 /** Carré ivoire posé à cheval sur le bandeau, avec le pictogramme de la catégorie dans un rond encre. */
-export function MenuBadge({ section, label }: { section: MenuSection; label: string }) {
+export function MenuBadge({ section, slug, label }: { section: MenuSection; slug?: string; label: string }) {
   return (
     <div className="enter-rise relative z-10 -mt-20 flex justify-center px-5 sm:-mt-24">
       <div className="grid size-40 place-items-center rounded-[2.2rem] bg-ivory shadow-lift sm:size-44">
         <div className="flex flex-col items-center">
           <span className="grid size-20 place-items-center rounded-full bg-ink text-champagne ring-4 ring-ivory ring-offset-2 ring-offset-ink/15 sm:size-22">
-            <CategoryIcon section={section} className="size-10 sm:size-11" />
+            <CategoryIcon section={section} slug={slug} className="size-10 sm:size-11" />
           </span>
           <p className="eyebrow mt-3 text-[0.5rem] tracking-[0.45em] text-taupe-deep">{label}</p>
         </div>
@@ -47,7 +47,7 @@ export function CategoryNav({ cats, activeId }: { cats: NavCat[]; activeId?: str
                 on ? "bg-ink text-champagne ring-2 ring-champagne ring-offset-4 ring-offset-ivory" : "border border-ink/15 bg-white text-ink/70 group-hover:-translate-y-1 group-hover:border-ink group-hover:text-ink",
               )}
             >
-              <CategoryIcon section={x.section} className="size-7 sm:size-8" />
+              <CategoryIcon section={x.section} slug={x.slug} className="size-7 sm:size-8" />
             </span>
             <span className={cn("text-[0.62rem] tracking-[0.25em] uppercase", on ? "font-medium text-ink" : "text-ink/55 group-hover:text-ink")}>{x.label}</span>
           </Link>

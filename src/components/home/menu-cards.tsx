@@ -8,7 +8,7 @@ import { Ornament } from "@/components/ornament";
 
 // Photos de la carte officielle
 const CARDS = [
-  { key: "shisha", slug: "chichas", src: "/images/menu/chicha-classique.jpg", r: "-6deg", pos: "" },
+  { key: "shisha", slug: "chichas", src: "/images/menu/quasar-tete-quasar.jpg", r: "-6deg", pos: "object-top" },
   { key: "drinks", slug: "cocktails", src: "/images/menu/mojito-fraise.jpg", r: "0deg", pos: "" },
   { key: "sweets", slug: "desserts", src: "/images/menu/cheesecake-speculoos.jpg", r: "6deg", pos: "" },
 ] as const;
@@ -34,7 +34,7 @@ export async function MenuCards() {
             <li key={c.key} style={{ "--i": i, "--r": c.r } as CSSProperties} className="sd-rise">
               {/* Mobile : ligne compacte (photo + texte) ; ordinateur : carte verticale */}
               <Link href={`/carte/${c.slug}`} className="group flex items-center gap-5 bg-ivory p-3 shadow-[0_1px_0_rgb(27_21_17/0.04)] transition-[transform,box-shadow] duration-500 ease-[var(--ease-lux)] hover:-translate-y-2 sm:block sm:bg-transparent sm:p-0 sm:text-center sm:shadow-none">
-                <div className="relative aspect-square w-24 shrink-0 overflow-hidden sm:aspect-[4/5] sm:w-full sm:rounded-t-full sm:outline sm:outline-1 sm:outline-offset-[10px] sm:outline-champagne/50">
+                <div className="relative aspect-square w-24 shrink-0 overflow-hidden sm:aspect-[2/3] sm:w-full sm:rounded-t-full sm:outline sm:outline-1 sm:outline-offset-[10px] sm:outline-champagne/50">
                   <Image src={c.src} alt="" fill sizes="(min-width: 640px) 320px, 96px" className={`object-cover ${c.pos} transition-transform duration-[1.2s] ease-[var(--ease-lux)] group-hover:scale-110`} />
                   {/* Pastille « Voir » qui apparaît au survol */}
                   <span aria-hidden className="absolute inset-0 hidden place-items-center sm:grid">

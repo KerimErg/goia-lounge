@@ -44,7 +44,7 @@ export default async function MenuCategoryPage({ params }: { params: Promise<{ l
           </ol>
         </nav>
       </MenuBand>
-      <MenuBadge section={c.section} label="GOIA" />
+      <MenuBadge section={c.section} slug={c.slug} label="GOIA" />
 
       <header style={{ animationDelay: "0.1s" }} className="enter-rise mt-8 px-5 text-center">
         <h1 className="text-[clamp(2.8rem,8vw,4.6rem)] leading-none">{tr(c.name, lang)}</h1>
@@ -90,7 +90,6 @@ export default async function MenuCategoryPage({ params }: { params: Promise<{ l
         ))}
       </ul>
 
-      <p className="mx-5 mt-16 rounded-full bg-white/70 px-5 py-2.5 text-center text-xs text-ink/70 shadow-soft sm:mx-auto sm:w-fit">{t("note")}</p>
       <div className="pt-10 pb-24 text-center">
         <Button asChild size="lux" variant="outline"><Link href="/carte">← {t("all")}</Link></Button>
       </div>

@@ -32,8 +32,9 @@ const pick = <T,>(a: readonly T[]) => a[Math.floor(rand() * a.length)];
 
 /* ---------- Horaires (provisoires : à remplacer par les vrais dans l'admin) ---------- */
 const HOURS: Record<number, [string, string]> = {
-  1: ["17:00", "01:00"], 2: ["17:00", "01:00"], 3: ["17:00", "01:00"], 4: ["17:00", "01:00"],
-  5: ["17:00", "03:00"], 6: ["17:00", "03:00"], 0: ["15:00", "01:00"],
+  // Fermeture à 3 h tous les jours, sauf vendredi et samedi à 4 h
+  1: ["17:00", "03:00"], 2: ["17:00", "03:00"], 3: ["17:00", "03:00"], 4: ["17:00", "03:00"],
+  5: ["17:00", "04:00"], 6: ["17:00", "04:00"], 0: ["15:00", "03:00"],
 };
 
 /* ---------- Salle : intérieur + terrasse, 30 tables (à ajuster dans l'admin) ---------- */
@@ -99,6 +100,17 @@ const MENU: Cat[] = [
       desc: l("Un gin fruité aux fraises fraîches, menthe, citron et finale pétillante.", "Ein fruchtiger Gin mit frischen Erdbeeren, Minze, Zitrone und spritzigem Abgang.", "A fruity gin with fresh strawberries, mint, lemon and a sparkling finish."),
       ingredients: l("Gin, fraises fraîches, menthe, citron et Sprite/Schweppes.", "Gin, frische Erdbeeren, Minze, Zitrone und Sprite/Schweppes.", "Gin, fresh strawberries, mint, lemon and Sprite/Schweppes.") },
     { name: l("Pornstar Martini", "Pornstar Martini", "Pornstar Martini"), price: 1000, image: M("pornstar-martini") },
+  ] },
+  // Boissons classiques (softs) et thé à la menthe — visuels illustrés sur le fond des autres produits ; prix à compléter
+  { slug: "boissons", section: "DRINK", name: l("Boissons", "Getränke", "Soft drinks"), items: [
+    { name: l("Coca-Cola", "Coca-Cola", "Coca-Cola"), price: null, image: M("coca-cola") },
+    { name: l("Coca-Cola Zero", "Coca-Cola Zero", "Coca-Cola Zero"), price: null, image: M("coca-cola-zero") },
+    { name: l("Fanta", "Fanta", "Fanta"), price: null, image: M("fanta") },
+    { name: l("Sprite", "Sprite", "Sprite"), price: null, image: M("sprite") },
+    { name: l("Ice Tea", "Eistee", "Iced tea"), price: null, image: M("ice-tea") },
+    { name: l("Eau plate", "Stilles Wasser", "Still water"), price: null, image: M("eau-plate") },
+    { name: l("Eau pétillante", "Sprudelwasser", "Sparkling water"), price: null, image: M("eau-petillante") },
+    { name: l("Thé à la menthe", "Minztee", "Mint tea"), price: null, image: M("the-menthe") },
   ] },
   // Desserts (photos fournies par le GOIA) ; prix à compléter dans l'admin
   { slug: "desserts", section: "FOOD", name: l("Desserts", "Desserts", "Desserts"), items: [

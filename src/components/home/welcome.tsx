@@ -29,8 +29,8 @@ export async function Welcome() {
               <Image src="/images/menu/quasar-tete-quasar.jpg" alt={t("photoMain")} fill sizes="(min-width: 768px) 420px, 78vw" className="object-cover" />
             </MaskReveal>
           </div>
-          <div style={{ "--from": "40px", "--to": "-60px" } as CSSProperties} className="sd-lift absolute -right-[10%] -bottom-[12%] w-[44%] border-[6px] border-ivory shadow-lift sm:-right-[22%]">
-            <div className="relative aspect-square">
+          <div style={{ "--from": "40px", "--to": "-60px" } as CSSProperties} className="sd-lift absolute -right-[8%] -bottom-[10%] w-[34%] border-[6px] border-ivory shadow-lift sm:-right-[18%]">
+            <div className="relative aspect-[2/3]">
               <Image src="/images/menu/pornstar-martini.jpg" alt={t("photoSmall")} fill sizes="(min-width: 768px) 200px, 36vw" className="object-cover" />
             </div>
           </div>

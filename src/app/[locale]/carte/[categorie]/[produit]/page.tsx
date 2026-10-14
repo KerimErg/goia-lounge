@@ -69,7 +69,7 @@ export default async function MenuItemPage({ params }: { params: Promise<{ local
             <ArrowLeft className="size-4" />
           </Link>
           <span aria-hidden className="absolute top-4 right-4 grid size-11 place-items-center rounded-full bg-ink/80 text-champagne backdrop-blur lg:top-6 lg:right-6 lg:size-14">
-            <CategoryIcon section={c.section} className="size-6 lg:size-7" />
+            <CategoryIcon section={c.section} slug={c.slug} className="size-6 lg:size-7" />
           </span>
         </div>
 

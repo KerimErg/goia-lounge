@@ -1,7 +1,8 @@
 import type { MenuSection } from "@prisma/client";
 
-/** Pictogrammes fins (trait 1,5) : chicha, cocktail, dessert. Couleur = couleur du texte. */
-export function CategoryIcon({ section, className }: { section: MenuSection; className?: string }) {
+/** Pictogrammes fins (trait 1,5) : chicha, cocktail, dessert, boissons (softs & thé). Couleur = couleur du texte. */
+export function CategoryIcon({ section, slug, className }: { section: MenuSection; slug?: string; className?: string }) {
+  const soft = slug === "boissons";
   const common = { fill: "none", stroke: "currentColor", strokeWidth: 1.5, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
   return (
     <svg viewBox="0 0 48 48" className={className} aria-hidden>
@@ -15,7 +16,17 @@ export function CategoryIcon({ section, className }: { section: MenuSection; cla
           <path d="M29 31h6" />
         </g>
       )}
-      {section === "DRINK" && (
+      {soft && (
+        <g {...common}>
+          <path d="M14 12h20l-3 30H17z" />
+          <path d="M15 20h18" />
+          <path d="M27 12l5-8h4" />
+          <circle cx="21" cy="28" r="1.4" />
+          <circle cx="26" cy="33" r="1.2" />
+          <circle cx="22" cy="37" r="1" />
+        </g>
+      )}
+      {section === "DRINK" && !soft && (
         <g {...common}>
           <path d="M10 10h28L24 26z" />
           <path d="M24 26v14" />
