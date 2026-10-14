@@ -2,17 +2,17 @@
  * Médias de l'accueil.
  *
  * VIDÉO DU HERO (public/videos/) : la vidéo de la terrasse (à partir de 4 s), sans son, en boucle —
- * WebM VP9 (Chrome, Firefox) et MP4 H.264 (Safari), 1080 × 1920.
+ * MP4 H.264 1080 × 1920 (ordinateur), WebM VP9 en secours, et une version légère 720 × 1280 pour téléphone.
  * Elle remplit toute la largeur de la bannière (recadrée automatiquement selon l'écran).
  * - poster : première image, affichée pendant le chargement (et si l'utilisateur réduit les animations)
  * Sans vidéo (video: null), le hero affiche la photo floue avec une fumée en WebGL.
  */
-export type HeroVideo = { mp4: string; webm?: string };
+export type HeroVideo = { mp4: string; webm?: string; mobile?: string };
 
 export const HERO_MEDIA: { poster: string; posterPortrait: string; video: HeroVideo | null } = {
   poster: "/images/hero/poster.jpg",
   posterPortrait: "/images/hero/poster.jpg",
-  video: { webm: "/videos/hero-terrasse.webm", mp4: "/videos/hero-terrasse.mp4" },
+  video: { mobile: "/videos/hero-terrasse-mobile.mp4", webm: "/videos/hero-terrasse.webm", mp4: "/videos/hero-terrasse.mp4" },
 };
 
 /** Photos du lieu (fournies par le GOIA). À remplacer par les originaux haute définition, mêmes noms. */
