@@ -2,17 +2,31 @@ import "server-only";
 
 type Lang = "fr" | "de" | "en";
 
-/** Envoi via l'API Resend (sans dépendance). Ignoré sans erreur si RESEND_API_KEY / EMAIL_FROM manquent. */
-async function send(to: string, subject: string, html: string, replyTo?: string) {
-  const key = process.env.RESEND_API_KEY, from = process.env.EMAIL_FROM;
-  if (!key || !from || !to) return false;
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ from, to, subject, html, ...(replyTo ? { reply_to: replyTo } : {}) }),
-  }).catch(() => null);
-  return !!res?.ok;
+/** Valeur d'environnement nettoyée (espaces et guillemets collés par erreur dans Vercel). */
+const env = (k: string) => process.env[k]?.trim().replace(/^["']|["']$/g, "").trim() || "";
+
+/** Envoi via l'API Resend (sans dépendance). Renvoie la raison exacte en cas d'échec (journalisée sur Vercel). */
+async function deliver(to: string, subject: string, html: string, replyTo?: string): Promise<{ ok: boolean; error?: string }> {
+  const key = env("RESEND_API_KEY"), from = env("EMAIL_FROM");
+  if (!key || !from) return { ok: false, error: "RESEND_API_KEY ou EMAIL_FROM manquant sur Vercel" };
+  if (!to) return { ok: false, error: "aucun destinataire" };
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ from, to, subject, html, ...(replyTo ? { reply_to: replyTo } : {}) }),
+    });
+    if (res.ok) return { ok: true };
+    const body = (await res.json().catch(() => ({}))) as { message?: string };
+    const error = `Resend ${res.status} : ${body.message ?? res.statusText}`;
+    console.error(`[e-mail] échec vers ${to} — ${error}`);
+    return { ok: false, error };
+  } catch (e) {
+    console.error(`[e-mail] échec vers ${to} —`, e);
+    return { ok: false, error: "connexion à Resend impossible" };
+  }
 }
+const send = async (to: string, subject: string, html: string, replyTo?: string) => (await deliver(to, subject, html, replyTo)).ok;
 
 const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
 const frame = (body: string) => `<div style="font-family:Georgia,serif;max-width:520px;margin:auto;padding:32px;background:#f7f2ea;color:#1b1511">
@@ -81,4 +95,9 @@ export function sendCustomerCancellation(m: BookingMail, replyTo?: string | null
 }
 
 /** Les envois sont-ils configurés (clé Resend + adresse d'expédition) ? */
-export const emailConfigured = () => !!(process.env.RESEND_API_KEY && process.env.EMAIL_FROM);
+export const emailConfigured = () => !!(env("RESEND_API_KEY") && env("EMAIL_FROM"));
+
+/** E-mail de test (admin → Réglages) : renvoie l'erreur exacte de Resend pour trouver le problème. */
+export function sendTestEmail(to: string) {
+  return deliver(to, "Test — e-mails du site GOIA", frame(`<p>Bonjour,</p><p>Si vous lisez ce message, l'envoi des e-mails du site fonctionne : les confirmations de réservation et vos copies partiront normalement.</p><p style="color:#5e5145">Expéditeur utilisé : ${esc(env("EMAIL_FROM"))}</p>`));
+}

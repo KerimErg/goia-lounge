@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { requireStaff } from "@/lib/auth";
 import { emailConfigured } from "@/lib/booking-email";
 import { venueInbox } from "@/lib/booking-common";
-import { AddUserForm, DeleteUserButton, NotifyForm, PasswordForm } from "./forms";
+import { AddUserForm, DeleteUserButton, NotifyForm, PasswordForm, TestEmailButton } from "./forms";
 
 export const dynamic = "force-dynamic";
 
@@ -33,6 +33,7 @@ export default async function Settings() {
             : <>Envoi des e-mails : <strong>pas encore activé</strong>. Il faut renseigner <code>RESEND_API_KEY</code> et <code>EMAIL_FROM</code> dans Vercel (Settings → Environment Variables), puis redéployer.</>}
         </p>
         {admin && <NotifyForm current={settings.notifyEmail ?? ""} />}
+        <TestEmailButton />
       </section>
 
       <section className={card}>

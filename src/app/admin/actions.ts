@@ -8,7 +8,7 @@ import type { ReservationStatus } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin, requireStaff } from "@/lib/auth";
 import { createBooking, Unavailable } from "@/lib/booking-create";
-import { sendCustomerCancellation, sendCustomerConfirmation } from "@/lib/booking-email";
+import { sendCustomerCancellation, sendCustomerConfirmation, sendTestEmail } from "@/lib/booking-email";
 import { dateLabel, manageUrl, venueInbox } from "@/lib/booking-common";
 import { tr } from "@/lib/localized";
 import { utcToKehl } from "@/lib/time";
@@ -160,4 +160,14 @@ export async function adminSlots(date: string, persons: number, zone: string | n
   const ctx = await bookingContext();
   const { slots } = await availability(ctx, date, persons, zone || null);
   return slots;
+}
+
+/** Envoie un e-mail de test à l'adresse des réservations (ou à soi-même) et affiche le résultat exact. */
+export async function testEmail(): Promise<ActionState> {
+  const me = await requireStaff();
+  const s = await prisma.settings.findUniqueOrThrow({ where: { id: 1 } });
+  const to = venueInbox(s.notifyEmail) || me.email || "";
+  if (!to) return { error: "Indiquez d'abord l'adresse qui reçoit les réservations" };
+  const r = await sendTestEmail(to);
+  return r.ok ? { ok: `E-mail de test envoyé à ${to} — regardez aussi dans les spams` } : { error: `Échec : ${r.error}` };
 }
