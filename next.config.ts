@@ -12,7 +12,13 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "images.pexels.com" },
     ],
   },
-  experimental: { optimizePackageImports: ["lucide-react", "framer-motion"] },
+  experimental: {
+    optimizePackageImports: ["lucide-react", "framer-motion"],
+    // Pages générées au déploiement depuis la base Neon : moins de requêtes en parallèle, et nouvel essai
+    // si la base (en veille sur le plan gratuit) met du temps à répondre.
+    staticGenerationMaxConcurrency: 4,
+    staticGenerationRetryCount: 3,
+  },
 };
 
 export default withNextIntl(nextConfig);
