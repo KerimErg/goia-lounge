@@ -11,7 +11,9 @@ import { CategoryNav, MenuBadge, MenuBand, RuleTitle, SubNav } from "@/component
 import { getMenu, euro, menuSections } from "@/lib/menu";
 import { tr } from "@/lib/localized";
 
-export const revalidate = 300;
+// Générée à la visite (pas au déploiement) : toujours à jour avec la carte de l’admin, et une erreur éventuelle
+// apparaît en clair dans les journaux Vercel au lieu de bloquer le déploiement.
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; categorie: string }> }): Promise<Metadata> {
   const { locale, categorie } = await params;

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { connection } from "next/server";
 import Image from "next/image";
 import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
@@ -10,7 +11,9 @@ import { getMenu, menuSections } from "@/lib/menu";
 import { tr } from "@/lib/localized";
 import { contactLinks, getVenue } from "@/lib/venue";
 
-export const revalidate = 300;
+// Générée à la visite (pas au déploiement) : toujours à jour avec la carte de l’admin, et une erreur éventuelle
+// apparaît en clair dans les journaux Vercel au lieu de bloquer le déploiement.
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
@@ -23,6 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
  * (Chichas, Cocktails, Desserts). Simple à comprendre, d'un seul coup d'œil.
  */
 export default async function MenuHome({ params }: { params: Promise<{ locale: string }> }) {
+  await connection(); // rendu à la visite uniquement
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("menuPage");
