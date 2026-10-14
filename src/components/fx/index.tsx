@@ -23,6 +23,7 @@ export function IntroCurtain() {
       <div className="intro-logo">
         <Logo className="w-full" title="" />
         <span className="intro-line" />
+        <span className="eyebrow mt-4 block text-center text-[0.55rem] tracking-[0.55em]">Huqqa — Lounge</span>
       </div>
     </div>
   );

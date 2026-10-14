@@ -8,7 +8,7 @@ import { Logo } from "@/components/brand/logo";
 import { Button } from "@/components/ui/button";
 import { CategoryIcon } from "@/components/menu/category-icon";
 import { CategoryNav, RuleTitle } from "@/components/menu/menu-chrome";
-import { getMenu, euro } from "@/lib/menu";
+import { getMenu, euro, menuSections } from "@/lib/menu";
 import { tr } from "@/lib/localized";
 
 export const revalidate = 300;
@@ -44,6 +44,9 @@ export default async function MenuItemPage({ params }: { params: Promise<{ local
   const f = await find(categorie, produit);
   if (!f) notFound();
   const { cats, c, it } = f;
+  const groups = menuSections(cats);
+  const group = groups.find((g) => g.section === c.section)!;
+  const label = (g: (typeof groups)[number]) => (g.hub ? t(`sec_${g.section}`) : tr(g.cats[0].name, lang));
   const tags = it.tags.filter((g) => TAGS.includes(g)).map((g) => t(`tag_${g}`));
   const idx = c.items.findIndex((x) => x.id === it.id);
   const prev = c.items[(idx - 1 + c.items.length) % c.items.length];
@@ -79,6 +82,12 @@ export default async function MenuItemPage({ params }: { params: Promise<{ local
             <ol className="flex items-center gap-2 text-[0.62rem] tracking-[0.25em] text-taupe-deep uppercase">
               <li><Link href="/carte" className="hover:text-ink">{t("title")}</Link></li>
               <li aria-hidden><ChevronRight className="size-3" /></li>
+              {group.hub && (
+                <>
+                  <li><Link href={`/carte/${group.slug}`} className="hover:text-ink">{label(group)}</Link></li>
+                  <li aria-hidden><ChevronRight className="size-3" /></li>
+                </>
+              )}
               <li><Link href={`/carte/${c.slug}`} className="hover:text-ink">{tr(c.name, lang)}</Link></li>
             </ol>
           </nav>
@@ -156,7 +165,7 @@ export default async function MenuItemPage({ params }: { params: Promise<{ local
       )}
 
       <div className="pt-12 pb-24">
-        <CategoryNav cats={cats.map((x) => ({ id: x.id, slug: x.slug, section: x.section, label: tr(x.name, lang) }))} activeId={c.id} />
+        <CategoryNav cats={groups.map((g) => ({ id: g.slug, slug: g.slug, section: g.section, label: label(g) }))} activeId={group.slug} />
       </div>
     </div>
   );

@@ -109,8 +109,8 @@
     "title": "Our menu",
     "shisha_t": "Shishas",
     "shisha": "Classique · Quasar",
-    "drinks_t": "Cocktails",
-    "drinks": "Rubis des Îles · Mojitos · Gin Berry · Pornstar Martini",
+    "drinks_t": "Drinks",
+    "drinks": "Cold & hot drinks · Cocktails",
     "cta": "See the full menu",
     "sweets_t": "Desserts",
     "sweets": "Cheesecakes · French toast · Chocolate fondant",
@@ -183,7 +183,8 @@
     "more": "Discover also",
     "prev": "Previous",
     "next": "Next",
-    "flavours": "All our flavours available"
+    "flavours": "All our flavours available",
+    "item": "item"
   },
   "cancelPage": {
     "title": "Cancel my booking",

@@ -109,8 +109,8 @@
     "title": "Notre carte",
     "shisha_t": "Chichas",
     "shisha": "Classique · Quasar",
-    "drinks_t": "Cocktails",
-    "drinks": "Rubis des Îles · Mojitos · Gin Berry · Pornstar Martini",
+    "drinks_t": "Boissons",
+    "drinks": "Boissons froides · Boissons chaudes · Cocktails",
     "cta": "Voir toute la carte",
     "sweets_t": "Desserts",
     "sweets": "Cheesecakes · Pain perdu · Fondant au chocolat",
@@ -183,7 +183,8 @@
     "more": "À découvrir aussi",
     "prev": "Précédent",
     "next": "Suivant",
-    "flavours": "Tous nos goûts disponibles"
+    "flavours": "Tous nos goûts disponibles",
+    "item": "article"
   },
   "cancelPage": {
     "title": "Annuler ma réservation",

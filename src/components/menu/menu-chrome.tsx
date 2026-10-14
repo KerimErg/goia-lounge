@@ -65,3 +65,24 @@ export function RuleTitle({ children, className }: { children: React.ReactNode; 
     </p>
   );
 }
+
+/** Sous-catégories d'une famille (ex. Boissons froides · Boissons chaudes · Cocktails) : pastilles. */
+export function SubNav({ items, activeSlug }: { items: { slug: string; label: string }[]; activeSlug?: string }) {
+  return (
+    <nav aria-label="Sous-catégories" className="flex flex-wrap justify-center gap-2 px-5">
+      {items.map((x) => (
+        <Link
+          key={x.slug}
+          href={`/carte/${x.slug}`}
+          aria-current={x.slug === activeSlug ? "page" : undefined}
+          className={cn(
+            "rounded-full px-4 py-2 text-[0.62rem] tracking-[0.2em] uppercase transition-colors duration-300",
+            x.slug === activeSlug ? "bg-ink text-champagne" : "border border-ink/15 text-ink/65 hover:border-ink hover:text-ink",
+          )}
+        >
+          {x.label}
+        </Link>
+      ))}
+    </nav>
+  );
+}

@@ -109,8 +109,8 @@
     "title": "Unsere Karte",
     "shisha_t": "Shishas",
     "shisha": "Classique · Quasar",
-    "drinks_t": "Cocktails",
-    "drinks": "Rubis des Îles · Mojitos · Gin Berry · Pornstar Martini",
+    "drinks_t": "Getränke",
+    "drinks": "Kalte & heiße Getränke · Cocktails",
     "cta": "Ganze Karte ansehen",
     "sweets_t": "Desserts",
     "sweets": "Cheesecakes · Pain perdu · Schokoladen-Fondant",
@@ -183,7 +183,8 @@
     "more": "Ebenfalls entdecken",
     "prev": "Zurück",
     "next": "Weiter",
-    "flavours": "Alle Geschmacksrichtungen verfügbar"
+    "flavours": "Alle Geschmacksrichtungen verfügbar",
+    "item": "Artikel"
   },
   "cancelPage": {
     "title": "Reservierung stornieren",

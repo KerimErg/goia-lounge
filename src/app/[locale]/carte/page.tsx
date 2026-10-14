@@ -6,7 +6,7 @@ import { InstagramIcon } from "@/components/brand/icons";
 import { Logo } from "@/components/brand/logo";
 import { CategoryIcon } from "@/components/menu/category-icon";
 import { Button } from "@/components/ui/button";
-import { getMenu } from "@/lib/menu";
+import { getMenu, menuSections } from "@/lib/menu";
 import { tr } from "@/lib/localized";
 import { contactLinks, getVenue } from "@/lib/venue";
 
@@ -56,14 +56,14 @@ export default async function MenuHome({ params }: { params: Promise<{ locale: s
           {instagram && <Button asChild size="lux" className="mt-8"><a href={instagram} target="_blank" rel="noopener"><InstagramIcon className="size-4" />@goia.kehl</a></Button>}
         </div>
       ) : (
-        <ul className="mx-auto mt-14 grid max-w-3xl grid-cols-2 justify-items-center gap-x-6 gap-y-10 px-5 sm:mt-16 sm:flex sm:flex-wrap sm:justify-center sm:gap-x-10">
-          {cats.map((c) => (
-            <li key={c.id}>
-              <Link href={`/carte/${c.slug}`} className="group flex w-24 flex-col items-center text-center sm:w-36">
+        <ul className="mx-auto mt-14 flex max-w-3xl flex-wrap justify-center gap-x-6 gap-y-10 px-5 sm:mt-16 sm:gap-x-14">
+          {menuSections(cats).map((g) => (
+            <li key={g.slug}>
+              <Link href={`/carte/${g.slug}`} className="group flex w-24 flex-col items-center text-center sm:w-36">
                 <span className="grid size-24 place-items-center rounded-full border-[3px] border-ink bg-ink text-champagne shadow-lift ring-4 ring-ivory ring-offset-2 ring-offset-ink/15 transition-transform duration-300 group-hover:-translate-y-1 sm:size-32">
-                  <CategoryIcon section={c.section} slug={c.slug} className="size-11 sm:size-14" />
+                  <CategoryIcon section={g.section} slug={g.slug} className="size-11 sm:size-14" />
                 </span>
-                <span className="mt-4 text-[0.72rem] font-medium tracking-[0.25em] uppercase sm:text-sm">{tr(c.name, lang)}</span>
+                <span className="mt-4 text-[0.72rem] font-medium tracking-[0.25em] uppercase sm:text-sm">{g.hub ? t(`sec_${g.section}`) : tr(g.cats[0].name, lang)}</span>
               </Link>
             </li>
           ))}

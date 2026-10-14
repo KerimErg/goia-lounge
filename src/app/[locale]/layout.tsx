@@ -5,6 +5,7 @@ import { getMessages, getTranslations, setRequestLocale } from "next-intl/server
 import { routing } from "@/i18n/routing";
 import { fontVariables } from "../fonts";
 import { SiteHeader } from "@/components/layout/site-header";
+import { IntroCurtain } from "@/components/fx";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { Cursor } from "@/components/cursor";
 import { LogoSymbol } from "@/components/brand/logo-symbol";
@@ -40,6 +41,8 @@ export default async function LocaleLayout({ children, params }: { children: Rea
       <body className="min-h-dvh bg-ivory">
         <LogoSymbol />
         <NextIntlClientProvider messages={messages}>
+          {/* Écran de chargement GOIA à l'ouverture du site (une fois : la navigation suivante ne recharge pas la page) */}
+          <IntroCurtain />
           <SiteHeader />
           <main id="main">{children}</main>
           <SiteFooter />
