@@ -63,11 +63,14 @@ export function HeroStage({ media, address, instagram, text }: {
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "18%"]);
   const contentY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -80]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, reduce ? 1 : 0]);
+  // En quittant l'accueil, l'image se replie en carte arrondie et laisse place au fond clair de « Bienvenue »
+  const shrink = useTransform(scrollYProgress, [0, 1], [1, reduce ? 1 : 0.86]);
+  const radius = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 48]);
 
   // Entrées en CSS (voir globals.css) : visibles dès le premier affichage.
 
   return (
-    <section ref={section} className="relative isolate flex h-[100svh] min-h-[620px] flex-col overflow-hidden bg-ink text-ivory" aria-labelledby="hero-title">
+    <motion.section ref={section} style={{ scale: shrink, borderRadius: radius }} className="relative isolate flex h-[100svh] min-h-[620px] origin-bottom flex-col overflow-hidden bg-ink text-ivory" aria-labelledby="hero-title">
       {/* Fond : ambiance du lounge, lent zoom continu */}
       <motion.div style={{ y: bgY }} className="absolute inset-0 -z-20">
         <div className="absolute inset-0 animate-[slowzoom_24s_ease-in-out_infinite_alternate] motion-reduce:animate-none">
@@ -114,6 +117,6 @@ export function HeroStage({ media, address, instagram, text }: {
           </p>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
