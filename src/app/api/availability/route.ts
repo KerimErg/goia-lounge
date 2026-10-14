@@ -16,5 +16,6 @@ export async function GET(req: Request) {
   const ctx = await bookingContext();
   if (persons > ctx.settings.maxOnlinePartySize) return NextResponse.json({ slots: [], tooMany: true });
   const { slots } = await availability(ctx, date, persons, zone);
-  return NextResponse.json({ slots }, { headers: { "Cache-Control": "no-store" } });
+  // Cache très court au CDN : la réservation revérifie tout au moment de valider
+  return NextResponse.json({ slots }, { headers: { "Cache-Control": "public, s-maxage=5, stale-while-revalidate=30" } });
 }

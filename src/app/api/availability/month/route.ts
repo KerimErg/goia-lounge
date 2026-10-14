@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { availability, bookingContext } from "@/lib/availability";
+import { availabilityDays, bookingContext } from "@/lib/availability";
 import { dayWindow } from "@/lib/slots";
 import { addDays, nowInKehl } from "@/lib/time";
 
@@ -29,13 +29,14 @@ export async function GET(req: Request) {
     if (!dayWindow(d, ctx.hours, ctx.specials)) { days[d] = "closed"; return false; }
     return true;
   });
-  // Par paquets de 7 jours pour ménager la base
-  for (let i = 0; i < todo.length; i += 7) {
-    await Promise.all(todo.slice(i, i + 7).map(async (d) => {
-      if (persons > ctx.settings.maxOnlinePartySize) { days[d] = "full"; return; }
-      const { slots } = await availability(ctx, d, persons, zone);
+  // Tout le mois en 2 requêtes, calculé en mémoire
+  if (persons > ctx.settings.maxOnlinePartySize) for (const d of todo) days[d] = "full";
+  else {
+    const res = await availabilityDays(ctx, todo, persons, zone);
+    for (const d of todo) {
+      const slots = res.get(d)?.slots ?? [];
       days[d] = slots.length === 0 ? "closed" : slots.some((s) => s.available) ? "available" : "full";
-    }));
+    }
   }
-  return NextResponse.json({ days }, { headers: { "Cache-Control": "no-store" } });
+  return NextResponse.json({ days }, { headers: { "Cache-Control": "public, s-maxage=15, stale-while-revalidate=60" } });
 }
