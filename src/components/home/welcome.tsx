@@ -12,16 +12,14 @@ const PHOTOS = [
   { src: "/images/menu/mojito-classic.jpg", alt: "Mojito Classic au GOIA" },
 ];
 
-/** Bienvenue : fond lie-de-vin animé, pile de photos de la carte qui se mélange, texte et deux boutons. */
+/** Bienvenue : dans la continuité sombre de l'ouverture, pile de photos de la carte qui se mélange, texte et deux boutons. */
 export async function Welcome() {
   const t = await getTranslations("welcome");
   const nav = await getTranslations("hero");
   return (
-    <section id="bienvenue" className="relative isolate scroll-mt-16 overflow-hidden bg-[#2b0f16] py-24 text-ivory sm:py-32" aria-labelledby="welcome-title">
-      {/* Lueurs qui bougent lentement */}
-      <div aria-hidden className="absolute -top-32 -left-24 -z-10 size-[34rem] animate-[glow_14s_ease-in-out_infinite_alternate] rounded-full bg-[#b23a48]/40 blur-[110px] motion-reduce:animate-none" />
-      <div aria-hidden className="absolute -right-24 -bottom-40 -z-10 size-[38rem] animate-[glow_18s_ease-in-out_infinite_alternate-reverse] rounded-full bg-champagne/30 blur-[120px] motion-reduce:animate-none" />
-      <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgb(20_6_10/0.55))]" />
+    <section id="bienvenue" className="relative isolate scroll-mt-16 overflow-hidden bg-ink py-24 text-ivory sm:py-32" aria-labelledby="welcome-title">
+      {/* Même fond que l'ouverture pour une transition continue ; une seule lueur dorée qui bouge lentement */}
+      <div aria-hidden className="absolute top-1/2 left-1/4 -z-10 size-[32rem] -translate-x-1/2 -translate-y-1/2 animate-[glow_16s_ease-in-out_infinite_alternate] rounded-full bg-champagne/15 blur-[120px] motion-reduce:animate-none" />
 
       <div className="container-page grid items-center gap-16 md:grid-cols-2 md:gap-16">
         <PhotoDeck photos={PHOTOS} />
