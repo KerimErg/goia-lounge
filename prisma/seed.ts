@@ -82,26 +82,30 @@ const MENU: Cat[] = [
   ] },
   { slug: "cocktails", section: "DRINK", name: l("Cocktails", "Cocktails", "Cocktails"), items: [
     // Prix non visible sur les captures : laissé vide (à compléter dans l'admin)
-    { name: l("Rubis des Îles", "Rubis des Îles", "Rubis des Îles"), price: null, tags: ["bestseller"],
+    { name: l("Rubis des Îles", "Rubis des Îles", "Rubis des Îles"), price: null, tags: ["bestseller"], image: M("rubis-des-iles"),
       desc: l("Un cocktail rubis aux accents des îles, bissap, rhum blanc et fraîcheur citronnée.", "Ein rubinroter Cocktail mit Inselflair: Bissap, weißer Rum und zitronige Frische.", "A ruby cocktail with island accents: bissap, white rum and citrus freshness."),
       ingredients: l("Rhum blanc, bissap, jus de citron vert, sirop de sucre de canne et eau pétillante.", "Weißer Rum, Bissap, Limettensaft, Rohrzuckersirup und Sprudelwasser.", "White rum, bissap, lime juice, cane sugar syrup and sparkling water.") },
     { name: l("Mojito Framboise", "Mojito Framboise", "Mojito Framboise"), price: 1000, image: M("mojito-framboise") },
     { name: l("Tiki Mangue", "Tiki Mangue", "Tiki Mangue"), price: 1000, image: M("tiki-mangue"),
       desc: l("Un cocktail tiki solaire au rhum, mangue, coco et ananas.", "Ein sonniger Tiki-Cocktail mit Rum, Mango, Kokos und Ananas.", "A sunny tiki cocktail with rum, mango, coconut and pineapple."),
       ingredients: l("Rhum, purée de coco, purée de mangue, jus d'ananas et citron vert.", "Rum, Kokospüree, Mangopüree, Ananassaft und Limette.", "Rum, coconut purée, mango purée, pineapple juice and lime.") },
-    { name: l("Mojito Passion", "Mojito Passion", "Mojito Passion"), price: null,
+    { name: l("Mojito Passion", "Mojito Passion", "Mojito Passion"), price: null, image: M("mojito-passion"),
       desc: l("Un mojito passion vibrant, frais et acidulé.", "Ein lebendiger Maracuja-Mojito, frisch und spritzig.", "A vibrant passion fruit mojito, fresh and tangy."),
       ingredients: l("Menthe fraîche, citron vert, sucre de canne, rhum Havana, eau pétillante et purée de fruit de la passion.", "Frische Minze, Limette, Rohrzucker, Havana-Rum, Sprudelwasser und Maracujapüree.", "Fresh mint, lime, cane sugar, Havana rum, sparkling water and passion fruit purée.") },
     { name: l("Mojito Classic", "Mojito Classic", "Mojito Classic"), price: 1000, image: M("mojito-classic"),
       desc: l("Un grand classique frais aux notes de menthe, citron vert et rhum Havana.", "Ein frischer Klassiker mit Minze, Limette und Havana-Rum.", "A fresh classic with notes of mint, lime and Havana rum.") },
-    { name: l("Gin Berry", "Gin Berry", "Gin Berry"), price: null,
+    { name: l("Gin Berry", "Gin Berry", "Gin Berry"), price: null, image: M("gin-berry"),
       desc: l("Un gin fruité aux fraises fraîches, menthe, citron et finale pétillante.", "Ein fruchtiger Gin mit frischen Erdbeeren, Minze, Zitrone und spritzigem Abgang.", "A fruity gin with fresh strawberries, mint, lemon and a sparkling finish."),
       ingredients: l("Gin, fraises fraîches, menthe, citron et Sprite/Schweppes.", "Gin, frische Erdbeeren, Minze, Zitrone und Sprite/Schweppes.", "Gin, fresh strawberries, mint, lemon and Sprite/Schweppes.") },
     { name: l("Pornstar Martini", "Pornstar Martini", "Pornstar Martini"), price: 1000, image: M("pornstar-martini") },
   ] },
-  // Desserts : seul le cheesecake spéculoos est connu (photo du GOIA) ; prix et autres desserts à compléter
+  // Desserts (photos fournies par le GOIA) ; prix à compléter dans l'admin
   { slug: "desserts", section: "FOOD", name: l("Desserts", "Desserts", "Desserts"), items: [
-    { name: l("Cheesecake spéculoos", "Spekulatius-Cheesecake", "Speculoos cheesecake"), price: null, image: "/images/goia/cheesecake-speculoos.jpg" },
+    { name: l("Cheesecake spéculoos", "Spekulatius-Cheesecake", "Speculoos cheesecake"), price: null, image: M("cheesecake-speculoos") },
+    { name: l("Cheesecake pistache", "Pistazien-Cheesecake", "Pistachio cheesecake"), price: null, image: M("cheesecake-pistache") },
+    { name: l("Cheesecake fruits rouges", "Beeren-Cheesecake", "Red berry cheesecake"), price: null, image: M("cheesecake-fruits-rouges") },
+    { name: l("Pain perdu", "Pain perdu", "French toast"), price: null, image: M("pain-perdu") },
+    { name: l("Fondant au chocolat", "Schokoladen-Fondant", "Chocolate fondant"), price: null, image: M("fondant-chocolat") },
   ] },
 ];
 
@@ -163,7 +167,7 @@ async function main() {
     await prisma.menuCategory.create({
       data: {
         slug: c.slug, section: c.section, name: c.name, description: c.description, order: ci,
-        imageUrl: { SHISHA: "/images/menu/chicha-classique.jpg", DRINK: "/images/menu/tiki-mangue.jpg", FOOD: "/images/goia/cheesecake-speculoos.jpg" }[c.section],
+        imageUrl: { SHISHA: "/images/menu/chicha-classique.jpg", DRINK: "/images/menu/rubis-des-iles.jpg", FOOD: "/images/menu/cheesecake-speculoos.jpg" }[c.section],
         items: { create: c.items.map((it, ii) => ({ name: it.name, description: it.desc, priceCents: it.price, tags: it.tags ?? [], preorderable: !!it.preorderable, order: ii,
           imageUrl: it.image ?? null, subtitle: it.subtitle, ingredients: it.ingredients })) },
       },

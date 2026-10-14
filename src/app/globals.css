@@ -282,3 +282,24 @@
     .sd-lift { animation: lift linear both; animation-timeline: view(); animation-range: cover; will-change: transform; }
   }
 }
+
+/* L'ambiance façon story : 5 images de 4 s qui s'enchaînent (fondu + lent zoom), barres qui se remplissent */
+.story-slide { opacity: 0; animation: story-fade 20s linear infinite both; animation-delay: calc(var(--i) * 4s); }
+.story-zoom { animation: story-zoom 20s linear infinite both; animation-delay: inherit; }
+.story-slide .story-zoom { animation-delay: calc(var(--i) * 4s); }
+@keyframes story-fade { 0% { opacity: 0; } 3%, 20% { opacity: 1; } 24%, 100% { opacity: 0; } }
+@keyframes story-zoom { 0% { transform: scale(1.14); } 24%, 100% { transform: scale(1); } }
+.story-bar { transform: scaleX(0); animation: 20s linear infinite; }
+.story-bar-0 { animation-name: bar0; } .story-bar-1 { animation-name: bar1; } .story-bar-2 { animation-name: bar2; }
+.story-bar-3 { animation-name: bar3; } .story-bar-4 { animation-name: bar4; }
+@keyframes bar0 { 0% { transform: scaleX(0); } 20%, 99.9% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
+@keyframes bar1 { 0%, 20% { transform: scaleX(0); } 40%, 99.9% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
+@keyframes bar2 { 0%, 40% { transform: scaleX(0); } 60%, 99.9% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
+@keyframes bar3 { 0%, 60% { transform: scaleX(0); } 80%, 99.9% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
+@keyframes bar4 { 0%, 80% { transform: scaleX(0); } 99.9% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
+.story:hover .story-slide, .story:hover .story-zoom, .story:hover .story-bar { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .story-slide, .story-zoom, .story-bar { animation: none !important; }
+  .story-slide:first-child { opacity: 1; }
+  .story-bar-0 { transform: scaleX(1); }
+}

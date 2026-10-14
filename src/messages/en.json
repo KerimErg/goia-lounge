@@ -110,12 +110,11 @@
     "shisha_t": "Shishas",
     "shisha": "Classique · Quasar",
     "drinks_t": "Cocktails",
-    "drinks": "Mojitos · Tiki Mangue · Pornstar Martini",
+    "drinks": "Rubis des Îles · Mojitos · Gin Berry · Pornstar Martini",
     "cta": "See the full menu",
     "sweets_t": "Desserts",
-    "sweets": "Speculoos cheesecake",
-    "see": "View",
-    "more": "+ {n} more"
+    "sweets": "Cheesecakes · French toast · Chocolate fondant",
+    "see": "View"
   },
   "flow": {
     "step1": "Your evening",
