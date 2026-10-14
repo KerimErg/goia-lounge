@@ -27,7 +27,10 @@ export default async function MenuHome({ params }: { params: Promise<{ locale: s
   setRequestLocale(locale);
   const t = await getTranslations("menuPage");
   const lang = await getLocale();
-  const [cats, venue] = await Promise.all([getMenu(), getVenue()]);
+  const [cats, venue] = await Promise.all([getMenu(), getVenue()]).catch((e) => {
+    console.error("[carte] Lecture de la carte impossible :", e); // visible dans les journaux Vercel
+    throw e;
+  });
   const { instagram } = contactLinks(venue.settings);
 
   return (
