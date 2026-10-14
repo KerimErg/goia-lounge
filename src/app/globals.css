@@ -163,9 +163,9 @@
   transform: rotate(180deg);
 }
 
-/* Leaflet (carte des infos pratiques) en tons chauds */
+/* Leaflet (carte des infos pratiques) : en couleurs */
 .leaflet-container { font-family: inherit; background: var(--linen); }
-.leaflet-tile-pane { filter: grayscale(0.85) sepia(0.25) contrast(0.95); }
+.leaflet-tile-pane { filter: saturate(1.05); }
 
 @keyframes scrollcue {
   0% { transform: translateY(-100%); }
