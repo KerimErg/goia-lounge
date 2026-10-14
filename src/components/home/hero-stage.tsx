@@ -20,14 +20,28 @@ function BackgroundVideo({ video, poster, labels }: { video: HeroVideo; poster: 
   const [playing, setPlaying] = useState(false);
   useEffect(() => {
     const v = ref.current;
-    if (!v || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    v.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
+    if (!v) return;
+    // iPhone / Android : la lecture automatique n'est permise que si la vidéo est muette
+    // (React ne pose pas l'attribut « muted » dans le HTML : on le force avant de lancer).
+    v.muted = true;
+    v.defaultMuted = true;
+    v.setAttribute("muted", "");
+    v.setAttribute("playsinline", "");
+    const tryPlay = () => v.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
+    tryPlay();
+    v.addEventListener("canplay", tryPlay, { once: true });
+    // Mode économie d'énergie (iPhone) : la vidéo démarre au premier toucher de l'écran
+    const onTouch = () => { if (v.paused) tryPlay(); };
+    window.addEventListener("touchstart", onTouch, { once: true, passive: true });
+    return () => { v.removeEventListener("canplay", tryPlay); window.removeEventListener("touchstart", onTouch); };
   }, []);
   return (
     <>
-      <video ref={ref} muted loop playsInline autoPlay preload="auto" poster={poster} aria-hidden="true" className="absolute inset-0 size-full object-cover object-[50%_55%]">
-        {video.webm && <source src={video.webm} type="video/webm" />}
+      <video ref={ref} muted loop playsInline autoPlay preload="auto" poster={poster} aria-hidden="true" disablePictureInPicture disableRemotePlayback className="absolute inset-0 size-full object-cover object-[50%_55%]">
+        {/* Téléphone : version légère (démarre vite en 4G) ; ailleurs MP4 haute qualité, lu partout y compris sur iPhone */}
+        {video.mobile && <source src={video.mobile} type="video/mp4" media="(max-width: 767px)" />}
         <source src={video.mp4} type="video/mp4" />
+        {video.webm && <source src={video.webm} type="video/webm" />}
       </video>
       <button
         type="button"

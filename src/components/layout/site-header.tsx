@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { CalendarDays } from "lucide-react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { Logo } from "@/components/brand/logo";
 import { LanguageSwitcher } from "./language-switcher";
@@ -95,12 +94,11 @@ export function SiteHeader() {
           <BookLink
             label={t("booking")}
             className={cn(
-              "eyebrow flex size-11 items-center justify-center text-[0.66rem] transition-colors duration-300 sm:size-auto sm:px-5 sm:py-3 lg:hidden",
+              "eyebrow flex h-10 items-center justify-center px-3.5 text-[0.6rem] tracking-[0.25em] transition-colors duration-300 sm:h-auto sm:px-5 sm:py-3 sm:text-[0.66rem] lg:hidden",
               light ? "bg-ivory text-ink hover:bg-linen" : "bg-ink text-ivory hover:bg-taupe",
             )}
           >
-            <CalendarDays className="size-4 sm:hidden" aria-hidden />
-            <span className="hidden sm:inline">{t("booking")}</span>
+            {t("booking")}
           </BookLink>
         </div>
       </div>
