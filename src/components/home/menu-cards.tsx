@@ -8,7 +8,7 @@ import { Ornament } from "@/components/ornament";
 
 // Photos de la carte officielle
 const CARDS = [
-  { key: "shisha", slug: "chichas", src: "/images/menu/quasar.jpg", r: "-6deg", pos: "object-top" },
+  { key: "shisha", slug: "chichas", src: "/images/menu/quasar-tete-quasar.jpg", r: "-6deg", pos: "" },
   { key: "drinks", slug: "cocktails", src: "/images/menu/mojito-framboise.jpg", r: "0deg", pos: "" },
   { key: "sweets", slug: "desserts", src: "/images/goia/cheesecake-speculoos.jpg", r: "6deg", pos: "" },
 ] as const;

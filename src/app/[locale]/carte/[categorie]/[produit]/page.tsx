@@ -57,22 +57,22 @@ export default async function MenuItemPage({ params }: { params: Promise<{ local
       </nav>
 
       <div className="mx-auto max-w-3xl">
-        <div className={`relative bg-ink sm:mt-8 sm:overflow-hidden sm:rounded-2xl ${c.section === "SHISHA" ? "aspect-[4/5] sm:mx-auto sm:max-w-md" : "aspect-[4/3]"}`}>
+        <div className={`enter-rise relative overflow-hidden bg-ink sm:mt-8 sm:rounded-2xl ${c.section === "SHISHA" ? "aspect-[2/3] max-h-[78svh] sm:mx-auto sm:max-w-md" : "aspect-[4/3]"}`}>
           {it.imageUrl ? (
-            <Image src={it.imageUrl} alt={tr(it.name, lang)} fill priority sizes="(min-width: 768px) 768px, 100vw" className={`object-cover ${c.section === "SHISHA" ? "object-top" : ""}`} />
+            <Image src={it.imageUrl} alt={tr(it.name, lang)} fill priority sizes="(min-width: 768px) 768px, 100vw" className="animate-[slowzoom_18s_ease-in-out_infinite_alternate] object-cover motion-reduce:animate-none" />
           ) : (
             <div className="grid size-full place-items-center"><Logo className="w-1/3 text-ivory/25" /></div>
           )}
         </div>
 
-        <div className="px-6 pt-10 pb-6 text-center">
+        <div style={{ animationDelay: "0.15s" }} className="enter-rise px-6 pt-10 pb-6 text-center">
           {rule()}
           <h1 className="mt-5 text-[clamp(2.2rem,6vw,3.2rem)] leading-tight">{tr(it.name, lang)}</h1>
           {it.priceCents != null && <p className="mt-2 text-2xl tabular-nums text-taupe-deep">{euro(it.priceCents, lang)}</p>}
           <div className="mt-5">{rule(true)}</div>
         </div>
 
-        <div className="mx-auto max-w-xl px-6 pb-10 text-center">
+        <div style={{ animationDelay: "0.3s" }} className="enter-rise mx-auto max-w-xl px-6 pb-10 text-center">
           {(tags.length > 0 || it.subtitle) && (
             <p className="text-xs tracking-[0.2em] text-taupe-deep uppercase">{[...tags, it.subtitle ? tr(it.subtitle, lang) : ""].filter(Boolean).join(" · ")}</p>
           )}
