@@ -1,3 +1,4 @@
+import "./site-url"; // NEXTAUTH_URL nettoyée avant que NextAuth ne la lise
 import type { NextAuthOptions } from "next-auth";
 import { getServerSession } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";

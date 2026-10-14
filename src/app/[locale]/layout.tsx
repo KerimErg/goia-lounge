@@ -9,6 +9,7 @@ import { IntroCurtain } from "@/components/fx";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { Cursor } from "@/components/cursor";
 import { LogoSymbol } from "@/components/brand/logo-symbol";
+import { siteOrigin } from "@/lib/site-url";
 import "../globals.css";
 
 export function generateStaticParams() {
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
   return {
-    metadataBase: new URL(process.env.NEXTAUTH_URL ?? "http://localhost:3000"),
+    metadataBase: new URL(siteOrigin()),
     title: { default: t("title"), template: "%s · GOIA Lounge" },
     description: t("description"),
     alternates: { languages: { fr: "/fr", de: "/de", en: "/en", "x-default": "/fr" } },

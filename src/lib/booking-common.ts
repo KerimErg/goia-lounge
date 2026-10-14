@@ -1,11 +1,12 @@
 import "server-only";
+import { siteOrigin } from "./site-url";
 import { createHash } from "node:crypto";
 import { VENUE_TZ } from "./time";
 
 export const sha = (s: string) => createHash("sha256").update(s).digest("hex");
 
 /** Adresse publique du site (liens des e-mails). */
-export const siteUrl = () => (process.env.NEXTAUTH_URL ?? "http://localhost:3000").replace(/\/$/, "");
+export const siteUrl = () => siteOrigin();
 
 export const dateLabel = (at: Date, locale: string) =>
   new Intl.DateTimeFormat(locale, { weekday: "long", day: "numeric", month: "long", timeZone: VENUE_TZ }).format(at);

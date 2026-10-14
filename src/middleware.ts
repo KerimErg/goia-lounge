@@ -14,7 +14,7 @@ export default async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   if (pathname.startsWith("/admin")) {
     if (pathname.startsWith("/admin/login")) return NextResponse.next();
-    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET, secureCookie: req.nextUrl.protocol === "https:" });
     if (!token) {
       const url = new URL("/admin/login", req.url);
       url.searchParams.set("callbackUrl", pathname);
