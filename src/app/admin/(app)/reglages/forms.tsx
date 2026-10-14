@@ -2,7 +2,7 @@
 
 import { useActionState, useTransition } from "react";
 import { toast } from "sonner";
-import { addUser, changePassword, deleteUser, saveNotifyEmail, type ActionState } from "../../actions";
+import { addUser, changePassword, deleteUser, saveNotifyEmail, testEmail, type ActionState } from "../../actions";
 
 const field = "h-11 w-full rounded-xl border border-ink/15 bg-white px-4 text-sm outline-none focus:border-ink";
 const btn = "h-11 rounded-full bg-ink px-5 text-sm text-ivory transition-colors hover:bg-taupe disabled:opacity-50";
@@ -61,5 +61,15 @@ export function DeleteUserButton({ id, email }: { id: string; email: string }) {
     >
       Supprimer
     </button>
+  );
+}
+
+export function TestEmailButton() {
+  const [s, action, pending] = useActionState<ActionState, FormData>(testEmail, null);
+  return (
+    <form action={action} className="mt-4 flex flex-wrap items-center gap-3">
+      <button className="h-11 rounded-full border border-ink/20 px-5 text-sm transition-colors hover:border-ink disabled:opacity-50" disabled={pending}>{pending ? "Envoi…" : "Envoyer un e-mail de test"}</button>
+      <Msg s={s} />
+    </form>
   );
 }
