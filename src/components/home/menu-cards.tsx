@@ -8,9 +8,9 @@ import { Ornament } from "@/components/ornament";
 
 // Photos de la carte officielle
 const CARDS = [
-  { key: "shisha", slug: "chichas", src: "/images/menu/chicha-classique.jpg", r: "-6deg" },
-  { key: "drinks", slug: "cocktails", src: "/images/menu/mojito-framboise.jpg", r: "0deg" },
-  { key: "sweets", slug: "desserts", src: "/images/goia/cheesecake-speculoos.jpg", r: "6deg" },
+  { key: "shisha", slug: "chichas", src: "/images/menu/quasar.jpg", r: "-6deg", pos: "object-top" },
+  { key: "drinks", slug: "cocktails", src: "/images/menu/mojito-framboise.jpg", r: "0deg", pos: "" },
+  { key: "sweets", slug: "desserts", src: "/images/goia/cheesecake-speculoos.jpg", r: "6deg", pos: "" },
 ] as const;
 
 /**
@@ -35,7 +35,7 @@ export async function MenuCards() {
               {/* Mobile : ligne compacte (photo + texte) ; ordinateur : carte verticale */}
               <Link href={`/carte/${c.slug}`} className="group flex items-center gap-5 bg-ivory p-3 shadow-[0_1px_0_rgb(27_21_17/0.04)] transition-[transform,box-shadow] duration-500 ease-[var(--ease-lux)] hover:-translate-y-2 sm:block sm:bg-transparent sm:p-0 sm:text-center sm:shadow-none">
                 <div className="relative aspect-square w-24 shrink-0 overflow-hidden sm:aspect-[4/5] sm:w-full sm:rounded-t-full sm:outline sm:outline-1 sm:outline-offset-[10px] sm:outline-champagne/50">
-                  <Image src={c.src} alt="" fill sizes="(min-width: 640px) 320px, 96px" className="object-cover transition-transform duration-[1.2s] ease-[var(--ease-lux)] group-hover:scale-110" />
+                  <Image src={c.src} alt="" fill sizes="(min-width: 640px) 320px, 96px" className={`object-cover ${c.pos} transition-transform duration-[1.2s] ease-[var(--ease-lux)] group-hover:scale-110`} />
                   {/* Pastille « Voir » qui apparaît au survol */}
                   <span aria-hidden className="absolute inset-0 hidden place-items-center sm:grid">
                     <span className="grid size-20 scale-50 place-items-center rounded-full bg-ivory/90 text-[0.6rem] tracking-[0.3em] text-ink uppercase opacity-0 backdrop-blur-sm transition-all duration-500 ease-[var(--ease-lux)] group-hover:scale-100 group-hover:opacity-100">{t("see")}</span>

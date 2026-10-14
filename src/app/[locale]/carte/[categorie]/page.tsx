@@ -53,9 +53,10 @@ export default async function MenuCategoryPage({ params }: { params: Promise<{ l
         {c.items.map((it) => (
           <li key={it.id}>
             <Link href={`/carte/${c.slug}/${it.slug}`} className="group block overflow-hidden rounded-2xl bg-white shadow-soft transition-shadow hover:shadow-lift">
-              <div className="relative aspect-square overflow-hidden bg-ink">
+              {/* Chichas : photos verticales (l'appareil en entier) ; boissons et desserts : carré */}
+              <div className={`relative overflow-hidden bg-ink ${c.section === "SHISHA" ? "aspect-[3/4]" : "aspect-square"}`}>
                 {it.imageUrl ? (
-                  <Image src={it.imageUrl} alt={tr(it.name, lang)} fill sizes="(min-width: 768px) 320px, 50vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <Image src={it.imageUrl} alt={tr(it.name, lang)} fill sizes="(min-width: 768px) 320px, 50vw" className={`object-cover transition-transform duration-700 group-hover:scale-105 ${c.section === "SHISHA" ? "object-top" : ""}`} />
                 ) : (
                   <div className="grid size-full place-items-center"><Logo className="w-1/2 text-ivory/25" /></div>
                 )}

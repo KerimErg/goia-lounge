@@ -57,9 +57,9 @@ export default async function MenuItemPage({ params }: { params: Promise<{ local
       </nav>
 
       <div className="mx-auto max-w-3xl">
-        <div className="relative aspect-[4/3] bg-ink sm:mt-8 sm:overflow-hidden sm:rounded-2xl">
+        <div className={`relative bg-ink sm:mt-8 sm:overflow-hidden sm:rounded-2xl ${c.section === "SHISHA" ? "aspect-[4/5] sm:mx-auto sm:max-w-md" : "aspect-[4/3]"}`}>
           {it.imageUrl ? (
-            <Image src={it.imageUrl} alt={tr(it.name, lang)} fill priority sizes="(min-width: 768px) 768px, 100vw" className="object-cover" />
+            <Image src={it.imageUrl} alt={tr(it.name, lang)} fill priority sizes="(min-width: 768px) 768px, 100vw" className={`object-cover ${c.section === "SHISHA" ? "object-top" : ""}`} />
           ) : (
             <div className="grid size-full place-items-center"><Logo className="w-1/3 text-ivory/25" /></div>
           )}
