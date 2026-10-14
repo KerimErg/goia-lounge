@@ -1,10 +1,9 @@
 import { getLocale, getTranslations } from "next-intl/server";
-import { Car, TramFront } from "lucide-react";
 import { dayName, getVenue, groupHours, isOpenNow } from "@/lib/venue";
 import { cn } from "@/lib/utils";
 import { VenueMap } from "@/components/home/venue-map";
 
-/** Adresse, horaires, accès et carte (accueil + page Contact). Prend la couleur du texte de la section (fond clair ou sombre). */
+/** Adresse, horaires et carte (accueil + page Contact). Prend la couleur du texte de la section (fond clair ou sombre). */
 export async function VenueInfo() {
   const info = await getTranslations("info");
   const locale = await getLocale();
@@ -35,13 +34,6 @@ export async function VenueInfo() {
                 </div>
               ))}
             </dl>
-          </div>
-          <div className="sm:col-span-2">
-            <h3 className="eyebrow text-[0.65rem]">{info("access")}</h3>
-            <ul className="mt-4 grid gap-3 text-sm leading-relaxed sm:grid-cols-2">
-              <li className="flex gap-3"><TramFront className="mt-0.5 size-4 shrink-0" aria-hidden />{info("tram")}</li>
-              <li className="flex gap-3"><Car className="mt-0.5 size-4 shrink-0" aria-hidden />{info("parking")}</li>
-            </ul>
           </div>
         </div>
         <div className="lg:col-span-5">
