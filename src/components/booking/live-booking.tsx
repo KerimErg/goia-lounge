@@ -53,14 +53,37 @@ export function LiveBooking({ zones, maxParty, maxDaysAhead, instagram, initial 
   const [done, setDone] = useState<{ reference: string; emailed: boolean } | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const slotsRef = useRef<HTMLDivElement>(null);
+  const doneRef = useRef<HTMLDivElement>(null);
+
+  // Réservation validée : le formulaire (haut) est remplacé par la confirmation (courte) ;
+  // on recentre l'écran sur la confirmation au lieu de laisser la page « tomber » vers le bas.
+  useEffect(() => {
+    if (!done) return;
+    const el = doneRef.current;
+    if (!el) return;
+    el.focus({ preventScroll: true });
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+  }, [done]);
 
   // 2. État des jours du mois affiché
   useEffect(() => {
     const ctrl = new AbortController();
-    fetch(`/api/availability/month?${new URLSearchParams({ month, persons: String(persons), ...(zone ? { zone } : {}) })}`, { signal: ctrl.signal })
-      .then((r) => r.json())
-      .then((j: { days?: Record<string, DayStatus> }) => setDays((d) => ({ ...d, ...(j.days ?? {}) })))
-      .catch(() => {});
+    const url = `/api/availability/month?${new URLSearchParams({ month, persons: String(persons), ...(zone ? { zone } : {}) })}`;
+    // Jusqu'à 3 essais : la base gratuite peut mettre quelques secondes à se réveiller
+    const load = async (attempt: number): Promise<void> => {
+      try {
+        const r = await fetch(url, { signal: ctrl.signal });
+        if (!r.ok) throw new Error(String(r.status));
+        const j: { days?: Record<string, DayStatus> } = await r.json();
+        setDays((d) => ({ ...d, ...(j.days ?? {}) }));
+      } catch {
+        if (ctrl.signal.aborted || attempt >= 3) return;
+        await new Promise((res) => setTimeout(res, 1200 * attempt));
+        if (!ctrl.signal.aborted) return load(attempt + 1);
+      }
+    };
+    load(1);
     return () => ctrl.abort();
   }, [month, persons, zone]);
 
@@ -69,7 +92,11 @@ export function LiveBooking({ zones, maxParty, maxDaysAhead, instagram, initial 
     if (!date) return;
     if (!quiet) setSlotsState("loading");
     try {
-      const r = await fetch(`/api/availability?${new URLSearchParams({ date, persons: String(persons), ...(zone ? { zone } : {}) })}`, { cache: "no-store" });
+      const url = `/api/availability?${new URLSearchParams({ date, persons: String(persons), ...(zone ? { zone } : {}) })}`;
+      // Un second essai si le serveur ne répond pas du premier coup (réveil de la base)
+      let r = await fetch(url, { cache: "no-store" }).catch(() => null);
+      if (!r?.ok) { await new Promise((res) => setTimeout(res, 1500)); r = await fetch(url, { cache: "no-store" }); }
+      if (!r.ok) throw new Error(String(r.status));
       const j: { slots?: Slot[] } = await r.json();
       setSlots(j.slots ?? []);
       setSlotsState("idle");
@@ -161,7 +188,7 @@ export function LiveBooking({ zones, maxParty, maxDaysAhead, instagram, initial 
 
   if (done) {
     return (
-      <div className="mx-auto max-w-[1040px] rounded-3xl border border-ivory/10 bg-[#211a16]/95 p-8 text-center text-ivory shadow-lift sm:p-12" tabIndex={-1}>
+      <div ref={doneRef} role="status" className="mx-auto max-w-[1040px] scroll-mt-28 rounded-3xl border border-ivory/10 bg-[#211a16]/95 p-8 text-center text-ivory shadow-lift outline-none sm:p-12" tabIndex={-1}>
         <span className="mx-auto grid size-16 place-items-center rounded-full bg-champagne text-ink"><Check className="size-8" strokeWidth={2.2} /></span>
         <h3 className="mt-6 text-[clamp(2rem,7vw,2.8rem)] leading-tight">{t("doneTitle", { name: form.name.split(" ")[0] })}</h3>
         <p className="mx-auto mt-3 max-w-[46ch] text-ivory/85">
