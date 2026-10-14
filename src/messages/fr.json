@@ -102,9 +102,14 @@
   "welcome": {
     "eyebrow": "Bienvenue",
     "title": "Bienvenue au GOIA",
-    "text": "Un lounge chaleureux pour passer la soirée entre amis : chichas et cocktails, dans une ambiance détendue.",
+    "text": "Un lounge chaleureux pour passer la soirée entre amis : chichas et cocktails, dans une ambiance détendue.",
     "cta": "Réserver une table",
-    "manifesto": "Bienvenue au GOIA [goia] un lounge chaleureux à Kehl pour passer la soirée entre amis, autour d'une chicha [shisha] et d'un cocktail [cocktail] dans une ambiance détendue."
+    "photoMain": "Mojito Classic servi au GOIA",
+    "photoSmall": "Pornstar Martini",
+    "d1_t": "Espaces",
+    "d1": "Intérieur & terrasse",
+    "d2_t": "À la carte",
+    "d2": "Chichas & cocktails"
   },
   "menuCards": {
     "eyebrow": "La carte",

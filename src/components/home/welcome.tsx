@@ -1,61 +1,68 @@
 import Image from "next/image";
-import { Fragment, type CSSProperties } from "react";
+import type { CSSProperties } from "react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { Button } from "@/components/ui/button";
-import { Ornament } from "@/components/ornament";
-
-// Petites photos glissées dans la phrase, à la place des mots-clés [goia] [shisha] [cocktail]
-const PILLS: Record<string, { src: string; alt: string }> = {
-  goia: { src: "/images/goia/chicha-fumee-ambiance.jpg", alt: "Le lounge GOIA" },
-  shisha: { src: "/images/menu/quasar.jpg", alt: "Chicha Quasar" },
-  cocktail: { src: "/images/menu/pornstar-martini.jpg", alt: "Pornstar Martini" },
-};
+import { MaskReveal } from "@/components/motion";
 
 /**
- * Bienvenue : une seule grande phrase sur fond clair, qui s'allume mot après mot pendant le défilement,
- * avec des photos rondes glissées entre les mots. Puis deux boutons.
+ * Bienvenue — mise en page éditoriale, façon magazine : grande photo en arche cernée d'un filet doré,
+ * seconde photo en médaillon qui glisse plus vite (parallaxe), titre fin, texte court et deux liens.
  */
 export async function Welcome() {
   const t = await getTranslations("welcome");
   const nav = await getTranslations("hero");
-  const parts = t("manifesto").split(/(\[[a-z]+\])/).filter(Boolean);
-  let n = 0;
+  const [first, ...rest] = t("title").split(" ");
+  const last = rest.pop();
 
   return (
-    <section id="bienvenue" className="relative scroll-mt-16 bg-ivory py-28 text-ink sm:py-40" aria-labelledby="welcome-title">
-      <div className="container-page">
-        <div className="flex items-center justify-center gap-4 text-taupe-deep">
-          <Ornament className="w-16 sm:w-24" />
-          <h2 id="welcome-title" className="eyebrow">{t("title")}</h2>
-          <Ornament className="w-16 sm:w-24" />
+    <section id="bienvenue" className="relative scroll-mt-16 overflow-clip bg-ivory py-28 text-ink sm:py-40" aria-labelledby="welcome-title">
+      {/* Marge : mention verticale, comme sur une page de magazine */}
+      <p aria-hidden className="text-vertical eyebrow absolute top-1/2 left-6 hidden -translate-y-1/2 text-[0.58rem] text-taupe xl:block">GOIA · Kehl</p>
+
+      <div className="container-page grid items-center gap-20 md:grid-cols-12 md:gap-10">
+        {/* Photos */}
+        <div className="relative mx-auto w-[78%] max-w-md md:col-span-6 md:w-full lg:col-span-5 lg:col-start-2">
+          <div className="rounded-t-full outline outline-1 outline-offset-[14px] outline-champagne/60">
+            <MaskReveal className="aspect-[4/5] rounded-t-full">
+              <Image src="/images/menu/mojito-classic.jpg" alt={t("photoMain")} fill sizes="(min-width: 768px) 420px, 78vw" className="object-cover" />
+            </MaskReveal>
+          </div>
+          <div style={{ "--from": "40px", "--to": "-60px" } as CSSProperties} className="sd-lift absolute -right-[10%] -bottom-[12%] w-[44%] border-[6px] border-ivory shadow-lift sm:-right-[22%]">
+            <div className="relative aspect-square">
+              <Image src="/images/menu/pornstar-martini.jpg" alt={t("photoSmall")} fill sizes="(min-width: 768px) 200px, 36vw" className="object-cover" />
+            </div>
+          </div>
         </div>
 
-        <p className="manifesto mx-auto mt-12 max-w-5xl text-center font-display text-[clamp(2.1rem,5.4vw,4.6rem)] leading-[1.12] sm:mt-16">
-          {parts.map((part, i) => {
-            const key = part.match(/^\[([a-z]+)\]$/)?.[1];
-            const pill = key && PILLS[key];
-            if (pill) {
-              return (
-                <Fragment key={i}>
-                  <span className="pill relative mx-[0.12em] inline-block h-[0.82em] w-[1.75em] translate-y-[0.08em] overflow-hidden rounded-full align-baseline shadow-soft">
-                    <Image src={pill.src} alt={pill.alt} fill sizes="120px" className="object-cover" />
-                  </span>{" "}
-                </Fragment>
-              );
-            }
-            return part.trim().split(/\s+/).map((w, j, arr) => (
-              <Fragment key={`${i}-${j}`}>
-                <span className="lw" style={{ "--k": n++ } as CSSProperties}>{w}</span>
-                {j < arr.length - 1 || /\s$/.test(part) ? " " : ""}
-              </Fragment>
-            ));
-          })}
-        </p>
+        {/* Texte */}
+        <div className="md:col-span-6 md:col-start-7 lg:col-span-5 lg:col-start-8">
+          <p className="eyebrow flex items-center gap-4 text-[0.62rem] text-taupe-deep"><span className="h-px w-10 bg-champagne" aria-hidden />Huqqa — Lounge</p>
+          <h2 id="welcome-title" className="mt-8 text-[clamp(3.2rem,6.4vw,6rem)] leading-[0.95]">
+            <span className="block">{first}</span>
+            <span className="block">
+              {rest.length > 0 && <span className="font-accent text-[0.8em] text-taupe-deep italic">{rest.join(" ")} </span>}
+              {last}
+            </span>
+          </h2>
+          <p className="sd-rise mt-10 max-w-sm text-[1.05rem] leading-[1.85] text-ink/70">{t("text")}</p>
 
-        <div className="mt-14 grid justify-center gap-3 sm:flex">
-          <Button asChild size="lux"><a href="#reserver">{t("cta")}</a></Button>
-          <Button asChild size="lux" variant="outline"><Link href="/carte">{nav("explore")}</Link></Button>
+          <dl className="sd-rise mt-12 grid max-w-sm grid-cols-2 border-t border-ink/10" style={{ "--i": 1 } as CSSProperties}>
+            <div className="border-r border-ink/10 py-5 pr-4">
+              <dt className="eyebrow text-[0.55rem] text-taupe">{t("d1_t")}</dt>
+              <dd className="mt-2 font-display text-xl">{t("d1")}</dd>
+            </div>
+            <div className="py-5 pl-5">
+              <dt className="eyebrow text-[0.55rem] text-taupe">{t("d2_t")}</dt>
+              <dd className="mt-2 font-display text-xl">{t("d2")}</dd>
+            </div>
+          </dl>
+
+          <div className="sd-rise mt-10 flex flex-wrap items-center gap-x-10 gap-y-4" style={{ "--i": 2 } as CSSProperties}>
+            <a href="#reserver" className="group inline-flex items-center gap-3 border-b border-ink pb-2 text-[0.7rem] tracking-[0.3em] uppercase">
+              {t("cta")}<span aria-hidden className="transition-transform duration-500 ease-[var(--ease-lux)] group-hover:translate-x-1.5">→</span>
+            </a>
+            <Link href="/carte" className="link-underline pb-2 text-[0.7rem] tracking-[0.3em] text-ink/65 uppercase hover:text-ink">{nav("explore")}</Link>
+          </div>
         </div>
       </div>
     </section>

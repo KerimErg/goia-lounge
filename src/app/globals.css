@@ -275,12 +275,10 @@
 }
 @media (prefers-reduced-motion: reduce) { .intro { display: none; } }
 
-/* Bienvenue : la phrase s'allume mot après mot au défilement, les photos rondes s'ouvrent */
-@keyframes light-up { from { opacity: 0.18; } to { opacity: 1; } }
-@keyframes pill-open { from { transform: translateY(0.08em) scale(0.3); opacity: 0; } to { transform: translateY(0.08em) scale(1); opacity: 1; } }
+/* Bienvenue : le médaillon photo remonte un peu plus vite que la page (parallaxe douce) */
+@keyframes lift { from { transform: translateY(var(--from, 40px)); } to { transform: translateY(var(--to, -40px)); } }
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
-    .manifesto .lw { animation: light-up linear both; animation-timeline: view(); animation-range: cover 18% cover 42%; }
-    .manifesto .pill { animation: pill-open linear both; animation-timeline: view(); animation-range: cover 15% cover 35%; }
+    .sd-lift { animation: lift linear both; animation-timeline: view(); animation-range: cover; will-change: transform; }
   }
 }
