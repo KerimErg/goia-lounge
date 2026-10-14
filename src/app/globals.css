@@ -248,14 +248,10 @@
 /* Grand mot en filigrane : texte posé en CSS (décoratif, ignoré par les lecteurs d'écran) */
 .ghost-text::before { content: attr(data-text); }
 
-/* Galerie : par défaut (navigateurs sans défilement animé) une bande que l'on fait glisser au doigt */
-.gal-track { display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; padding-inline: 1.25rem; scrollbar-width: none; }
-.gal-track > * { scroll-snap-align: center; }
 
 @keyframes rise-sd { from { opacity: 0; transform: translateY(70px) rotate(var(--r, 0deg)) scale(0.96); } to { opacity: 1; transform: none; } }
 @keyframes word-in { from { opacity: 0; transform: translateY(0.55em) rotate(5deg); filter: blur(10px); } to { opacity: 1; transform: none; filter: none; } }
 @keyframes drift { from { transform: translateX(var(--from, 8%)); } to { transform: translateX(var(--to, -45%)); } }
-@keyframes gal-x { to { transform: translateX(calc(-100% + 100vw)); } }
 @keyframes open-panel { from { clip-path: inset(0 5% 0 5% round 3rem 3rem 0 0); } to { clip-path: inset(0 0 0 0 round 0); } }
 @keyframes logo-up { from { transform: translateY(45%); opacity: 0.2; } to { transform: none; opacity: 1; } }
 
@@ -269,12 +265,6 @@
     .sd-drift { animation: drift linear both; animation-timeline: view(); animation-range: cover; }
     .sd-open { animation: open-panel linear both; animation-timeline: view(); animation-range: entry 0% entry 90%; }
     .sd-logo { animation: logo-up linear both; animation-timeline: view(); animation-range: entry 0% entry 100%; }
-
-    /* Galerie épinglée : on défile vers le bas, les photos glissent vers la gauche */
-    .gal { height: calc(100svh + var(--n) * 30svh); view-timeline-name: --gal; }
-    .gal-sticky { position: sticky; top: 0; height: 100svh; overflow: clip; display: flex; flex-direction: column; justify-content: center; }
-    .gal-track { overflow: visible; width: max-content; scroll-snap-type: none; padding-inline: 8vw; animation: gal-x linear both; animation-timeline: --gal; animation-range: contain 0% contain 100%; }
-    .gal-word { animation: drift linear both; animation-timeline: --gal; animation-range: contain 0% contain 100%; }
   }
 }
 @media (prefers-reduced-motion: reduce) { .intro { display: none; } }
