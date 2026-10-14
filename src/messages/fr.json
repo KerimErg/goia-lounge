@@ -7,7 +7,6 @@
     "home": "Accueil",
     "menu": "La carte",
     "booking": "Réserver",
-    "privatization": "Privatisation",
     "contact": "Contact",
     "events": "Événements",
     "openMenu": "Ouvrir le menu",
@@ -37,7 +36,7 @@
     "pickDate": "Choisir une date",
     "closed": "Fermé ce jour-là",
     "personsN": "{n} pers.",
-    "more": "Plus de {n} personnes ? Pensez à la <link>privatisation</link>."
+    "more": "Plus de {n} personnes ? Écrivez-nous sur <link>Instagram</link>."
   },
   "gallery": {
     "eyebrow": "Galerie",
@@ -72,13 +71,8 @@
     "closed": "Fermé",
     "openNow": "Ouvert maintenant",
     "closedNow": "Fermé actuellement",
-    "access": "Accès depuis Strasbourg",
-    "tram": "Tram D, arrêt « Kehl Bahnhof », à quelques pas.",
-    "parking": "Parkings publics autour de la gare de Kehl.",
     "contact": "Contact",
-    "directions": "Itinéraire",
-    "mapConsent": "La carte est fournie par OpenStreetMap. En l'affichant, votre adresse IP est transmise à ce service.",
-    "mapLoad": "Afficher la carte"
+    "directions": "Itinéraire"
   },
   "footer": {
     "tagline": "Huqqa lounge à Kehl, à deux pas de Strasbourg.",
@@ -105,19 +99,22 @@
   "welcome": {
     "eyebrow": "Bienvenue",
     "title": "Bienvenue au GOIA",
-    "text": "Un lounge chaleureux pour passer la soirée entre amis : chicha, boissons et desserts, dans une ambiance détendue.",
-    "cta": "Réserver une table"
+    "text": "Un lounge chaleureux pour passer la soirée entre amis : chichas et cocktails, dans une ambiance détendue.",
+    "cta": "Réserver une table",
+    "photoMain": "Chicha Quasar au GOIA",
+    "photoSmall": "Pornstar Martini"
   },
   "menuCards": {
     "eyebrow": "La carte",
     "title": "Notre carte",
     "shisha_t": "Chichas",
-    "shisha": "Classiques et créations maison.",
+    "shisha": "Classique · Quasar",
     "drinks_t": "Boissons",
-    "drinks": "Boissons fraîches et chaudes.",
+    "drinks": "Boissons froides · Boissons chaudes · Cocktails",
+    "cta": "Voir toute la carte",
     "sweets_t": "Desserts",
-    "sweets": "Douceurs à partager.",
-    "cta": "Voir toute la carte"
+    "sweets": "Cheesecakes · Pain perdu · Fondant au chocolat",
+    "see": "Voir"
   },
   "flow": {
     "step1": "Votre soirée",
@@ -161,7 +158,7 @@
     "keepRef": "Gardez cette référence, elle vous sera demandée à l'arrivée.",
     "home": "Retour à l'accueil",
     "personsN": "{n} pers.",
-    "more": "Plus de {n} personnes ? Pensez à la <link>privatisation</link>.",
+    "more": "Plus de {n} personnes ? Écrivez-nous sur <link>Instagram</link>.",
     "title": "Réserver une table",
     "lead": "Votre table en moins d'une minute."
   },
@@ -177,6 +174,80 @@
     "tag_premium": "Premium",
     "note": "Prix en euros, TVA incluse. Chichas réservées aux personnes majeures.",
     "book": "Réserver une table",
-    "empty": "La carte arrive bientôt."
+    "empty": "La carte complète arrive très bientôt sur le site. En attendant, retrouvez-la sur Instagram.",
+    "items": "articles",
+    "ingredients": "Ingrédients",
+    "tag_bestseller": "Best seller",
+    "tag_classique": "Classique",
+    "all": "Toute la carte",
+    "more": "À découvrir aussi",
+    "prev": "Précédent",
+    "next": "Suivant",
+    "flavours": "Tous nos goûts disponibles",
+    "item": "article"
+  },
+  "cancelPage": {
+    "title": "Annuler ma réservation",
+    "confirmQ": "Voulez-vous annuler cette réservation ?",
+    "cancel": "Oui, annuler",
+    "keep": "Non, je garde ma table",
+    "done": "Votre réservation est annulée. Merci d'avoir prévenu !",
+    "already": "Cette réservation est déjà annulée.",
+    "notFound": "Réservation introuvable. Vérifiez le lien reçu par e-mail.",
+    "tooLate": "Il est trop tard pour annuler en ligne ({h} h avant l'arrivée). Écrivez-nous sur Instagram.",
+    "error": "Une erreur est survenue. Réessayez."
+  },
+  "contactPage": {
+    "lead": "Une question, un groupe de plus de 8 personnes ? Écrivez-nous sur Instagram, nous répondons rapidement."
+  },
+  "bk": {
+    "persons": "Combien êtes-vous ?",
+    "date": "Choisissez une date",
+    "time": "Choisissez l'horaire",
+    "details": "Vos coordonnées",
+    "personsAria": "{n} personne(s)",
+    "more": "Plus de {max} personnes ? Écrivez-nous sur <link>Instagram</link>.",
+    "zone": "Espace",
+    "anyZone": "Peu importe",
+    "available": "Disponible",
+    "full": "Complet",
+    "closed": "Fermé",
+    "dayFull": "Complet",
+    "live": "En temps réel",
+    "pickDate": "Choisissez d'abord une date dans le calendrier.",
+    "loading": "Chargement des disponibilités…",
+    "loadError": "Impossible de charger les disponibilités. Vérifiez votre connexion.",
+    "retry": "Réessayer",
+    "noSlots": "Plus de place ce jour-là pour {n} personne(s). Choisissez une autre date.",
+    "fewSeats": "Plus que {n} places",
+    "fewSeats1": "Plus qu'une place",
+    "slotFull": "Complet",
+    "summary": "{date} · {time} · {n} pers.",
+    "change": "Modifier",
+    "name": "Nom",
+    "phone": "Téléphone",
+    "email": "Email",
+    "message": "Message",
+    "optional": "(optionnel)",
+    "messagePh": "Anniversaire, préférence de place…",
+    "age": "Je confirme avoir 18 ans ou plus.",
+    "privacy": "J'accepte la <link>politique de confidentialité</link>.",
+    "submit": "Confirmer la réservation",
+    "sending": "Réservation en cours…",
+    "taken": "Désolé, ce créneau vient d'être réservé par quelqu'un d'autre. Les disponibilités sont à jour : choisissez un autre horaire.",
+    "errRequired": "Ce champ est obligatoire.",
+    "errEmail": "Adresse email invalide.",
+    "errPhone": "Numéro de téléphone invalide.",
+    "errCheck": "Merci de cocher cette case.",
+    "errRate": "Trop de tentatives. Réessayez dans quelques minutes.",
+    "errGeneric": "Une erreur est survenue. Réessayez ou écrivez-nous sur Instagram.",
+    "doneTitle": "C'est réservé, {name} !",
+    "doneText": "Votre table est confirmée le {date} à {time} pour {n} personne(s). Un email de confirmation a été envoyé à {email}.",
+    "doneTextNoMail": "Votre table est confirmée le {date} à {time} pour {n} personne(s). Gardez votre référence.",
+    "ref": "Référence",
+    "idCheck": "Pièce d'identité demandée à l'entrée (18+).",
+    "again": "Nouvelle réservation",
+    "prevMonth": "Mois précédent",
+    "nextMonth": "Mois suivant"
   }
 }

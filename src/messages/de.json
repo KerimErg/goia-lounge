@@ -7,7 +7,6 @@
     "home": "Start",
     "menu": "Karte",
     "booking": "Reservieren",
-    "privatization": "Private Events",
     "contact": "Kontakt",
     "events": "Events",
     "openMenu": "Menü öffnen",
@@ -37,7 +36,7 @@
     "pickDate": "Datum wählen",
     "closed": "An diesem Tag geschlossen",
     "personsN": "{n} Pers.",
-    "more": "Mehr als {n} Personen? Frag nach einer <link>privaten Feier</link>."
+    "more": "Mehr als {n} Personen? Schreib uns auf <link>Instagram</link>."
   },
   "gallery": {
     "eyebrow": "Galerie",
@@ -72,13 +71,8 @@
     "closed": "Geschlossen",
     "openNow": "Jetzt geöffnet",
     "closedNow": "Derzeit geschlossen",
-    "access": "Anfahrt aus Straßburg",
-    "tram": "Tram D, Haltestelle „Kehl Bahnhof“, nur wenige Schritte entfernt.",
-    "parking": "Öffentliche Parkplätze rund um den Bahnhof Kehl.",
     "contact": "Kontakt",
-    "directions": "Route planen",
-    "mapConsent": "Die Karte wird von OpenStreetMap bereitgestellt. Beim Anzeigen wird deine IP-Adresse an diesen Dienst übermittelt.",
-    "mapLoad": "Karte anzeigen"
+    "directions": "Route planen"
   },
   "footer": {
     "tagline": "Huqqa Lounge in Kehl, direkt an der Grenze zu Straßburg.",
@@ -105,19 +99,22 @@
   "welcome": {
     "eyebrow": "Willkommen",
     "title": "Willkommen im GOIA",
-    "text": "Eine gemütliche Lounge für den Abend mit Freunden: Shisha, Getränke und Desserts in entspannter Atmosphäre.",
-    "cta": "Tisch reservieren"
+    "text": "Eine gemütliche Lounge für den Abend mit Freunden: Shishas und Cocktails in entspannter Atmosphäre.",
+    "cta": "Tisch reservieren",
+    "photoMain": "Quasar-Shisha im GOIA",
+    "photoSmall": "Pornstar Martini"
   },
   "menuCards": {
     "eyebrow": "Die Karte",
     "title": "Unsere Karte",
     "shisha_t": "Shishas",
-    "shisha": "Klassiker und Hauskreationen.",
+    "shisha": "Classique · Quasar",
     "drinks_t": "Getränke",
-    "drinks": "Kalte und warme Getränke.",
+    "drinks": "Kalte & heiße Getränke · Cocktails",
+    "cta": "Ganze Karte ansehen",
     "sweets_t": "Desserts",
-    "sweets": "Süßes zum Teilen.",
-    "cta": "Ganze Karte ansehen"
+    "sweets": "Cheesecakes · Pain perdu · Schokoladen-Fondant",
+    "see": "Ansehen"
   },
   "flow": {
     "step1": "Dein Abend",
@@ -161,7 +158,7 @@
     "keepRef": "Bitte notiere die Referenz, sie wird bei der Ankunft benötigt.",
     "home": "Zur Startseite",
     "personsN": "{n} Pers.",
-    "more": "Mehr als {n} Personen? Frag nach einer <link>privaten Feier</link>.",
+    "more": "Mehr als {n} Personen? Schreib uns auf <link>Instagram</link>.",
     "title": "Tisch reservieren",
     "lead": "Dein Tisch in weniger als einer Minute."
   },
@@ -177,6 +174,80 @@
     "tag_premium": "Premium",
     "note": "Preise in Euro inkl. MwSt. Shishas nur für Volljährige.",
     "book": "Tisch reservieren",
-    "empty": "Die Karte folgt in Kürze."
+    "empty": "Die vollständige Karte ist bald hier verfügbar. Bis dahin findest du sie auf Instagram.",
+    "items": "Artikel",
+    "ingredients": "Zutaten",
+    "tag_bestseller": "Bestseller",
+    "tag_classique": "Klassisch",
+    "all": "Ganze Karte",
+    "more": "Ebenfalls entdecken",
+    "prev": "Zurück",
+    "next": "Weiter",
+    "flavours": "Alle Geschmacksrichtungen verfügbar",
+    "item": "Artikel"
+  },
+  "cancelPage": {
+    "title": "Reservierung stornieren",
+    "confirmQ": "Möchtest du diese Reservierung stornieren?",
+    "cancel": "Ja, stornieren",
+    "keep": "Nein, Tisch behalten",
+    "done": "Deine Reservierung ist storniert. Danke fürs Bescheidgeben!",
+    "already": "Diese Reservierung ist bereits storniert.",
+    "notFound": "Reservierung nicht gefunden. Bitte prüfe den Link aus der E-Mail.",
+    "tooLate": "Für eine Online-Stornierung ist es zu spät ({h} Std. vorher). Schreib uns auf Instagram.",
+    "error": "Ein Fehler ist aufgetreten. Bitte erneut versuchen."
+  },
+  "contactPage": {
+    "lead": "Eine Frage oder eine Gruppe mit mehr als 8 Personen? Schreib uns auf Instagram, wir antworten schnell."
+  },
+  "bk": {
+    "persons": "Wie viele seid ihr?",
+    "date": "Wähle ein Datum",
+    "time": "Wähle die Uhrzeit",
+    "details": "Deine Kontaktdaten",
+    "personsAria": "{n} Person(en)",
+    "more": "Mehr als {max} Personen? Schreib uns auf <link>Instagram</link>.",
+    "zone": "Bereich",
+    "anyZone": "Egal",
+    "available": "Verfügbar",
+    "full": "Ausgebucht",
+    "closed": "Geschlossen",
+    "dayFull": "Voll",
+    "live": "Live",
+    "pickDate": "Wähle zuerst ein Datum im Kalender.",
+    "loading": "Verfügbarkeit wird geladen…",
+    "loadError": "Verfügbarkeit konnte nicht geladen werden. Prüfe deine Verbindung.",
+    "retry": "Erneut versuchen",
+    "noSlots": "An diesem Tag ist für {n} Person(en) nichts mehr frei. Wähle ein anderes Datum.",
+    "fewSeats": "Nur noch {n} Plätze",
+    "fewSeats1": "Nur noch 1 Platz",
+    "slotFull": "Ausgebucht",
+    "summary": "{date} · {time} · {n} Pers.",
+    "change": "Ändern",
+    "name": "Name",
+    "phone": "Telefon",
+    "email": "E-Mail",
+    "message": "Nachricht",
+    "optional": "(optional)",
+    "messagePh": "Geburtstag, Platzwunsch…",
+    "age": "Ich bestätige, dass ich mindestens 18 Jahre alt bin.",
+    "privacy": "Ich akzeptiere die <link>Datenschutzerklärung</link>.",
+    "submit": "Reservierung bestätigen",
+    "sending": "Wird reserviert…",
+    "taken": "Sorry, diese Uhrzeit wurde gerade von jemand anderem reserviert. Die Verfügbarkeit ist aktualisiert: Wähle eine andere Uhrzeit.",
+    "errRequired": "Dieses Feld ist erforderlich.",
+    "errEmail": "Ungültige E-Mail-Adresse.",
+    "errPhone": "Ungültige Telefonnummer.",
+    "errCheck": "Bitte bestätige dieses Feld.",
+    "errRate": "Zu viele Versuche. Bitte in ein paar Minuten erneut versuchen.",
+    "errGeneric": "Ein Fehler ist aufgetreten. Versuche es erneut oder schreib uns auf Instagram.",
+    "doneTitle": "Reserviert, {name}!",
+    "doneText": "Dein Tisch ist bestätigt am {date} um {time} für {n} Person(en). Eine Bestätigung wurde an {email} geschickt.",
+    "doneTextNoMail": "Dein Tisch ist bestätigt am {date} um {time} für {n} Person(en). Bitte notiere deine Referenz.",
+    "ref": "Referenz",
+    "idCheck": "Ausweis wird am Eingang verlangt (18+).",
+    "again": "Neue Reservierung",
+    "prevMonth": "Vorheriger Monat",
+    "nextMonth": "Nächster Monat"
   }
 }

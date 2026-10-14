@@ -1,30 +1,61 @@
 import Image from "next/image";
+import type { CSSProperties } from "react";
 import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { MaskReveal } from "@/components/motion";
-import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
 import { Ornament } from "@/components/ornament";
-import { PHOTOS } from "@/content/media";
 
-/** Bienvenue : une photo, un titre, une phrase, un bouton. */
+/**
+ * Bienvenue — mise en page éditoriale, façon magazine : grande photo en arche cernée d'un filet doré,
+ * seconde photo en médaillon qui glisse plus vite (parallaxe), titre fin et deux boutons.
+ */
 export async function Welcome() {
   const t = await getTranslations("welcome");
+  const nav = await getTranslations("hero");
+  const [first, ...rest] = t("title").split(" ");
+  const last = rest.pop();
+
   return (
-    <section id="bienvenue" className="scroll-mt-16 bg-ivory py-24 text-ink sm:py-32" aria-labelledby="welcome-title">
-      <div className="container-page grid items-center gap-12 md:grid-cols-2 md:gap-16">
-        <div className="relative mx-auto w-full max-w-[420px]">
-          <div aria-hidden className="arch absolute inset-0 translate-x-4 translate-y-4 border border-champagne/60" />
-          <MaskReveal className="arch aspect-[4/5] w-full">
-            <Image src={PHOTOS.amber} alt="Chicha, cocktail et dessert au GOIA" fill sizes="(min-width: 768px) 420px, 90vw" className="object-cover" />
-          </MaskReveal>
+    <section id="bienvenue" className="relative scroll-mt-16 overflow-clip bg-ivory py-28 text-ink sm:py-40" aria-labelledby="welcome-title">
+      {/* Marge : mention verticale, comme sur une page de magazine */}
+      <p aria-hidden className="text-vertical eyebrow absolute top-1/2 left-6 hidden -translate-y-1/2 text-[0.58rem] text-taupe xl:block">GOIA · Kehl</p>
+
+      <div className="container-page grid items-center gap-20 md:grid-cols-12 md:gap-10">
+        {/* Photos */}
+        <div className="relative mx-auto w-[78%] max-w-md md:col-span-6 md:w-full lg:col-span-5 lg:col-start-2">
+          <div className="rounded-t-full outline outline-1 outline-offset-[14px] outline-champagne/60">
+            <MaskReveal className="aspect-[2/3] rounded-t-full">
+              <Image src="/images/menu/quasar-tete-quasar.jpg" alt={t("photoMain")} fill sizes="(min-width: 768px) 420px, 78vw" className="object-cover" />
+            </MaskReveal>
+          </div>
+          <div style={{ "--from": "40px", "--to": "-60px" } as CSSProperties} className="sd-lift absolute -right-[8%] -bottom-[10%] w-[34%] border-[6px] border-ivory shadow-lift sm:-right-[18%]">
+            <div className="relative aspect-[2/3]">
+              <Image src="/images/menu/pornstar-martini.jpg" alt={t("photoSmall")} fill sizes="(min-width: 768px) 200px, 36vw" className="object-cover" />
+            </div>
+          </div>
         </div>
-        <Reveal className="text-center md:text-left">
-          <p className="eyebrow text-taupe-deep">{t("eyebrow")}</p>
-          <h2 id="welcome-title" className="mt-5 text-[clamp(2.6rem,5.5vw,4.4rem)] leading-[1.02]">{t("title")}</h2>
-          <Ornament className="mx-auto mt-6 text-champagne md:mx-0" />
-          <p className="mx-auto mt-6 max-w-md text-lg leading-relaxed text-ink/75 md:mx-0">{t("text")}</p>
-          <Button asChild size="lux" className="mt-10"><a href="#reserver">{t("cta")}</a></Button>
-        </Reveal>
+
+        {/* Texte : composition centrée, façon faire-part */}
+        <div className="flex flex-col items-center text-center md:col-span-6 md:col-start-7 lg:col-span-5 lg:col-start-8">
+          <p className="eyebrow flex items-center gap-4 text-[0.6rem] text-taupe-deep">
+            <span className="h-px w-8 bg-champagne sm:w-12" aria-hidden />Huqqa · Lounge<span className="h-px w-8 bg-champagne sm:w-12" aria-hidden />
+          </p>
+          <h2 id="welcome-title" className="mt-9 flex flex-col items-center">
+            <span className="text-[clamp(3rem,5.6vw,5.2rem)] leading-none">{first}</span>
+            {rest.length > 0 && (
+              <span className="my-3 flex items-center gap-5 font-accent text-[clamp(1.6rem,2.6vw,2.4rem)] leading-none text-taupe-deep italic">
+                <span className="h-px w-10 bg-champagne/70 sm:w-16" aria-hidden />{rest.join(" ")}<span className="h-px w-10 bg-champagne/70 sm:w-16" aria-hidden />
+              </span>
+            )}
+            <span className="pl-[0.18em] text-[clamp(3.6rem,7.4vw,7rem)] leading-none tracking-[0.18em]">{last}</span>
+          </h2>
+          <Ornament className="mt-8 text-champagne" />
+          <div className="sd-rise mt-10 grid w-full max-w-xs gap-3 sm:flex sm:max-w-none sm:justify-center" style={{ "--i": 1 } as CSSProperties}>
+            <Button asChild size="lux"><a href="#reserver">{t("cta")}</a></Button>
+            <Button asChild size="lux" variant="outline"><Link href="/carte">{nav("explore")}</Link></Button>
+          </div>
+        </div>
       </div>
     </section>
   );

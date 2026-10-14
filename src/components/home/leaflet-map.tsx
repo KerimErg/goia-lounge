@@ -13,9 +13,9 @@ const pin = L.divIcon({
 
 export default function LeafletMap({ lat, lng, label }: { lat: number; lng: number; label: string }) {
   return (
-    <MapContainer center={[lat, lng]} zoom={16} scrollWheelZoom={false} className="size-full" attributionControl>
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' />
-      <Marker position={[lat, lng]} icon={pin}><Popup>{label}</Popup></Marker>
+    <MapContainer center={[lat, lng]} zoom={16} minZoom={12} maxZoom={18} scrollWheelZoom={false} className="size-full" attributionControl>
+      <TileLayer url="/api/tiles/{z}/{x}/{y}" attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' />
+      <Marker position={[lat, lng]} icon={pin} title={label} alt={label}><Popup>{label}</Popup></Marker>
     </MapContainer>
   );
 }

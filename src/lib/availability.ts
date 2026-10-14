@@ -1,4 +1,5 @@
 import "server-only";
+import type { Prisma } from "@prisma/client";
 import { prisma } from "./prisma";
 import { addDays, kehlToUtc, nowInKehl, toMinutes } from "./time";
 import { arrivalSlots, dayWindow, type SpecialDayRow } from "./slots";
@@ -32,18 +33,20 @@ type Ctx = Awaited<ReturnType<typeof bookingContext>>;
  * Tables libres pour chaque créneau d'une soirée. Une table convient si elle est active,
  * réservable en ligne, accepte le nombre de personnes, est dans l'espace demandé (si précisé),
  * et n'a ni réservation active ni blocage qui chevauche [arrivée, arrivée + durée).
+ * En plus : pas plus de maxGuestsAtOnce personnes présentes en même temps,
+ * ni plus de maxGuestsPerSlot personnes qui arrivent sur le même créneau.
  */
-export async function availability(ctx: Ctx, ymd: string, persons: number, zoneSlug?: string | null) {
+export async function availability(ctx: Ctx, ymd: string, persons: number, zoneSlug?: string | null, db: Prisma.TransactionClient = prisma) {
   const { settings, hours, specials, rules } = ctx;
   const slots = arrivalSlots(ymd, hours, rules, specials);
   const w = dayWindow(ymd, hours, specials);
-  if (!w || slots.length === 0) return { slots: [] as { time: string; available: boolean }[], tablesFor: () => [] as string[] };
+  if (!w || slots.length === 0) return { slots: [] as { time: string; available: boolean; left: number }[], tablesFor: () => [] as string[] };
 
   const durationMs = settings.defaultDurationMin * 60_000;
   const first = arrivalInstant(ymd, slots[0], w.open);
   const last = new Date(arrivalInstant(ymd, slots[slots.length - 1], w.open).getTime() + durationMs);
 
-  const tables = await prisma.table.findMany({
+  const tables = await db.table.findMany({
     where: {
       active: true, onlineBookable: true, minCovers: { lte: persons }, maxCovers: { gte: persons },
       zone: { active: true, ...(zoneSlug ? { slug: zoneSlug } : {}) },
@@ -56,12 +59,38 @@ export async function availability(ctx: Ctx, ymd: string, persons: number, zoneS
     },
   });
 
+  // Réservations actives de la soirée, pour les plafonds de capacité
+  const booked = await db.reservation.findMany({
+    where: { status: { in: ["PENDING", "CONFIRMED", "SEATED"] }, startAt: { lt: last }, endAt: { gt: first } },
+    select: { startAt: true, endAt: true, partySize: true },
+  });
+  const STEP = 15 * 60_000;
+  /** Places encore disponibles sur un créneau : le plus petit des deux plafonds (présents, arrivées). */
+  const placesLeft = (s: number, e: number) => {
+    const arrivals = booked.filter((r) => r.startAt.getTime() === s).reduce((n, r) => n + r.partySize, 0);
+    let left = settings.maxGuestsPerSlot - arrivals;
+    for (let t = s; t < e; t += STEP) {
+      const present = booked.filter((r) => r.startAt.getTime() <= t && r.endAt.getTime() > t).reduce((n, r) => n + r.partySize, 0);
+      left = Math.min(left, settings.maxGuestsAtOnce - present);
+    }
+    return Math.max(0, left);
+  };
+  const capacityOk = (s: number, e: number) => placesLeft(s, e) >= persons;
+
   const tablesFor = (time: string) => {
     const s = arrivalInstant(ymd, time, w.open).getTime(), e = s + durationMs;
+    if (!capacityOk(s, e)) return [];
     return tables
       .filter((t) => !t.reservations.some((r) => r.startAt.getTime() < e && r.endAt.getTime() > s))
       .filter((t) => !t.blocks.some((b) => b.startsAt.getTime() < e && b.endsAt.getTime() > s))
       .map((t) => t.id);
   };
-  return { slots: slots.map((time) => ({ time, available: tablesFor(time).length > 0 })), tablesFor, open: w.open };
+  return {
+    slots: slots.map((time) => {
+      const s = arrivalInstant(ymd, time, w.open).getTime();
+      return { time, available: tablesFor(time).length > 0, left: placesLeft(s, s + durationMs) };
+    }),
+    tablesFor,
+    open: w.open,
+  };
 }

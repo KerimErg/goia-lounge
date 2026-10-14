@@ -47,7 +47,6 @@ export async function SiteFooter() {
           <nav aria-label="Liens" className="grid content-start gap-2 text-sm">
             <Link href="/carte" className="link-underline w-fit">{nav("menu")}</Link>
             <Link href="/reservation" className="link-underline w-fit">{nav("booking")}</Link>
-            <Link href="/privatisation" className="link-underline w-fit">{nav("privatization")}</Link>
             <Link href="/contact" className="link-underline w-fit">{nav("contact")}</Link>
           </nav>
         </div>
@@ -63,6 +62,10 @@ export async function SiteFooter() {
             <span>© {new Date().getFullYear()} GOIA Lounge</span>
           </p>
         </div>
+      </div>
+      {/* Grand logo en fin de page : monte doucement quand on arrive en bas */}
+      <div aria-hidden className="overflow-clip px-5 pb-6 sm:px-8">
+        <div className="sd-logo"><Logo className="w-full text-champagne/20" title="" /></div>
       </div>
     </footer>
   );

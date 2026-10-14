@@ -6,6 +6,7 @@ import { Gallery } from "@/components/home/gallery";
 import { Events } from "@/components/home/events";
 import { Reviews } from "@/components/home/reviews";
 import { Booking } from "@/components/home/booking";
+import { InView, ScrollProgress } from "@/components/fx";
 import { contactLinks, getVenue } from "@/lib/venue";
 
 export const revalidate = 300;
@@ -22,6 +23,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const { instagram } = contactLinks(settings);
   return (
     <>
+      <ScrollProgress />
+      <InView />
       <Hero />
       <Welcome />
       <MenuCards />

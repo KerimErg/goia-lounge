@@ -7,7 +7,6 @@
     "home": "Home",
     "menu": "Menu",
     "booking": "Book",
-    "privatization": "Private events",
     "contact": "Contact",
     "events": "Events",
     "openMenu": "Open menu",
@@ -37,7 +36,7 @@
     "pickDate": "Pick a date",
     "closed": "Closed that day",
     "personsN": "{n} guests",
-    "more": "More than {n} guests? Ask about <link>private hire</link>."
+    "more": "More than {n} guests? Message us on <link>Instagram</link>."
   },
   "gallery": {
     "eyebrow": "Gallery",
@@ -72,13 +71,8 @@
     "closed": "Closed",
     "openNow": "Open now",
     "closedNow": "Closed now",
-    "access": "Getting here from Strasbourg",
-    "tram": "Tram D, “Kehl Bahnhof” stop, a short walk away.",
-    "parking": "Public car parks around Kehl station.",
     "contact": "Contact",
-    "directions": "Directions",
-    "mapConsent": "The map is provided by OpenStreetMap. Displaying it sends your IP address to this service.",
-    "mapLoad": "Show map"
+    "directions": "Directions"
   },
   "footer": {
     "tagline": "Huqqa lounge in Kehl, just across from Strasbourg.",
@@ -105,19 +99,22 @@
   "welcome": {
     "eyebrow": "Welcome",
     "title": "Welcome to GOIA",
-    "text": "A warm lounge to spend the evening with friends: shisha, drinks and desserts in a relaxed setting.",
-    "cta": "Book a table"
+    "text": "A warm lounge to spend the evening with friends: shishas and cocktails in a relaxed setting.",
+    "cta": "Book a table",
+    "photoMain": "Quasar shisha at GOIA",
+    "photoSmall": "Pornstar Martini"
   },
   "menuCards": {
     "eyebrow": "The menu",
     "title": "Our menu",
     "shisha_t": "Shishas",
-    "shisha": "Classics and house creations.",
+    "shisha": "Classique · Quasar",
     "drinks_t": "Drinks",
-    "drinks": "Cold and hot drinks.",
+    "drinks": "Cold & hot drinks · Cocktails",
+    "cta": "See the full menu",
     "sweets_t": "Desserts",
-    "sweets": "Sweets to share.",
-    "cta": "See the full menu"
+    "sweets": "Cheesecakes · French toast · Chocolate fondant",
+    "see": "View"
   },
   "flow": {
     "step1": "Your evening",
@@ -161,7 +158,7 @@
     "keepRef": "Keep this reference, you'll be asked for it on arrival.",
     "home": "Back to home",
     "personsN": "{n} guests",
-    "more": "More than {n} guests? Ask about <link>private hire</link>.",
+    "more": "More than {n} guests? Message us on <link>Instagram</link>.",
     "title": "Book a table",
     "lead": "Your table in under a minute."
   },
@@ -177,6 +174,80 @@
     "tag_premium": "Premium",
     "note": "Prices in euros, VAT included. Shishas for adults only.",
     "book": "Book a table",
-    "empty": "The menu is coming soon."
+    "empty": "The full menu is coming to the site very soon. Meanwhile, find it on Instagram.",
+    "items": "items",
+    "ingredients": "Ingredients",
+    "tag_bestseller": "Best seller",
+    "tag_classique": "Classic",
+    "all": "Full menu",
+    "more": "Discover also",
+    "prev": "Previous",
+    "next": "Next",
+    "flavours": "All our flavours available",
+    "item": "item"
+  },
+  "cancelPage": {
+    "title": "Cancel my booking",
+    "confirmQ": "Do you want to cancel this booking?",
+    "cancel": "Yes, cancel",
+    "keep": "No, keep my table",
+    "done": "Your booking is cancelled. Thank you for letting us know!",
+    "already": "This booking is already cancelled.",
+    "notFound": "Booking not found. Please check the link from your email.",
+    "tooLate": "It's too late to cancel online ({h} h before arrival). Please message us on Instagram.",
+    "error": "Something went wrong. Please try again."
+  },
+  "contactPage": {
+    "lead": "A question, or a group of more than 8? Message us on Instagram, we reply quickly."
+  },
+  "bk": {
+    "persons": "How many are you?",
+    "date": "Choose a date",
+    "time": "Choose a time",
+    "details": "Your details",
+    "personsAria": "{n} guest(s)",
+    "more": "More than {max} guests? Message us on <link>Instagram</link>.",
+    "zone": "Area",
+    "anyZone": "No preference",
+    "available": "Available",
+    "full": "Full",
+    "closed": "Closed",
+    "dayFull": "Full",
+    "live": "Live",
+    "pickDate": "First pick a date in the calendar.",
+    "loading": "Loading availability…",
+    "loadError": "Could not load availability. Check your connection.",
+    "retry": "Try again",
+    "noSlots": "No room left that day for {n} guest(s). Choose another date.",
+    "fewSeats": "Only {n} seats left",
+    "fewSeats1": "Only 1 seat left",
+    "slotFull": "Full",
+    "summary": "{date} · {time} · {n} guests",
+    "change": "Change",
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "message": "Message",
+    "optional": "(optional)",
+    "messagePh": "Birthday, seating preference…",
+    "age": "I confirm I am 18 or older.",
+    "privacy": "I accept the <link>privacy policy</link>.",
+    "submit": "Confirm booking",
+    "sending": "Booking…",
+    "taken": "Sorry, this time was just booked by someone else. Availability is up to date: choose another time.",
+    "errRequired": "This field is required.",
+    "errEmail": "Invalid email address.",
+    "errPhone": "Invalid phone number.",
+    "errCheck": "Please tick this box.",
+    "errRate": "Too many attempts. Please try again in a few minutes.",
+    "errGeneric": "Something went wrong. Try again or message us on Instagram.",
+    "doneTitle": "You're booked, {name}!",
+    "doneText": "Your table is confirmed on {date} at {time} for {n} guest(s). A confirmation email has been sent to {email}.",
+    "doneTextNoMail": "Your table is confirmed on {date} at {time} for {n} guest(s). Keep your reference.",
+    "ref": "Reference",
+    "idCheck": "ID required at the entrance (18+).",
+    "again": "New booking",
+    "prevMonth": "Previous month",
+    "nextMonth": "Next month"
   }
 }

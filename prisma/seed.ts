@@ -32,134 +32,100 @@ const pick = <T,>(a: readonly T[]) => a[Math.floor(rand() * a.length)];
 
 /* ---------- Horaires (provisoires : à remplacer par les vrais dans l'admin) ---------- */
 const HOURS: Record<number, [string, string]> = {
-  1: ["17:00", "01:00"], 2: ["17:00", "01:00"], 3: ["17:00", "01:00"], 4: ["17:00", "01:00"],
-  5: ["17:00", "03:00"], 6: ["17:00", "03:00"], 0: ["15:00", "01:00"],
+  // Fermeture à 3 h tous les jours, sauf vendredi et samedi à 4 h
+  1: ["17:00", "03:00"], 2: ["17:00", "03:00"], 3: ["17:00", "03:00"], 4: ["17:00", "03:00"],
+  5: ["17:00", "04:00"], 6: ["17:00", "04:00"], 0: ["17:00", "03:00"],
 };
 
-/* ---------- Salle : 3 zones, 18 tables ---------- */
+/* ---------- Salle : intérieur + terrasse, 30 tables (à ajuster dans l'admin) ---------- */
 const ZONES = [
-  { slug: "lounge", order: 1, outdoor: false, name: l("Lounge", "Lounge", "Lounge"),
-    description: l("Canapés profonds, lumière tamisée, au cœur de l'ambiance.", "Tiefe Sofas, gedämpftes Licht, mitten im Geschehen.", "Deep sofas, dimmed lights, right in the heart of the atmosphere.") },
-  { slug: "vip", order: 2, outdoor: false, name: l("Carré VIP", "VIP-Bereich", "VIP area"),
-    description: l("Espaces privatifs pour les groupes, service dédié.", "Private Nischen für Gruppen, eigener Service.", "Private booths for groups, dedicated service.") },
-  { slug: "terrasse", order: 3, outdoor: true, name: l("Terrasse", "Terrasse", "Terrace"),
-    description: l("Chauffée en saison froide, ouverte selon la météo.", "Im Winter beheizt, je nach Wetter geöffnet.", "Heated in the cold season, open depending on the weather.") },
+  { slug: "interieur", order: 1, outdoor: false, name: l("Intérieur", "Innenbereich", "Indoor"),
+    description: l("Au cœur du lounge.", "Mitten in der Lounge.", "Inside the lounge.") },
+  { slug: "terrasse", order: 2, outdoor: true, name: l("Terrasse", "Terrasse", "Terrace"),
+    description: l("En plein air, selon la météo.", "Draußen, je nach Wetter.", "Outdoors, weather permitting.") },
 ] as const;
 
 type T = { zone: string; label: string; min: number; max: number; shape: TableShape; x: number; y: number; w: number; h: number; rotation?: number };
+/** Génère une rangée de tables identiques sur le plan (coordonnées sur 1000 × 700). */
+const row = (zone: string, prefix: string, start: number, count: number, size: [number, number], shape: TableShape, y: number): T[] =>
+  Array.from({ length: count }, (_, i) => ({
+    zone, label: `${prefix}${start + i}`, min: size[0], max: size[1], shape,
+    x: 60 + i * (880 / Math.max(count, 1)), y, w: size[1] >= 8 ? 150 : size[1] >= 4 ? 110 : 80, h: size[1] >= 8 ? 90 : 80,
+  }));
 const TABLES: T[] = [
-  // Lounge (8)
-  { zone: "lounge", label: "L1", min: 1, max: 2, shape: "ROUND", x: 80, y: 90, w: 90, h: 90 },
-  { zone: "lounge", label: "L2", min: 1, max: 2, shape: "ROUND", x: 230, y: 90, w: 90, h: 90 },
-  { zone: "lounge", label: "L3", min: 2, max: 4, shape: "SQUARE", x: 400, y: 80, w: 120, h: 120 },
-  { zone: "lounge", label: "L4", min: 2, max: 4, shape: "SQUARE", x: 580, y: 80, w: 120, h: 120 },
-  { zone: "lounge", label: "L5", min: 2, max: 4, shape: "SQUARE", x: 760, y: 80, w: 120, h: 120 },
-  { zone: "lounge", label: "L6", min: 4, max: 6, shape: "BOOTH", x: 80, y: 330, w: 220, h: 130 },
-  { zone: "lounge", label: "L7", min: 4, max: 6, shape: "BOOTH", x: 390, y: 330, w: 220, h: 130 },
-  { zone: "lounge", label: "L8", min: 3, max: 6, shape: "RECT", x: 700, y: 330, w: 200, h: 120 },
-  // VIP (4)
-  { zone: "vip", label: "V1", min: 4, max: 8, shape: "BOOTH", x: 90, y: 100, w: 300, h: 180 },
-  { zone: "vip", label: "V2", min: 4, max: 8, shape: "BOOTH", x: 560, y: 100, w: 300, h: 180 },
-  { zone: "vip", label: "V3", min: 6, max: 10, shape: "BOOTH", x: 90, y: 400, w: 360, h: 200 },
-  { zone: "vip", label: "V4", min: 2, max: 4, shape: "ROUND", x: 640, y: 440, w: 140, h: 140 },
-  // Terrasse (6)
-  { zone: "terrasse", label: "T1", min: 1, max: 2, shape: "ROUND", x: 80, y: 120, w: 90, h: 90 },
-  { zone: "terrasse", label: "T2", min: 1, max: 2, shape: "ROUND", x: 240, y: 120, w: 90, h: 90 },
-  { zone: "terrasse", label: "T3", min: 2, max: 4, shape: "SQUARE", x: 420, y: 110, w: 120, h: 120 },
-  { zone: "terrasse", label: "T4", min: 2, max: 4, shape: "SQUARE", x: 620, y: 110, w: 120, h: 120 },
-  { zone: "terrasse", label: "T5", min: 4, max: 6, shape: "RECT", x: 120, y: 380, w: 220, h: 120 },
-  { zone: "terrasse", label: "T6", min: 4, max: 8, shape: "RECT", x: 480, y: 380, w: 280, h: 130 },
+  // Intérieur : 20 tables (12 de 2, 5 de 4, 3 de 8)
+  ...row("interieur", "I", 1, 6, [1, 2], "ROUND", 60),
+  ...row("interieur", "I", 7, 6, [1, 2], "ROUND", 200),
+  ...row("interieur", "I", 13, 5, [2, 4], "SQUARE", 360),
+  ...row("interieur", "I", 18, 3, [4, 8], "BOOTH", 540),
+  // Terrasse : 10 tables (6 de 2, 3 de 4, 1 de 8)
+  ...row("terrasse", "T", 1, 6, [1, 2], "ROUND", 100),
+  ...row("terrasse", "T", 7, 3, [2, 4], "SQUARE", 320),
+  ...row("terrasse", "T", 10, 1, [4, 8], "RECT", 520),
 ];
 
 /* ---------- Carte : 25 chichas, 20 boissons (FR / DE / EN) ---------- */
-type Item = { name: L; desc?: L; price: number; tags?: string[]; preorderable?: boolean };
+type Item = { name: L; desc?: L; price: number | null; tags?: string[]; preorderable?: boolean; image?: string; subtitle?: L; ingredients?: L };
 type Cat = { slug: string; section: MenuSection; name: L; description?: L; items: Item[] };
 
+// Carte officielle du GOIA : à remplir uniquement avec les produits, prix et photos réels
+// (aucun produit inventé). Format : { slug, section, name: l(fr, de, en), items: [{ name, desc?, price (centimes), image? }] }
+const ALL_FLAVOURS = l("Disponible avec tous nos goûts.", "Mit allen unseren Sorten erhältlich.", "Available in all our flavours.");
+const M = (f: string) => `/images/menu/${f}.jpg`;
 const MENU: Cat[] = [
-  { slug: "classiques", section: "SHISHA", name: l("Classiques", "Klassiker", "Classics"), items: [
-    { name: l("Double Pomme", "Doppelapfel", "Double Apple"), desc: l("L'incontournable, anisé et doux", "Der Klassiker, mild mit Anisnote", "The classic, smooth with a hint of anise"), price: 1700, tags: ["popular"], preorderable: true },
-    { name: l("Raisin", "Traube", "Grape"), price: 1700, preorderable: true },
-    { name: l("Pastèque", "Wassermelone", "Watermelon"), price: 1700, preorderable: true },
-    { name: l("Pêche", "Pfirsich", "Peach"), price: 1700, preorderable: true },
-    { name: l("Citron", "Zitrone", "Lemon"), price: 1700, preorderable: true },
+  { slug: "chichas", section: "SHISHA", name: l("Chichas", "Shishas", "Shishas"), items: [
+    { name: l("Chicha Classique", "Chicha Classique", "Chicha Classique"), price: 1500, tags: ["classique"], image: M("chicha-classique"), subtitle: ALL_FLAVOURS, preorderable: true,
+      desc: l("Chicha traditionnelle avec tous les parfums disponibles.", "Traditionelle Shisha mit allen verfügbaren Sorten.", "Traditional shisha with all available flavours.") },
+    { name: l("Quasar", "Quasar", "Quasar"), price: 2000, tags: ["premium"], image: M("quasar"), subtitle: ALL_FLAVOURS, preorderable: true,
+      desc: l("Système de chauffe premium Quasar avec tous les parfums disponibles.", "Premium-Heizsystem Quasar mit allen verfügbaren Sorten.", "Premium Quasar heat management system with all available flavours.") },
+    { name: l("Quasar + Tête Quasar", "Quasar + Quasar-Kopf", "Quasar + Quasar bowl"), price: 2500, tags: ["premium"], image: M("quasar-tete-quasar"), subtitle: ALL_FLAVOURS, preorderable: true,
+      desc: l("Tête Quasar officielle avec système de chauffe Quasar. Expérience premium, fumée dense et longue durée.", "Original Quasar-Kopf mit Quasar-Heizsystem. Premium-Erlebnis, dichter Rauch und lange Dauer.", "Official Quasar bowl with Quasar heat management. Premium experience, dense smoke and long-lasting.") },
   ] },
-  { slug: "fruitees", section: "SHISHA", name: l("Fruitées", "Fruchtig", "Fruity"), items: [
-    { name: l("Mangue Passion", "Mango Maracuja", "Mango Passion"), desc: l("Mangue mûre, fruit de la passion", "Reife Mango, Maracuja", "Ripe mango, passion fruit"), price: 1800, preorderable: true },
-    { name: l("Fruits rouges", "Rote Beeren", "Red berries"), price: 1800, preorderable: true },
-    { name: l("Ananas Coco", "Ananas Kokos", "Pineapple Coconut"), price: 1800, preorderable: true },
-    { name: l("Kiwi Fraise", "Kiwi Erdbeere", "Kiwi Strawberry"), price: 1800, preorderable: true },
-    { name: l("Melon blanc", "Honigmelone", "Honeydew melon"), price: 1800, preorderable: true },
-    { name: l("Litchi Rose", "Litschi Rose", "Lychee Rose"), desc: l("Floral et délicat", "Blumig und fein", "Floral and delicate"), price: 1800, tags: ["new"], preorderable: true },
+  // Boissons froides (softs, eaux) et boissons chaudes — visuels illustrés sur le fond des autres produits ; prix à compléter
+  { slug: "boissons-froides", section: "DRINK", name: l("Boissons froides", "Kalte Getränke", "Cold drinks"), items: [
+    { name: l("Coca-Cola", "Coca-Cola", "Coca-Cola"), price: null, image: M("coca-cola") },
+    { name: l("Coca-Cola Zero", "Coca-Cola Zero", "Coca-Cola Zero"), price: null, image: M("coca-cola-zero") },
+    { name: l("Fanta", "Fanta", "Fanta"), price: null, image: M("fanta") },
+    { name: l("Sprite", "Sprite", "Sprite"), price: null, image: M("sprite") },
+    { name: l("Ice Tea", "Eistee", "Iced tea"), price: null, image: M("ice-tea") },
+    { name: l("Eau plate", "Stilles Wasser", "Still water"), price: null, image: M("eau-plate") },
+    { name: l("Eau pétillante", "Sprudelwasser", "Sparkling water"), price: null, image: M("eau-petillante") },
   ] },
-  { slug: "menthe", section: "SHISHA", name: l("Menthe & fraîcheur", "Minze & Frische", "Mint & fresh"), items: [
-    { name: l("Menthe glaciale", "Eisminze", "Ice mint"), desc: l("Fraîcheur intense", "Intensive Frische", "Intense freshness"), price: 1700, preorderable: true },
-    { name: l("Raisin Menthe", "Traube Minze", "Grape Mint"), price: 1700, tags: ["popular"], preorderable: true },
-    { name: l("Citron Menthe", "Zitrone Minze", "Lemon Mint"), price: 1700, preorderable: true },
-    { name: l("Pastèque Menthe", "Wassermelone Minze", "Watermelon Mint"), price: 1700, preorderable: true },
+  { slug: "boissons-chaudes", section: "DRINK", name: l("Boissons chaudes", "Heiße Getränke", "Hot drinks"), items: [
+    { name: l("Thé à la menthe", "Minztee", "Mint tea"), price: null, image: M("the-menthe") },
   ] },
-  { slug: "signatures", section: "SHISHA", name: l("Signatures GOIA", "GOIA Signatures", "GOIA signatures"),
-    description: l("Nos créations maison, servies sur tête premium.", "Unsere Hauskreationen auf Premium-Kopf.", "Our house creations, served on a premium bowl."), items: [
-    { name: l("GOIA Gold", "GOIA Gold", "GOIA Gold"), desc: l("Mangue, vanille, menthe glaciale", "Mango, Vanille, Eisminze", "Mango, vanilla, ice mint"), price: 2300, tags: ["signature"], preorderable: true },
-    { name: l("Nuit de Kehl", "Kehler Nacht", "Kehl Night"), desc: l("Fruits rouges, citron vert, menthe", "Rote Beeren, Limette, Minze", "Red berries, lime, mint"), price: 2300, tags: ["signature"], preorderable: true },
-    { name: l("Rhin doré", "Goldener Rhein", "Golden Rhine"), desc: l("Pêche blanche, thé glacé, fleur d'oranger", "Weißer Pfirsich, Eistee, Orangenblüte", "White peach, iced tea, orange blossom"), price: 2300, tags: ["signature"], preorderable: true },
-    { name: l("Velours bordeaux", "Bordeaux-Samt", "Burgundy velvet"), desc: l("Cerise noire, cassis, pointe de cannelle", "Schwarzkirsche, Cassis, Hauch Zimt", "Black cherry, blackcurrant, a touch of cinnamon"), price: 2300, tags: ["signature", "new"], preorderable: true },
-    { name: l("Émeraude", "Smaragd", "Emerald"), desc: l("Pomme verte, kiwi, menthe poivrée", "Grüner Apfel, Kiwi, Pfefferminze", "Green apple, kiwi, peppermint"), price: 2300, tags: ["signature"], preorderable: true },
+  { slug: "cocktails", section: "DRINK", name: l("Cocktails", "Cocktails", "Cocktails"), items: [
+    // Tous les cocktails : 10 €
+    { name: l("Rubis des Îles", "Rubis des Îles", "Rubis des Îles"), price: 1000, tags: ["bestseller"], image: M("rubis-des-iles"),
+      desc: l("Un cocktail rubis aux accents des îles, bissap, rhum blanc et fraîcheur citronnée.", "Ein rubinroter Cocktail mit Inselflair: Bissap, weißer Rum und zitronige Frische.", "A ruby cocktail with island accents: bissap, white rum and citrus freshness."),
+      ingredients: l("Rhum blanc, bissap, jus de citron vert, sirop de sucre de canne et eau pétillante.", "Weißer Rum, Bissap, Limettensaft, Rohrzuckersirup und Sprudelwasser.", "White rum, bissap, lime juice, cane sugar syrup and sparkling water.") },
+    { name: l("Mojito Framboise", "Mojito Framboise", "Mojito Framboise"), price: 1000, image: M("mojito-framboise") },
+    { name: l("Mojito Fraise", "Mojito Fraise", "Mojito Fraise"), price: 1000, image: M("mojito-fraise") },
+    { name: l("Tiki Mangue", "Tiki Mangue", "Tiki Mangue"), price: 1000, image: M("tiki-mangue"),
+      desc: l("Un cocktail tiki solaire au rhum, mangue, coco et ananas.", "Ein sonniger Tiki-Cocktail mit Rum, Mango, Kokos und Ananas.", "A sunny tiki cocktail with rum, mango, coconut and pineapple."),
+      ingredients: l("Rhum, purée de coco, purée de mangue, jus d'ananas et citron vert.", "Rum, Kokospüree, Mangopüree, Ananassaft und Limette.", "Rum, coconut purée, mango purée, pineapple juice and lime.") },
+    { name: l("Mojito Passion", "Mojito Passion", "Mojito Passion"), price: 1000, image: M("mojito-passion"),
+      desc: l("Un mojito passion vibrant, frais et acidulé.", "Ein lebendiger Maracuja-Mojito, frisch und spritzig.", "A vibrant passion fruit mojito, fresh and tangy."),
+      ingredients: l("Menthe fraîche, citron vert, sucre de canne, rhum Havana, eau pétillante et purée de fruit de la passion.", "Frische Minze, Limette, Rohrzucker, Havana-Rum, Sprudelwasser und Maracujapüree.", "Fresh mint, lime, cane sugar, Havana rum, sparkling water and passion fruit purée.") },
+    { name: l("Mojito Classic", "Mojito Classic", "Mojito Classic"), price: 1000, image: M("mojito-classic"),
+      desc: l("Un grand classique frais aux notes de menthe, citron vert et rhum Havana.", "Ein frischer Klassiker mit Minze, Limette und Havana-Rum.", "A fresh classic with notes of mint, lime and Havana rum.") },
+    { name: l("Gin Berry", "Gin Berry", "Gin Berry"), price: 1000, image: M("gin-berry"),
+      desc: l("Un gin fruité aux fraises fraîches, menthe, citron et finale pétillante.", "Ein fruchtiger Gin mit frischen Erdbeeren, Minze, Zitrone und spritzigem Abgang.", "A fruity gin with fresh strawberries, mint, lemon and a sparkling finish."),
+      ingredients: l("Gin, fraises fraîches, menthe, citron et Sprite/Schweppes.", "Gin, frische Erdbeeren, Minze, Zitrone und Sprite/Schweppes.", "Gin, fresh strawberries, mint, lemon and Sprite/Schweppes.") },
+    { name: l("Pornstar Martini", "Pornstar Martini", "Pornstar Martini"), price: 1000, image: M("pornstar-martini") },
   ] },
-  { slug: "premium", section: "SHISHA", name: l("Premium", "Premium", "Premium"),
-    description: l("Tabacs haut de gamme, préparation soignée.", "Hochwertige Tabake, sorgfältig zubereitet.", "High-end tobaccos, carefully prepared."), items: [
-    { name: l("Tête fruit ananas", "Ananaskopf", "Pineapple bowl"), desc: l("Servie dans un ananas frais, parfum au choix", "Im frischen Ananaskopf, Sorte nach Wahl", "Served in a fresh pineapple, flavour of your choice"), price: 3200, tags: ["premium"], preorderable: true },
-    { name: l("Tête fruit melon", "Melonenkopf", "Melon bowl"), desc: l("Servie dans un melon (selon saison)", "Im Melonenkopf (saisonal)", "Served in a melon (seasonal)"), price: 3200, tags: ["premium"], preorderable: true },
-    { name: l("Blend du chef", "Blend des Hauses", "Head shisha master's blend"), desc: l("Mélange préparé à la table selon vos goûts", "Am Tisch nach deinem Geschmack gemischt", "Mixed at your table to your taste"), price: 2600, tags: ["premium"], preorderable: true },
-    { name: l("Dark leaf", "Dark Leaf", "Dark leaf"), desc: l("Tabac foncé, pour amateurs", "Dunkler Tabak, für Kenner", "Dark-leaf tobacco, for connoisseurs"), price: 2600, tags: ["premium"], preorderable: true },
-    { name: l("Ice Blueberry", "Ice Blueberry", "Ice Blueberry"), price: 2600, tags: ["premium"], preorderable: true },
-  ] },
-
-  // Boissons
-  { slug: "softs", section: "DRINK", name: l("Softs", "Softdrinks", "Soft drinks"), items: [
-    { name: l("Cola (33 cl)", "Cola (0,33 l)", "Cola (33 cl)"), price: 400 },
-    { name: l("Cola zéro (33 cl)", "Cola Zero (0,33 l)", "Zero cola (33 cl)"), price: 400 },
-    { name: l("Ginger beer", "Ginger Beer", "Ginger beer"), price: 450 },
-    { name: l("Eau plate (50 cl)", "Stilles Wasser (0,5 l)", "Still water (50 cl)"), price: 350 },
-    { name: l("Eau pétillante (50 cl)", "Sprudelwasser (0,5 l)", "Sparkling water (50 cl)"), price: 350 },
-  ] },
-  { slug: "mocktails", section: "DRINK", name: l("Mocktails", "Mocktails", "Mocktails"),
-    description: l("Cocktails sans alcool préparés au bar.", "Alkoholfreie Cocktails von der Bar.", "Alcohol-free cocktails made at the bar."), items: [
-    { name: l("Virgin Mojito", "Virgin Mojito", "Virgin Mojito"), desc: l("Citron vert, menthe fraîche, sucre de canne", "Limette, frische Minze, Rohrzucker", "Lime, fresh mint, cane sugar"), price: 850, tags: ["popular"] },
-    { name: l("Passion Sunset", "Passion Sunset", "Passion Sunset"), desc: l("Fruit de la passion, orange, grenadine", "Maracuja, Orange, Grenadine", "Passion fruit, orange, grenadine"), price: 850 },
-    { name: l("GOIA Breeze", "GOIA Breeze", "GOIA Breeze"), desc: l("Mangue, ananas, coco, citron vert", "Mango, Ananas, Kokos, Limette", "Mango, pineapple, coconut, lime"), price: 900, tags: ["signature"] },
-    { name: l("Berry Fizz", "Berry Fizz", "Berry Fizz"), desc: l("Fruits rouges, basilic, tonic", "Rote Beeren, Basilikum, Tonic", "Red berries, basil, tonic"), price: 850 },
-    { name: l("Pink Lemonade", "Pink Lemonade", "Pink Lemonade"), desc: l("Citron, framboise, eau pétillante", "Zitrone, Himbeere, Sprudel", "Lemon, raspberry, sparkling water"), price: 750 },
-  ] },
-  { slug: "thes", section: "DRINK", name: l("Thés", "Tee", "Tea"), items: [
-    { name: l("Thé à la menthe (verre)", "Minztee (Glas)", "Mint tea (glass)"), desc: l("Menthe fraîche, à la marocaine", "Frische Minze, marokkanisch", "Fresh mint, Moroccan style"), price: 400 },
-    { name: l("Théière menthe (2–3 pers.)", "Kanne Minztee (2–3 Pers.)", "Mint tea pot (2–3 people)"), price: 1000, tags: ["popular"] },
-    { name: l("Thé noir", "Schwarzer Tee", "Black tea"), price: 350 },
-    { name: l("Thé vert jasmin", "Grüner Jasmintee", "Jasmine green tea"), price: 350 },
-  ] },
-  { slug: "cafes", section: "DRINK", name: l("Cafés", "Kaffee", "Coffee"), items: [
-    { name: l("Espresso", "Espresso", "Espresso"), price: 280 },
-    { name: l("Cappuccino", "Cappuccino", "Cappuccino"), price: 400 },
-    { name: l("Café turc", "Türkischer Mokka", "Turkish coffee"), price: 380 },
-  ] },
-  { slug: "jus", section: "DRINK", name: l("Jus frais", "Frische Säfte", "Fresh juices"), items: [
-    { name: l("Orange pressée", "Frisch gepresster O-Saft", "Fresh orange juice"), price: 650 },
-    { name: l("Citronnade gingembre", "Ingwer-Zitronade", "Ginger lemonade"), price: 600 },
-    { name: l("Pomme Kiwi", "Apfel Kiwi", "Apple Kiwi"), price: 650 },
-  ] },
-  // Douceurs
-  { slug: "desserts", section: "FOOD", name: l("Douceurs", "Süßes", "Sweets"), items: [
-    { name: l("Cheesecake spéculoos", "Spekulatius-Cheesecake", "Speculoos cheesecake"), desc: l("Fait maison, base biscuitée croustillante", "Hausgemacht, knuspriger Keksboden", "Homemade, crunchy biscuit base"), price: 750, tags: ["signature"] },
-    { name: l("Cheesecake fruits rouges", "Beeren-Cheesecake", "Red berry cheesecake"), price: 750 },
-    { name: l("Assiette de fruits frais", "Frischer Obstteller", "Fresh fruit platter"), desc: l("À partager, selon la saison", "Zum Teilen, je nach Saison", "To share, seasonal"), price: 1400 },
+  // Desserts (photos fournies par le GOIA) ; prix à compléter dans l'admin
+  { slug: "desserts", section: "FOOD", name: l("Desserts", "Desserts", "Desserts"), items: [
+    { name: l("Cheesecake spéculoos", "Spekulatius-Cheesecake", "Speculoos cheesecake"), price: null, image: M("cheesecake-speculoos") },
+    { name: l("Cheesecake pistache", "Pistazien-Cheesecake", "Pistachio cheesecake"), price: null, image: M("cheesecake-pistache") },
+    { name: l("Cheesecake fruits rouges", "Beeren-Cheesecake", "Red berry cheesecake"), price: null, image: M("cheesecake-fruits-rouges") },
+    { name: l("Pain perdu", "Pain perdu", "French toast"), price: null, image: M("pain-perdu") },
+    { name: l("Fondant au chocolat", "Schokoladen-Fondant", "Chocolate fondant"), price: null, image: M("fondant-chocolat") },
   ] },
 ];
 
-const EXTRAS: { section: MenuSection; name: L; price: number }[] = [
-  { section: "SHISHA", name: l("Tête fruit (ananas ou melon)", "Fruchtkopf (Ananas oder Melone)", "Fruit bowl (pineapple or melon)"), price: 1000 },
-  { section: "SHISHA", name: l("Tête premium", "Premium-Kopf", "Premium bowl"), price: 400 },
-  { section: "SHISHA", name: l("Changement de parfum", "Sortenwechsel", "Flavour change"), price: 600 },
-  { section: "SHISHA", name: l("Embout personnel", "Eigenes Mundstück", "Personal mouthpiece"), price: 100 },
-];
+
+const EXTRAS: { section: MenuSection; name: L; price: number }[] = [];
 
 /* ---------- Clients de démonstration (adresses en .example) ---------- */
 const FIRST = ["Léa", "Thomas", "Sarah", "Yanis", "Jonas", "Inès", "Mehdi", "Laura", "Lukas", "Amina", "Hugo", "Sofia", "Nils", "Camille", "Emre", "Julia", "Rayan", "Clara", "Noah", "Lina", "Adam", "Mia"];
@@ -184,16 +150,21 @@ async function main() {
       latitude: 48.5717, longitude: 7.8113,
       phone: "+49 0000 000000", whatsapp: "490000000000", email: "kontakt@example.com",
       instagramUrl: "https://www.instagram.com/goia.kehl/",
+      // Réservation en ligne : 8 personnes max (au-delà : Instagram), 45 personnes présentes max,
+      // 12 arrivées max par créneau de 30 min pour éviter le rush.
+      maxOnlinePartySize: 8, maxGuestsAtOnce: 45, maxGuestsPerSlot: 12,
+      notifyEmail: process.env.SEED_NOTIFY_EMAIL || null,
     },
   });
   await prisma.openingHours.createMany({
     data: Object.entries(HOURS).map(([d, [opensAt, closesAt]]) => ({ weekday: Number(d), opensAt, closesAt })),
   });
 
-  /* Compte admin */
+  /* Compte admin (pas au déploiement : scripts/bootstrap.ts crée l'accès propriétaire depuis ADMIN_EMAIL) */
+  const skipAdmin = process.env.SEED_SKIP_ADMIN === "yes";
   const email = (process.env.SEED_ADMIN_EMAIL || "admin@goia.test").toLowerCase();
   const password = process.env.SEED_ADMIN_PASSWORD || randomBytes(9).toString("base64url");
-  await prisma.user.create({ data: { email, name: "Admin GOIA", role: "ADMIN", passwordHash: await bcrypt.hash(password, 10) } });
+  if (!skipAdmin) await prisma.user.create({ data: { email, name: "Admin GOIA", role: "ADMIN", passwordHash: await bcrypt.hash(password, 10) } });
 
   /* Salle */
   const zoneIds: Record<string, string> = {};
@@ -212,7 +183,9 @@ async function main() {
     await prisma.menuCategory.create({
       data: {
         slug: c.slug, section: c.section, name: c.name, description: c.description, order: ci,
-        items: { create: c.items.map((it, ii) => ({ name: it.name, description: it.desc, priceCents: it.price, tags: it.tags ?? [], preorderable: !!it.preorderable, order: ii })) },
+        imageUrl: { SHISHA: "/images/menu/chicha-classique.jpg", DRINK: "/images/menu/rubis-des-iles.jpg", FOOD: "/images/menu/cheesecake-speculoos.jpg" }[c.section],
+        items: { create: c.items.map((it, ii) => ({ name: it.name, description: it.desc, priceCents: it.price, tags: it.tags ?? [], preorderable: !!it.preorderable, order: ii,
+          imageUrl: it.image ?? null, subtitle: it.subtitle, ingredients: it.ingredients })) },
       },
     });
     itemCount += c.items.length;
@@ -224,7 +197,7 @@ async function main() {
   await prisma.galleryImage.createMany({
     data: [
       g("chicha-fumee-ambiance.jpg", l("Chicha et volutes de fumée dans la lumière tamisée du GOIA", "Shisha und Rauchschwaden im gedämpften Licht des GOIA", "Shisha and swirling smoke in GOIA's soft light"), 0),
-      g("table-desserts-cocktails.jpg", l("Table dressée avec desserts et cocktails sans alcool", "Gedeckter Tisch mit Desserts und alkoholfreien Cocktails", "Table set with desserts and alcohol-free cocktails"), 1),
+      g("table-desserts-cocktails.jpg", l("Table dressée avec desserts et boissons", "Gedeckter Tisch mit Desserts und Getränken", "Table set with desserts and drinks"), 1),
       g("cheesecake-speculoos.jpg", l("Cheesecake spéculoos maison", "Hausgemachter Spekulatius-Cheesecake", "Homemade speculoos cheesecake"), 2, 387, 516),
       g("chicha-cocktail-dessert.jpg", l("Chicha, cocktail et cheesecake sur table en marbre", "Shisha, Cocktail und Cheesecake auf Marmortisch", "Shisha, cocktail and cheesecake on a marble table"), 3),
     ],
@@ -250,69 +223,75 @@ async function main() {
     ],
   });
 
-  /* Clients */
-  const customers = [];
-  for (let i = 0; i < 22; i++) {
-    const firstName = FIRST[i % FIRST.length];
-    const lastName = pick(LAST);
-    customers.push(await prisma.customer.create({
-      data: {
-        firstName, lastName,
-        email: `${firstName.normalize("NFD").replace(/[^\w]/g, "").toLowerCase()}.${lastName.normalize("NFD").replace(/[^\w]/g, "").toLowerCase()}${i}@example.com`,
-        phone: `+49 151 ${String(1000000 + i * 7919).slice(0, 7)}`,
-        locale: pick(["fr", "fr", "de", "de", "en"]), vip: i % 9 === 0,
-      },
-    }));
+  /* Données de démonstration (clients .example, réservations fictives) : seulement en local,
+     ou si SEED_DEMO=yes. Sur le vrai site, la base démarre sans aucune réservation. */
+  const demo = /@(localhost|127\.0\.0\.1|postgres)(:|\/)/.test(process.env.DATABASE_URL ?? "") && process.env.SEED_DEMO !== "no" || process.env.SEED_DEMO === "yes";
+  let demoCustomers = 0, created = 0;
+  if (demo) {
+    /* Clients */
+    const customers = [];
+    for (let i = 0; i < 22; i++) {
+      const firstName = FIRST[i % FIRST.length];
+      const lastName = pick(LAST);
+      customers.push(await prisma.customer.create({
+        data: {
+          firstName, lastName,
+          email: `${firstName.normalize("NFD").replace(/[^\w]/g, "").toLowerCase()}.${lastName.normalize("NFD").replace(/[^\w]/g, "").toLowerCase()}${i}@example.com`,
+          phone: `+49 151 ${String(1000000 + i * 7919).slice(0, 7)}`,
+          locale: pick(["fr", "fr", "de", "de", "en"]), vip: i % 9 === 0,
+        },
+      }));
+    }
+
+    /* 30 réservations sur les 3 prochaines semaines, sans chevauchement (vérifié par la base) */
+    const settings = { slot: 30, duration: 150, lastSeatingBeforeClose: 60 };
+    const busy: Record<string, { start: number; end: number }[]> = {};
+    const overlaps = (tableId: string, s: number, e: number) => (busy[tableId] ?? []).some((b) => s < b.end && b.start < e);
+    const statuses: ReservationStatus[] = ["CONFIRMED", "CONFIRMED", "CONFIRMED", "CONFIRMED", "CONFIRMED", "PENDING", "CANCELLED"];
+    const occasions: Occasion[] = ["NONE", "NONE", "FRIENDS", "BIRTHDAY", "DATE", "NONE", "BUSINESS"];
+    const preorderable = await prisma.menuItem.findMany({ where: { preorderable: true }, select: { id: true } });
+    let attempts = 0;
+    while (created < 20 && attempts++ < 500) {
+      const day = addDays(today, 1 + Math.floor(rand() * 21));
+      const [opensAt, closesAt] = HOURS[weekdayOf(day)];
+      const open = toMinutes(opensAt);
+      let close = toMinutes(closesAt);
+      if (close <= open) close += 1440;
+      const slots = [];
+      for (let m = open; m <= close - settings.lastSeatingBeforeClose; m += settings.slot) slots.push(m);
+      const m = pick(slots);
+      const time = fromMinutes(m);
+      const startDay = m >= 1440 ? addDays(day, 1) : day; // créneau après minuit
+      const startAt = kehlToUtc(startDay, time);
+      const endAt = new Date(startAt.getTime() + settings.duration * 60000);
+      const party = pick([2, 2, 2, 3, 4, 4, 5, 6]);
+      const candidates = tables.filter((t) => t.minCovers <= party && party <= t.maxCovers)
+        .sort((a, b) => a.maxCovers - b.maxCovers);
+      const table = candidates.find((t) => !overlaps(t.id, startAt.getTime(), endAt.getTime()));
+      if (!table) continue;
+      const status = pick(statuses);
+      if (status !== "CANCELLED") (busy[table.id] ??= []).push({ start: startAt.getTime(), end: endAt.getTime() });
+      const customer = pick(customers);
+      const occasion = pick(occasions);
+      await prisma.reservation.create({
+        data: {
+          reference: `GO-${randomBytes(4).toString("hex").slice(0, 6).toUpperCase()}`,
+          status, source: pick(["WEBSITE", "WEBSITE", "WEBSITE", "PHONE"] as const),
+          customerId: customer.id, startAt, endAt, partySize: party, preferredZoneId: table.zoneId,
+          occasion, specialRequest: occasion === "BIRTHDAY" ? "Bougie sur le dessert si possible 🎂" : null,
+          preorder: preorderable.length && rand() < 0.3 ? [{ menuItemId: pick(preorderable).id, quantity: 1 }] : undefined,
+          locale: customer.locale, adultConfirmed: true, privacyAcceptedAt: new Date(),
+          cancelledBy: status === "CANCELLED" ? "client" : null,
+          tables: { create: [{ tableId: table.id, startAt, endAt }] },
+        },
+      });
+      created++;
+    }
+    demoCustomers = customers.length;
   }
 
-  /* 30 réservations sur les 3 prochaines semaines, sans chevauchement (vérifié par la base) */
-  const settings = { slot: 30, duration: 150, lastSeatingBeforeClose: 60 };
-  const busy: Record<string, { start: number; end: number }[]> = {};
-  const overlaps = (tableId: string, s: number, e: number) => (busy[tableId] ?? []).some((b) => s < b.end && b.start < e);
-  const statuses: ReservationStatus[] = ["CONFIRMED", "CONFIRMED", "CONFIRMED", "CONFIRMED", "CONFIRMED", "PENDING", "CANCELLED"];
-  const occasions: Occasion[] = ["NONE", "NONE", "FRIENDS", "BIRTHDAY", "DATE", "NONE", "BUSINESS"];
-  const preorderable = await prisma.menuItem.findMany({ where: { preorderable: true }, select: { id: true } });
-  let created = 0;
-  let attempts = 0;
-  while (created < 30 && attempts++ < 500) {
-    const day = addDays(today, 1 + Math.floor(rand() * 21));
-    const [opensAt, closesAt] = HOURS[weekdayOf(day)];
-    const open = toMinutes(opensAt);
-    let close = toMinutes(closesAt);
-    if (close <= open) close += 1440;
-    const slots = [];
-    for (let m = open; m <= close - settings.lastSeatingBeforeClose; m += settings.slot) slots.push(m);
-    const m = pick(slots);
-    const time = fromMinutes(m);
-    const startDay = m >= 1440 ? addDays(day, 1) : day; // créneau après minuit
-    const startAt = kehlToUtc(startDay, time);
-    const endAt = new Date(startAt.getTime() + settings.duration * 60000);
-    const party = pick([2, 2, 2, 3, 4, 4, 5, 6, 8]);
-    const candidates = tables.filter((t) => t.minCovers <= party && party <= t.maxCovers)
-      .sort((a, b) => a.maxCovers - b.maxCovers);
-    const table = candidates.find((t) => !overlaps(t.id, startAt.getTime(), endAt.getTime()));
-    if (!table) continue;
-    const status = pick(statuses);
-    if (status !== "CANCELLED") (busy[table.id] ??= []).push({ start: startAt.getTime(), end: endAt.getTime() });
-    const customer = pick(customers);
-    const occasion = pick(occasions);
-    await prisma.reservation.create({
-      data: {
-        reference: `GO-${randomBytes(4).toString("hex").slice(0, 6).toUpperCase()}`,
-        status, source: pick(["WEBSITE", "WEBSITE", "WEBSITE", "PHONE"] as const),
-        customerId: customer.id, startAt, endAt, partySize: party, preferredZoneId: table.zoneId,
-        occasion, specialRequest: occasion === "BIRTHDAY" ? "Bougie sur le dessert si possible 🎂" : null,
-        preorder: rand() < 0.3 ? [{ menuItemId: pick(preorderable).id, quantity: 1 }] : undefined,
-        locale: customer.locale, adultConfirmed: true, privacyAcceptedAt: new Date(),
-        cancelledBy: status === "CANCELLED" ? "client" : null,
-        tables: { create: [{ tableId: table.id, startAt, endAt }] },
-      },
-    });
-    created++;
-  }
-
-  console.log(`✓ ${ZONES.length} zones, ${tables.length} tables, ${itemCount} produits (${MENU.filter((c) => c.section === "SHISHA").reduce((n, c) => n + c.items.length, 0)} chichas), ${EXTRAS.length} suppléments, 3 événements, ${customers.length} clients, ${created} réservations`);
-  console.log(`✓ Compte admin : ${email} / ${process.env.SEED_ADMIN_PASSWORD ? "(mot de passe SEED_ADMIN_PASSWORD)" : password}`);
+  console.log(`✓ ${ZONES.length} zones, ${tables.length} tables, ${itemCount} produits (${MENU.filter((c) => c.section === "SHISHA").reduce((n, c) => n + c.items.length, 0)} chichas), ${EXTRAS.length} suppléments, 3 événements, ${demoCustomers} clients, ${created} réservations${demo ? " (démo)" : ""}`);
+  if (!skipAdmin) console.log(`✓ Compte admin : ${email} / ${process.env.SEED_ADMIN_PASSWORD ? "(mot de passe SEED_ADMIN_PASSWORD)" : password}`);
   console.log("  Aucun avis n'a été créé : ajoutez de vrais avis depuis l'admin.");
 }
 

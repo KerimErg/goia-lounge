@@ -1,5 +1,6 @@
 // GOIA Lounge — PostgreSQL (Neon en production)
-// DATABASE_URL : connexion poolée (application) · DIRECT_URL : connexion directe (migrations).
+// DATABASE_URL : connexion poolée (application) · DATABASE_URL_UNPOOLED : connexion directe (migrations).
+// Ce sont les noms créés automatiquement par l'intégration Neon de Vercel (onglet Storage).
 // Toutes les dates/heures sont stockées en UTC ; l'heure de Kehl (Europe/Berlin)
 // est convertie dans src/lib/time.ts.
 // Les textes traduits sont des objets JSON { "fr": "...", "de": "...", "en": "..." }.
@@ -12,7 +13,7 @@ generator client {
 datasource db {
   provider   = "postgresql"
   url        = env("DATABASE_URL")
-  directUrl  = env("DIRECT_URL")
+  directUrl  = env("DATABASE_URL_UNPOOLED")
   extensions = [btree_gist]
 }
 
@@ -126,7 +127,13 @@ model Settings {
   lastSeatingBeforeCloseMin Int      @default(60)
   minLeadMin                Int      @default(60)
   maxDaysAhead              Int      @default(60)
-  maxOnlinePartySize        Int      @default(10)
+  maxOnlinePartySize        Int      @default(8)
+  /// Plafond de personnes présentes en même temps (toutes tables confondues)
+  maxGuestsAtOnce           Int      @default(45)
+  /// Plafond de personnes qui arrivent sur un même créneau (évite le rush à l'accueil)
+  maxGuestsPerSlot          Int      @default(12)
+  /// Adresse qui reçoit une copie de chaque réservation / annulation
+  notifyEmail               String?
   cancelHoursBefore         Int      @default(3)
   // Acompte Stripe (désactivé par défaut)
   depositEnabled            Boolean  @default(false)
@@ -283,6 +290,7 @@ model MenuCategory {
   section     MenuSection
   name        Json
   description Json?
+  imageUrl    String?
   order       Int         @default(0)
   active      Boolean     @default(true)
   items       MenuItem[]
@@ -294,7 +302,13 @@ model MenuItem {
   category     MenuCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   name         Json
   description  Json?
-  priceCents   Int
+  /// Prix en centimes (vide = prix non communiqué, rien n'est affiché)
+  priceCents   Int?
+  /// Ligne courte sous le nom, ex. « Disponible avec tous nos goûts. »
+  subtitle     Json?
+  /// Liste des ingrédients (texte)
+  ingredients  Json?
+  imageUrl     String?
   /// ex. ["signature", "new", "premium", "vegan"]
   tags         String[]     @default([])
   available    Boolean      @default(true)

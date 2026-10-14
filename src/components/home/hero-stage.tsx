@@ -14,26 +14,20 @@ import { SmokeVeil } from "./smoke-veil";
 
 type Text = { eyebrow: string; book: string; explore: string; scroll: string; tonight: string; play: string; pause: string };
 
-/** Vidéo plein écran (version portrait sur téléphone), lecture sans son, bouton pause. */
+/** Vidéo plein cadre (toute la largeur), lecture sans son en boucle, bouton pause. */
 function BackgroundVideo({ video, poster, labels }: { video: HeroVideo; poster: string; labels: { play: string; pause: string } }) {
   const ref = useRef<HTMLVideoElement>(null);
-  const [src, setSrc] = useState<{ mp4: string; webm?: string } | null>(null);
   const [playing, setPlaying] = useState(false);
   useEffect(() => {
-    const portrait = window.matchMedia("(max-width: 767px)").matches && video.portrait;
-    setSrc(portrait ? video.portrait! : video.landscape);
-  }, [video]);
-  useEffect(() => {
     const v = ref.current;
-    if (!v || !src) return;
-    v.load();
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) v.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
-  }, [src]);
+    if (!v || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    v.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
+  }, []);
   return (
     <>
-      <video ref={ref} muted loop playsInline preload="metadata" poster={poster} aria-hidden="true" className="absolute inset-0 size-full object-cover">
-        {src?.webm && <source src={src.webm} type="video/webm" />}
-        {src && <source src={src.mp4} type="video/mp4" />}
+      <video ref={ref} muted loop playsInline autoPlay preload="auto" poster={poster} aria-hidden="true" className="absolute inset-0 size-full object-cover object-[50%_55%]">
+        {video.webm && <source src={video.webm} type="video/webm" />}
+        <source src={video.mp4} type="video/mp4" />
       </video>
       <button
         type="button"
@@ -63,22 +57,32 @@ export function HeroStage({ media, address, instagram, text }: {
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "18%"]);
   const contentY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -80]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, reduce ? 1 : 0]);
+  // En quittant l'accueil, l'image se replie en carte arrondie et laisse place au fond clair de « Bienvenue »
+  const shrink = useTransform(scrollYProgress, [0, 1], [1, reduce ? 1 : 0.86]);
+  const radius = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 48]);
 
   // Entrées en CSS (voir globals.css) : visibles dès le premier affichage.
 
   return (
-    <section ref={section} className="relative isolate flex h-[100svh] min-h-[620px] flex-col overflow-hidden bg-ink text-ivory" aria-labelledby="hero-title">
+    <motion.section ref={section} style={{ scale: shrink, borderRadius: radius }} className="relative isolate flex h-[100svh] min-h-[620px] origin-bottom flex-col overflow-hidden bg-ink text-ivory" aria-labelledby="hero-title">
       {/* Fond : ambiance du lounge, lent zoom continu */}
       <motion.div style={{ y: bgY }} className="absolute inset-0 -z-20">
-        <div className="absolute inset-0 animate-[slowzoom_24s_ease-in-out_infinite_alternate] motion-reduce:animate-none">
-          <Image src={media.poster} alt="" fill priority sizes="100vw" quality={70} className="hidden object-cover sm:block" />
-          <Image src={media.posterPortrait} alt="" fill priority sizes="100vw" quality={70} className="object-cover sm:hidden" />
-          {media.video && <BackgroundVideo video={media.video} poster={media.poster} labels={{ play: text.play, pause: text.pause }} />}
-        </div>
+        {media.video ? (
+          // Vidéo naturelle, sans effet : l'image d'attente est sa première image
+          <div className="absolute inset-0">
+            <Image src={media.poster} alt="" fill priority sizes="100vw" quality={80} className="object-cover object-[50%_55%]" />
+            <BackgroundVideo video={media.video} poster={media.poster} labels={{ play: text.play, pause: text.pause }} />
+          </div>
+        ) : (
+          <div className="absolute inset-0 animate-[slowzoom_24s_ease-in-out_infinite_alternate] motion-reduce:animate-none">
+            <Image src={media.poster} alt="" fill priority sizes="100vw" quality={70} className="hidden object-cover sm:block" />
+            <Image src={media.posterPortrait} alt="" fill priority sizes="100vw" quality={70} className="object-cover sm:hidden" />
+          </div>
+        )}
       </motion.div>
-      <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_50%_45%,rgb(27_21_17/0.25),rgb(27_21_17/0.85)_75%)]" />
+      <div aria-hidden className={`absolute inset-0 -z-10 ${media.video ? "bg-[radial-gradient(ellipse_at_50%_45%,rgb(27_21_17/0.3),rgb(27_21_17/0.6)_85%)]" : "bg-[radial-gradient(ellipse_at_50%_45%,rgb(27_21_17/0.25),rgb(27_21_17/0.85)_75%)]"}`} />
       <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-2/5 bg-gradient-to-t from-ink to-transparent" />
-      <SmokeVeil className="pointer-events-none absolute inset-0 z-0 size-full mix-blend-screen" density={media.video ? 0.3 : 0.6} />
+      {!media.video && <SmokeVeil className="pointer-events-none absolute inset-0 z-0 size-full mix-blend-screen" density={0.6} />}
 
       <h1 id="hero-title" className="sr-only">GOIA — Huqqa Lounge, Kehl</h1>
       {/* Cadre fin, comme un faire-part : touche luxe discrète */}
@@ -114,6 +118,6 @@ export function HeroStage({ media, address, instagram, text }: {
           </p>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
