@@ -3,10 +3,11 @@ import type { CSSProperties } from "react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { MaskReveal } from "@/components/motion";
+import { Button } from "@/components/ui/button";
 
 /**
  * Bienvenue — mise en page éditoriale, façon magazine : grande photo en arche cernée d'un filet doré,
- * seconde photo en médaillon qui glisse plus vite (parallaxe), titre fin, texte court et deux liens.
+ * seconde photo en médaillon qui glisse plus vite (parallaxe), titre fin et deux boutons.
  */
 export async function Welcome() {
   const t = await getTranslations("welcome");
@@ -44,24 +45,9 @@ export async function Welcome() {
               {last}
             </span>
           </h2>
-          <p className="sd-rise mt-10 max-w-sm text-[1.05rem] leading-[1.85] text-ink/70">{t("text")}</p>
-
-          <dl className="sd-rise mt-12 grid max-w-sm grid-cols-2 border-t border-ink/10" style={{ "--i": 1 } as CSSProperties}>
-            <div className="border-r border-ink/10 py-5 pr-4">
-              <dt className="eyebrow text-[0.55rem] text-taupe">{t("d1_t")}</dt>
-              <dd className="mt-2 font-display text-xl">{t("d1")}</dd>
-            </div>
-            <div className="py-5 pl-5">
-              <dt className="eyebrow text-[0.55rem] text-taupe">{t("d2_t")}</dt>
-              <dd className="mt-2 font-display text-xl">{t("d2")}</dd>
-            </div>
-          </dl>
-
-          <div className="sd-rise mt-10 flex flex-wrap items-center gap-x-10 gap-y-4" style={{ "--i": 2 } as CSSProperties}>
-            <a href="#reserver" className="group inline-flex items-center gap-3 border-b border-ink pb-2 text-[0.7rem] tracking-[0.3em] uppercase">
-              {t("cta")}<span aria-hidden className="transition-transform duration-500 ease-[var(--ease-lux)] group-hover:translate-x-1.5">→</span>
-            </a>
-            <Link href="/carte" className="link-underline pb-2 text-[0.7rem] tracking-[0.3em] text-ink/65 uppercase hover:text-ink">{nav("explore")}</Link>
+          <div className="sd-rise mt-12 grid gap-3 sm:flex" style={{ "--i": 1 } as CSSProperties}>
+            <Button asChild size="lux"><a href="#reserver">{t("cta")}</a></Button>
+            <Button asChild size="lux" variant="outline"><Link href="/carte">{nav("explore")}</Link></Button>
           </div>
         </div>
       </div>
