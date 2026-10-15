@@ -12,6 +12,20 @@ import { LogoSymbol } from "@/components/brand/logo-symbol";
 import { siteOrigin } from "@/lib/site-url";
 import "../globals.css";
 
+/**
+ * Au rechargement (ou à la réouverture de l'onglet), on repart toujours du haut de la page :
+ * le navigateur ne restaure plus l'ancienne position et l'ancre #reserver est retirée de l'adresse.
+ * Exécuté avant l'affichage, une seule fois (la navigation interne ne recharge pas la page).
+ */
+const SCROLL_TOP_ON_RELOAD = `(function(){try{
+var n=performance.getEntriesByType("navigation")[0],t=n?n.type:"navigate";
+if(t==="navigate")return;
+if("scrollRestoration" in history)history.scrollRestoration="manual";
+if(location.hash)history.replaceState(history.state,"",location.pathname+location.search);
+var top=function(){window.scrollTo(0,0)};top();
+addEventListener("DOMContentLoaded",top);addEventListener("load",top);addEventListener("pageshow",top);
+}catch(e){}})();`;
+
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
@@ -40,6 +54,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   return (
     <html lang={locale} className={fontVariables}>
       <body className="min-h-dvh bg-ivory">
+        <script dangerouslySetInnerHTML={{ __html: SCROLL_TOP_ON_RELOAD }} />
         <LogoSymbol />
         <NextIntlClientProvider messages={messages}>
           {/* Écran de chargement GOIA à l'ouverture du site (une fois : la navigation suivante ne recharge pas la page) */}
