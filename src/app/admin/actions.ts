@@ -117,6 +117,14 @@ export async function saveNotifyEmail(_: ActionState, form: FormData): Promise<A
   return { ok: v ? `Les réservations seront envoyées à ${v}` : "Adresse retirée" };
 }
 
+/** Active ou coupe le récapitulatif quotidien de la soirée. */
+export async function saveDailySummary(on: boolean): Promise<ActionState> {
+  await requireAdmin();
+  await prisma.settings.update({ where: { id: 1 }, data: { dailySummary: on } });
+  revalidatePath("/admin/reglages");
+  return { ok: on ? "Récapitulatif quotidien activé" : "Récapitulatif quotidien désactivé" };
+}
+
 export async function changePassword(_: ActionState, form: FormData): Promise<ActionState> {
   const me = await requireStaff();
   const current = String(form.get("current") ?? ""), next = String(form.get("next") ?? "");

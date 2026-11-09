@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { requireStaff } from "@/lib/auth";
 import { emailConfigured } from "@/lib/booking-email";
 import { venueInbox } from "@/lib/booking-common";
-import { AddUserForm, DeleteUserButton, NotifyForm, PasswordForm, TestEmailButton } from "./forms";
+import { AddUserForm, DailySummaryToggle, DeleteUserButton, NotifyForm, PasswordForm, TestEmailButton } from "./forms";
 
 export const dynamic = "force-dynamic";
 
@@ -25,7 +25,7 @@ export default async function Settings() {
         <h2 className="font-display text-2xl">E-mails de réservation</h2>
         <p className="mt-2 text-sm text-ink/65">
           À chaque réservation, le client reçoit sa confirmation (avec un lien pour annuler) et le lounge reçoit une copie.
-          Un récapitulatif de la soirée est aussi envoyé chaque après-midi.
+          Un récapitulatif de la soirée peut aussi être envoyé chaque après-midi.
         </p>
         <p className={`mt-4 rounded-2xl px-4 py-3 text-sm ${emailConfigured() ? "bg-[#8fc79a]/20" : "bg-amber/15"}`}>
           {emailConfigured()
@@ -33,6 +33,7 @@ export default async function Settings() {
             : <>Envoi des e-mails : <strong>pas encore activé</strong>. Il faut renseigner <code>RESEND_API_KEY</code> et <code>EMAIL_FROM</code> dans Vercel (Settings → Environment Variables), puis redéployer.</>}
         </p>
         {admin && <NotifyForm current={settings.notifyEmail ?? ""} />}
+        {admin && <DailySummaryToggle initial={settings.dailySummary} />}
         <TestEmailButton />
       </section>
 

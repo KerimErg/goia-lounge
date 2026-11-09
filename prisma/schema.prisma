@@ -134,6 +134,8 @@ model Settings {
   maxGuestsPerSlot          Int      @default(12)
   /// Adresse qui reçoit une copie de chaque réservation / annulation
   notifyEmail               String?
+  /// Récapitulatif de la soirée envoyé chaque après-midi (seulement s'il y a des réservations)
+  dailySummary              Boolean  @default(true)
   cancelHoursBefore         Int      @default(3)
   // Acompte Stripe (désactivé par défaut)
   depositEnabled            Boolean  @default(false)

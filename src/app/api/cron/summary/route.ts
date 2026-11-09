@@ -19,6 +19,7 @@ export async function GET(req: Request) {
   const settings = await prisma.settings.findUniqueOrThrow({ where: { id: 1 } });
   const to = venueInbox(settings.notifyEmail);
   if (!to) return NextResponse.json({ skipped: "no recipient" });
+  if (!settings.dailySummary) return NextResponse.json({ skipped: "disabled" });
 
   const today = nowInKehl().ymd;
   const from = kehlToUtc(today, "06:00"), until = kehlToUtc(addDays(today, 1), "06:00");
@@ -27,6 +28,8 @@ export async function GET(req: Request) {
     orderBy: { startAt: "asc" },
     include: { customer: true, tables: { include: { table: { include: { zone: true } } } } },
   });
+  // Pas d'e-mail les soirs sans réservation
+  if (rows.length === 0) return NextResponse.json({ sent: 0 });
   await sendDailySummary(to, dateLabel(from, "fr"), rows.map((r) => ({
     time: utcToKehl(r.startAt).hhmm,
     persons: r.partySize,
