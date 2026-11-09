@@ -1,8 +1,8 @@
 "use client";
 
-import { useActionState, useTransition } from "react";
+import { useActionState, useState, useTransition } from "react";
 import { toast } from "sonner";
-import { addUser, changePassword, deleteUser, saveNotifyEmail, testEmail, type ActionState } from "../../actions";
+import { addUser, changePassword, deleteUser, saveDailySummary, saveNotifyEmail, testEmail, type ActionState } from "../../actions";
 
 const field = "h-11 w-full rounded-xl border border-ink/15 bg-white px-4 text-sm outline-none focus:border-ink";
 const btn = "h-11 rounded-full bg-ink px-5 text-sm text-ivory transition-colors hover:bg-taupe disabled:opacity-50";
@@ -19,6 +19,31 @@ export function NotifyForm({ current }: { current: string }) {
       </div>
       <Msg s={s} />
     </form>
+  );
+}
+
+export function DailySummaryToggle({ initial }: { initial: boolean }) {
+  const [on, setOn] = useState(initial);
+  const [pending, start] = useTransition();
+  const flip = () => {
+    const next = !on;
+    setOn(next);
+    start(async () => {
+      const r = await saveDailySummary(next);
+      if (r?.error) { setOn(!next); toast.error(r.error); } else toast.success(r?.ok);
+    });
+  };
+  return (
+    <label className="mt-5 flex cursor-pointer items-start justify-between gap-4 rounded-2xl bg-linen px-4 py-3">
+      <span className="text-sm">
+        <span className="font-medium">Récapitulatif de la soirée</span>
+        <span className="mt-0.5 block text-ink/60">Un e-mail chaque après-midi avec les réservations du soir (rien n’est envoyé les soirs sans réservation).</span>
+      </span>
+      <input type="checkbox" role="switch" checked={on} disabled={pending} onChange={flip} className="peer sr-only" />
+      <span aria-hidden className={`relative mt-1 h-6 w-11 shrink-0 rounded-full transition-colors peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-ink ${on ? "bg-ink" : "bg-ink/20"}`}>
+        <span className={`absolute top-0.5 size-5 rounded-full bg-white shadow transition-[left] ${on ? "left-[1.375rem]" : "left-0.5"}`} />
+      </span>
+    </label>
   );
 }
 
